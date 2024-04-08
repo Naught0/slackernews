@@ -22,8 +22,7 @@ export async function getHomepage(props?: {
 }
 
 export async function getItemById<T>(id: number | string) {
-  const resp = await fetch(`https://api.hackerwebapp.com/item/${id}`);
-  return (await resp.json()) as TThread;
+  return await request<T>(`/item/${id}.json`);
 }
 
 export async function getThreadComments(id: number | string) {
@@ -52,38 +51,59 @@ export async function getCommentsByPostId({
   sortBy,
   sortDir,
 }: {
-  id: string;
+  id: string | number;
   count?: number;
   sortBy?: string;
   sortDir?: "asc" | "desc";
 }): Promise<{ items: HNComment[] }> {
   const post = await request<HNStory>(`/item/${id}.json`);
+  if (!post) return { items: [] };
+
   const resp = await Promise.all(
-    post.kids.map((id) => request<HNComment>(`/item/${id}.json`)),
+    post.kids?.map((id) => request<HNComment>(`/item/${id}.json`)),
   );
-  return { items: resp.filter((c) => c.text && !c.deleted) };
+  return { items: resp };
 }
 
-export async function getComments(
-  rootId: string,
-  depth: number = 0,
-  comments: HNComment & { comments?: HNComment[] },
-): Promise<HNComment[]> {
-  console.log("DEPTH", depth);
-  const { items } = await getCommentsByPostId({ id: rootId });
-  const ret: (HNComment & { comments?: HNComment[] })[] = items.map((item) => ({
-    ...item,
-    comments: [],
-  }));
+export async function getComments({
+  maxDepth = 3,
+  depth = 0,
+  id,
+  story,
+  comments,
+}: {
+  id: string | number;
+  depth: number;
+  story: HNStory;
+  comments?: HNComment;
+  maxDepth?: number;
+}): Promise<HNComment> {
+  const resp = await getCommentsByPostId({ id });
+}
 
-  for (const i of items) {
-    if (i.kids?.length) {
-      depth++;
-      ret?.[ret.indexOf(i)]?.comments?.push(
-        ...(await getComments(i.id.toString(), depth)),
-      );
-    }
+// Recursively gather comments in a thread
+export async function gatherComments(
+  id: number,
+  depth: number,
+): Promise<HNComment> {
+  if (depth <= 0) {
+    return await getItemById(id);
   }
 
-  return ret;
+  try {
+    const comment = await getItemById<HNComment>(id);
+    const comments = { ...comment };
+
+    if (comment.kids && Array.isArray(comment.kids)) {
+      const kidsCommentsPromises = comment.kids.map((kidId) =>
+        gatherComments(kidId, depth - 1),
+      );
+      comments.comments = await Promise.all(kidsCommentsPromises);
+    }
+
+    return comments;
+  } catch (error) {
+    console.error("Error gathering comments:", error);
+    throw error;
+  }
 }

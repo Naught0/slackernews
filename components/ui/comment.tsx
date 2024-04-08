@@ -36,3 +36,29 @@ export const Comment = (props: TComment & { indentLevel?: number }) => {
     </article>
   );
 };
+
+export const HNComment = (props: HNComment & { indentLevel?: number }) => {
+  return (
+    <article
+      className={`flex flex-col justify-between gap-2 border-l-2 border-solid ${
+        indentColorsClassName?.[props.indentLevel ?? 0] ??
+        indentColorsClassName[-1]
+      } py-1 pl-3 ${
+        indentLevels?.[props.indentLevel ?? 0] ?? indentLevels[-1]
+      } mb-2 min-w-0 max-w-fit`}
+    >
+      <div className="flex flex-row items-center gap-1 text-sm lg:text-base">
+        <Link href={`/user/${props.by}`} className="text-muted-foreground">
+          {props.by}
+        </Link>
+        <Timestamp time={props.time} timeAgo={`${props.time}`} />
+      </div>
+      {props.text && (
+        <div
+          dangerouslySetInnerHTML={{ __html: props.text }}
+          className="content"
+        />
+      )}
+    </article>
+  );
+};

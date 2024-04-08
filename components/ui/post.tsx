@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { PostActions } from "./post-actions";
 import { PersonIcon, TriangleUpIcon } from "@radix-ui/react-icons";
-import { Triangle } from "lucide-react";
 
 export const Post = (props: HNStory) => {
   return (

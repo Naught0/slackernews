@@ -12,6 +12,7 @@ interface HNStory extends HNItem {
   title: string;
   type: "story";
   url: string;
+  comments?: HNComment[];
 }
 
 interface HNComment extends HNItem {
@@ -21,6 +22,7 @@ interface HNComment extends HNItem {
   parent: number;
   text?: string;
   time: number;
+  comments?: HNComment[];
   type: "comment";
 }
 
