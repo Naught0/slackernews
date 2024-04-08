@@ -51,7 +51,10 @@ export const HNComment = (props: HNComment & { indentLevel?: number }) => {
         <Link href={`/user/${props.by}`} className="text-muted-foreground">
           {props.by}
         </Link>
-        <Timestamp time={props.time} timeAgo={`${props.time}`} />
+        <Timestamp
+          time={props.time}
+          timeAgo={new Date(props.time * 1000).toLocaleString()}
+        />
       </div>
       {props.text && (
         <div
