@@ -1,5 +1,9 @@
 import Link from "next/link";
-import { getItemById, getThreadComments } from "~/app/hackernews-api";
+import {
+  getComments,
+  getItemById,
+  getThreadComments,
+} from "~/app/hackernews-api";
 import { BrowserBackButton } from "~/components/ui/browser-back-button";
 import { Separator } from "~/components/ui/separator";
 import { Thread } from "~/components/ui/thread";
@@ -12,6 +16,7 @@ export default async function Page({
 }) {
   const post = await getItemById<TThread>(id);
   const comments = await getThreadComments(id);
+  const test = await getComments(id);
 
   return (
     <div className="flex flex-col flex-wrap gap-6">
@@ -27,11 +32,11 @@ export default async function Page({
           <Link className="text-muted-foreground" href={`/user/${post.user}`}>
             {post.user}
           </Link>{" "}
-          <Timestamp time={post.time} timeAgo={post.time_ago} />
+          <Timestamp time={post.time} timeAgo={"test"} />
         </h2>
       </div>
       <Separator />
-      {comments?.comments?.map((item) => <Thread key={item.id} {...item} />)}
+      {comments?.children?.map((item) => <Thread key={item.id} {...item} />)}
     </div>
   );
 }

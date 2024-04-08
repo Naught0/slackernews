@@ -9,8 +9,8 @@ export const Thread = async (
   return (
     <div>
       <Comment {...props} />
-      {comments.comments.map((c) => {
-        return c.comments ? (
+      {comments.children.map((c) => {
+        return c.children ? (
           <Thread
             key={c.id}
             {...c}

@@ -17,7 +17,7 @@ interface HNStory extends HNItem {
 interface HNComment extends HNItem {
   by: string;
   id: number;
-  kids: number[];
+  kids?: number[];
   parent: number;
   text?: string;
   time: number;

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Timestamp } from "./timestamp";
 
-const indentLevels = ["ml-0", "ml-4", "ml-8", "ml-12", "ml-14", "ml-18"];
+const indentLevels = ["ml-0", "ml-4", "ml-8", "ml-12", "ml-16", "ml-20"];
 const indentColorsClassName = [
   "border-slate-300",
   "border-slate-400",
@@ -22,14 +22,14 @@ export const Comment = (props: TComment & { indentLevel?: number }) => {
       } mb-2 min-w-0 max-w-fit`}
     >
       <div className="flex flex-row items-center gap-1 text-sm lg:text-base">
-        <Link href={`/user/${props.user}`} className="text-muted-foreground">
-          {props.user}
+        <Link href={`/user/${props.author}`} className="text-muted-foreground">
+          {props.author}
         </Link>
         <Timestamp time={props.time} timeAgo={props.time_ago} />
       </div>
-      {props.content && (
+      {props.text && (
         <div
-          dangerouslySetInnerHTML={{ __html: props.content }}
+          dangerouslySetInnerHTML={{ __html: props.text }}
           className="content"
         />
       )}

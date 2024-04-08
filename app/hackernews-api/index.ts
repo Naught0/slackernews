@@ -27,7 +27,7 @@ export async function getItemById<T>(id: number | string) {
 }
 
 export async function getThreadComments(id: number | string) {
-  const resp = await fetch(`https://api.hackerwebapp.com/item/${id}`);
+  const resp = await fetch(`http://hn.algolia.com/api/v1/items/${id}`);
   const data = await resp.json();
 
   return data as TThread;
@@ -62,4 +62,28 @@ export async function getCommentsByPostId({
     post.kids.map((id) => request<HNComment>(`/item/${id}.json`)),
   );
   return { items: resp.filter((c) => c.text && !c.deleted) };
+}
+
+export async function getComments(
+  rootId: string,
+  depth: number = 0,
+  comments: HNComment & { comments?: HNComment[] },
+): Promise<HNComment[]> {
+  console.log("DEPTH", depth);
+  const { items } = await getCommentsByPostId({ id: rootId });
+  const ret: (HNComment & { comments?: HNComment[] })[] = items.map((item) => ({
+    ...item,
+    comments: [],
+  }));
+
+  for (const i of items) {
+    if (i.kids?.length) {
+      depth++;
+      ret?.[ret.indexOf(i)]?.comments?.push(
+        ...(await getComments(i.id.toString(), depth)),
+      );
+    }
+  }
+
+  return ret;
 }
