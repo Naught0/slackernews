@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "./button";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 
-export const BrowserBackButton = () => {
+export const BackHomeButton = () => {
   const { back } = useRouter();
 
   return (
