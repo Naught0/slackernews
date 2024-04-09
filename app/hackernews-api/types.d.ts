@@ -73,3 +73,5 @@ interface HNPollOpt {
 }
 
 type HNAnyItem = HNStory | HNAsk | HNJob | HNComment | HNPoll;
+
+type HNPost = HNStory | HNAsk | HNJob;

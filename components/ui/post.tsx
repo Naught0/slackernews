@@ -7,7 +7,7 @@ import { cn } from "~/lib/utils";
 export const Post = ({
   story,
   ...props
-}: { story: HNStory } & HTMLProps<HTMLDivElement>) => {
+}: { story: HNPost } & HTMLProps<HTMLDivElement>) => {
   return (
     <article
       {...props}
@@ -23,12 +23,16 @@ export const Post = ({
         </span>{" "}
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-1">
-            <Link href={story.url} className="w-fit text-lg lg:text-xl">
-              {story.title}
-              <p className="ml-1 text-xs text-muted-foreground lg:text-sm">
-                {new URL(story.url).hostname}
-              </p>
-            </Link>
+            {"url" in story ? (
+              <Link href={story.url} className="w-fit text-lg lg:text-xl">
+                {story.title}
+                <p className="ml-1 text-xs text-muted-foreground lg:text-sm">
+                  {new URL(story.url).hostname}
+                </p>
+              </Link>
+            ) : (
+              <p className="w-fit text-lg lg:text-xl">{story.title}</p>
+            )}
             <Link
               href={`/user/${story.by}`}
               className="flex w-fit items-center gap-1 text-sm text-slate-500 dark:text-muted-foreground md:text-base"
@@ -37,7 +41,9 @@ export const Post = ({
               {story.by}
             </Link>
           </div>
-          <PostActions comments={story.descendants} postId={story.id} />
+          {"descendants" in story && (
+            <PostActions comments={story.descendants} postId={story.id} />
+          )}
         </div>
       </div>
     </article>
