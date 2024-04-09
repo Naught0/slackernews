@@ -10,12 +10,15 @@ async function request<T extends unknown>(
 }
 export async function getHomepage(props?: {
   count?: number;
-}): Promise<{ items: (HNStory | HNAsk | HNJob)[] }> {
+  pageIndex?: number;
+}): Promise<{ items: HNStory[] }> {
+  const count = props?.count ?? 25;
+  const pageIndex = props?.pageIndex ?? 0;
   const postIds = await request<number[]>("/topstories.json");
   const postData = await Promise.all(
     postIds
-      .slice(0, props?.count ?? 3)
-      .map((id) => request<HNStory | HNAsk | HNJob>(`/item/${id}.json`)),
+      .slice(pageIndex * count, pageIndex * count + count)
+      .map((id) => request<HNStory>(`/item/${id}.json`)),
   );
 
   return { items: postData };
@@ -23,62 +26,6 @@ export async function getHomepage(props?: {
 
 export async function getItemById<T>(id: number | string) {
   return await request<T>(`/item/${id}.json`);
-}
-
-export async function getThreadComments(id: number | string) {
-  const resp = await fetch(`http://hn.algolia.com/api/v1/items/${id}`);
-  const data = await resp.json();
-
-  return data as TThread;
-}
-
-export async function getItemsById<T extends HNAnyItem>(
-  ids: string[] | number[],
-): Promise<{ items: T[] }> {
-  if (!ids) return { items: [] };
-
-  const items = await Promise.all(
-    ids.map((id) => request<T>(`/item/${id}.json`)),
-  );
-  return {
-    items,
-  };
-}
-
-export async function getCommentsByPostId({
-  id,
-  count,
-  sortBy,
-  sortDir,
-}: {
-  id: string | number;
-  count?: number;
-  sortBy?: string;
-  sortDir?: "asc" | "desc";
-}): Promise<{ items: HNComment[] }> {
-  const post = await request<HNStory>(`/item/${id}.json`);
-  if (!post) return { items: [] };
-
-  const resp = await Promise.all(
-    post.kids?.map((id) => request<HNComment>(`/item/${id}.json`)),
-  );
-  return { items: resp };
-}
-
-export async function getComments({
-  maxDepth = 3,
-  depth = 0,
-  id,
-  story,
-  comments,
-}: {
-  id: string | number;
-  depth: number;
-  story: HNStory;
-  comments?: HNComment;
-  maxDepth?: number;
-}): Promise<HNComment> {
-  const resp = await getCommentsByPostId({ id });
 }
 
 // Recursively gather comments in a thread
