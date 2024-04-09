@@ -1,21 +1,23 @@
 import { HTMLProps } from "react";
 import { cn } from "~/lib/utils";
+import dayjs from "dayjs";
+import relative from "dayjs/plugin/relativeTime";
+dayjs.extend(relative);
 
 export const Timestamp = ({
-  timeAgo,
   time,
   ...props
 }: {
-  timeAgo: string;
   time: number;
 } & HTMLProps<HTMLSpanElement>) => {
+  const djs = dayjs.unix(time);
   return (
     <span
       {...props}
-      title={new Date(time * 1000).toLocaleString()}
+      title={djs.toDate().toLocaleString()}
       className={cn("text-xs lg:text-base", props.className)}
     >
-      {timeAgo}
+      {dayjs().to(djs)}
     </span>
   );
 };
