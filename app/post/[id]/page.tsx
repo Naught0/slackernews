@@ -24,11 +24,7 @@ export default async function Page({
       </div>
       <Separator />
       {test.comments?.map((comment) => (
-        <HNThreadComponent
-          topLevelCommentsCount={comment.comments?.length}
-          key={comment.id}
-          {...comment}
-        />
+        <HNThreadComponent key={comment.id} {...comment} />
       ))}
       <AnchorButtons />
     </div>
