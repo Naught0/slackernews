@@ -1,47 +1,31 @@
-import Link from "next/link";
-import {
-  gatherComments,
-  getComments,
-  getItemById,
-  getThreadComments,
-} from "~/app/hackernews-api";
+import { gatherComments, getItemById } from "~/app/hackernews-api";
+import { AnchorButtons } from "~/components/ui/anchor-buttons";
 import { BrowserBackButton } from "~/components/ui/browser-back-button";
+import { Post } from "~/components/ui/post";
 import { Separator } from "~/components/ui/separator";
-import { HNThreadComponent, Thread } from "~/components/ui/thread";
-import { Timestamp } from "~/components/ui/timestamp";
+import { HNThreadComponent } from "~/components/ui/thread";
 
 export default async function Page({
   params: { id },
 }: {
   params: { id: string };
 }) {
-  const post = await getItemById<HNComment>(id);
-  const comments = await getThreadComments(id);
+  const story = await getItemById<HNStory>(id);
   const test = await gatherComments(parseInt(id), 4);
-  console.log(JSON.stringify(test, undefined, 2));
 
   return (
     <div className="flex flex-col flex-wrap gap-6">
       <div className="flex flex-col flex-wrap gap-3">
-        <div className="flex flex-row flex-wrap items-center gap-3">
+        <div className="flex flex-1 flex-row gap-3">
           <BrowserBackButton />
-          <Link className="text-lg lg:text-xl" href={post.url}>
-            {post.title}
-          </Link>
+          <Post story={story} className="flex-grow" />
         </div>
-        <h2 className="text-sm lg:text-base">
-          Submitted by{" "}
-          <Link className="text-muted-foreground" href={`/user/${post.user}`}>
-            {post.user}
-          </Link>{" "}
-          <Timestamp time={post.time} timeAgo={"test"} />
-        </h2>
       </div>
       <Separator />
-      {comments?.children?.map((item) => <Thread key={item.id} {...item} />)}
       {test.comments?.map((comment) => (
         <HNThreadComponent key={comment.id} {...comment} />
       ))}
+      <AnchorButtons />
     </div>
   );
 }
