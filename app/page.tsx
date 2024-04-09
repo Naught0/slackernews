@@ -1,13 +1,22 @@
-import { getHomepage } from "./hackernews-api";
+import { getHomepage } from "~/app/hackernews-api";
+import { HomepagePagination } from "~/components/ui/homepage-pagination";
 import { Post } from "~/components/ui/post";
 
-export default async function Home() {
-  const results = await getHomepage();
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Record<string, string | undefined>;
+}) {
+  const results = await getHomepage({
+    count: parseInt(searchParams?.["perPage"] ?? "25"),
+    pageIndex: parseInt(searchParams?.["page"] ?? "1") - 1,
+  });
   return (
     <div className="flex w-full  basis-full flex-col gap-3">
       {results.items.map((item) => (
-        <Post key={item.id} {...item} />
+        <Post key={item.id} story={item} />
       ))}
+      <HomepagePagination searchParams={searchParams} />
     </div>
   );
 }
