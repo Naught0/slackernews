@@ -29,14 +29,17 @@ export async function getItemById<T>(id: number | string) {
 }
 
 // Function to gather comments in a thread
-export async function gatherComments(commentId: number): Promise<HNComment> {
+export async function gatherComments(
+  commentId: number,
+  depth: number = 4,
+): Promise<HNComment> {
   try {
-    const comment = await getItemById<HNComment>(commentId);
-    const comments: HNComment = { ...comment };
+    const item = await getItemById<HNComment>(commentId);
+    const comments: HNComment = { ...item };
 
-    if (comment.kids && Array.isArray(comment.kids)) {
-      const kidsCommentsPromises = comment.kids.map((kidId) =>
-        gatherComments(kidId),
+    if (depth > 0 && item.kids) {
+      const kidsCommentsPromises = item.kids.map((kidId) =>
+        gatherComments(kidId, depth - 1),
       );
       comments.comments = await Promise.all(kidsCommentsPromises);
     }
