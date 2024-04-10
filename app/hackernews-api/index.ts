@@ -28,22 +28,15 @@ export async function getItemById<T>(id: number | string) {
   return await request<T>(`/item/${id}.json`);
 }
 
-// Recursively gather comments in a thread
-export async function gatherComments(
-  id: number,
-  depth: number,
-): Promise<HNComment> {
-  if (depth <= 0) {
-    return await getItemById(id);
-  }
-
+// Function to gather comments in a thread
+export async function gatherComments(commentId: number): Promise<HNComment> {
   try {
-    const comment = await getItemById<HNComment>(id);
-    const comments = { ...comment };
+    const comment = await getItemById<HNComment>(commentId);
+    const comments: HNComment = { ...comment };
 
     if (comment.kids && Array.isArray(comment.kids)) {
       const kidsCommentsPromises = comment.kids.map((kidId) =>
-        gatherComments(kidId, depth - 1),
+        gatherComments(kidId),
       );
       comments.comments = await Promise.all(kidsCommentsPromises);
     }
