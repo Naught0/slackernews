@@ -12,7 +12,7 @@ export default async function Home({
     pageIndex: parseInt(searchParams?.["page"] ?? "1") - 1,
   });
   return (
-    <div className="flex w-full  basis-full flex-col gap-3">
+    <div className="flex w-full max-w-screen-lg basis-full flex-col gap-3">
       {results.items.map((item) => (
         <Post key={item.id} story={item} />
       ))}

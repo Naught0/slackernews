@@ -4,7 +4,7 @@ export const HNThreadComponent = async (
   props: HNComment & { maxDepth?: number; indentLevel?: number; op: string },
 ) => {
   return (
-    <div className="flex flex-1 basis-full flex-col">
+    <div className="flex flex-1 basis-full flex-col items-start">
       <HNComment indentLevel={0} {...props} />
       {props.comments?.map((c) => {
         return c.comments ? (
