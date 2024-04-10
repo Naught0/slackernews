@@ -5,7 +5,7 @@ export const HNThreadComponent = async (
 ) => {
   return (
     <div className="flex flex-1 basis-full flex-col">
-      <HNComment {...props} />
+      <HNComment indentLevel={0} {...props} />
       {props.comments?.map((c) => {
         return c.comments ? (
           <HNThreadComponent
@@ -14,8 +14,6 @@ export const HNThreadComponent = async (
             {...c}
             indentLevel={(props.indentLevel ?? 0) + 1}
           />
-        ) : c.kids ? (
-          <span>Lead {c.kids.length} more comments</span>
         ) : (
           <HNComment
             key={c.id}
