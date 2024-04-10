@@ -14,7 +14,7 @@ export default async function Page({
   const thread = await gatherComments(parseInt(id));
 
   return (
-    <div className="flex flex-col flex-wrap gap-3">
+    <div className="flex w-full flex-col gap-3">
       <div className="flex flex-col flex-wrap gap-3">
         <div className="flex flex-1 flex-row gap-3">
           <BackHomeButton />
