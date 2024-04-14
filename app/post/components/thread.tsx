@@ -19,7 +19,7 @@ export const HNThreadComponent = async (
   return (
     <Collapsible>
       <div
-        className={`flex flex-1 basis-full flex-col items-start gap-1 ${leftBorder} ${indentColor}`}
+        className={`flex max-w-[80vw] flex-col items-start gap-1 ${leftBorder} ${indentColor}`}
       >
         <HNComment indentLevel={0} {...props} />
         {props.comments?.map((c) => {

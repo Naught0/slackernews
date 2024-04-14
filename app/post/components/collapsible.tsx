@@ -38,7 +38,7 @@ export const Collapsible = ({
           {!expanded && collapsedElement}
         </Button>
       )}
-      {expanded && <div className="flex flex-1">{children}</div>}
+      {expanded && children}
     </div>
   );
 };
