@@ -22,7 +22,6 @@ export function AnchorButtons() {
     setIdx(newIdx);
     ids[newIdx]?.scrollIntoView({ behavior: "auto", inline: "start" });
   }
-  console.log(idx);
 
   return (
     <div className="fixed bottom-5 right-5 flex w-fit flex-row gap-1 lg:bottom-10 lg:right-10">
