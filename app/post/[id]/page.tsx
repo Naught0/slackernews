@@ -11,7 +11,7 @@ export default async function Page({
   params: { id: string };
 }) {
   const story = await getItemById<HNStory>(id);
-  const thread = await gatherComments(parseInt(id));
+  const thread = await gatherComments(id);
 
   return (
     <div className="flex w-full flex-col gap-3">
