@@ -1,44 +1,15 @@
 import Link from "next/link";
 import { Timestamp } from "~/components/ui/timestamp";
 import { RiHashtag } from "react-icons/ri";
-import { Button } from "~/components/ui/button";
 
-const indentClassNames = [
-  "",
-  "ml-[25px]",
-  "ml-[50px]",
-  "ml-[75px]",
-  "ml-[100px]",
-  "ml-[125px]",
-  "ml-[150px]",
-];
-
-const indentColorsClassName = [
-  "border-slate-300",
-  "border-slate-400",
-  "border-slate-500",
-  "border-slate-600",
-  "border-zinc-400",
-  "border-zinc-500",
-  "border-zinc-600",
-];
-export const HNComment = (
-  props: HNComment & { indentLevel?: number; op: string },
-) => {
+export const HNComment = (props: HNComment & { op: string }) => {
   const isOp = props.by === props.op;
-  const indentClass =
-    indentClassNames[props.indentLevel ?? 0] ?? indentClassNames[0];
-  return !props?.comments && (props.kids?.length ?? 0) > 0 ? (
-    <Button className={`w-fit ${indentClass}`} variant="link">
-      Load more comments ({props.kids!.length})
-    </Button>
-  ) : (
+  return (
     <article
       id={`${props.id}`}
-      className={`flex flex-1 flex-col items-start justify-between gap-2 ${
-        indentColorsClassName?.[props.indentLevel ?? 0] ??
-        indentColorsClassName[0]
-      } py-2 pl-3 ${indentClass} min-w-0`}
+      className={
+        "mb-2 flex min-w-0 flex-1 flex-col items-start justify-between gap-2 border-l-0 border-solid py-2 pl-3"
+      }
     >
       <div className="flex w-full flex-row items-center gap-1 text-sm lg:text-base">
         {props.deleted ? (
@@ -63,7 +34,7 @@ export const HNComment = (
       {props.text && (
         <div
           dangerouslySetInnerHTML={{ __html: props.text }}
-          className="prose prose-sm md:prose-base prose-slate dark:prose-invert max-w-screen-lg"
+          className="prose prose-sm prose-slate max-w-screen-lg dark:prose-invert md:prose-base"
         />
       )}
     </article>
