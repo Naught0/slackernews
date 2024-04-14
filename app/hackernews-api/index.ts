@@ -30,8 +30,8 @@ export async function getItemById<T>(id: number | string) {
 
 // Function to gather comments in a thread
 export async function gatherComments(
-  commentId: number,
-  depth: number = 4,
+  commentId: string | number,
+  depth: number = 5,
 ): Promise<HNComment> {
   try {
     const item = await getItemById<HNComment>(commentId);
