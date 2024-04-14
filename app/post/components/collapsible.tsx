@@ -33,7 +33,7 @@ export const Collapsible = ({
         >
           {expanded ? <BiMessageSquareMinus /> : <BiMessageSquareAdd />}
           {!expanded && !collapsedElement && (
-            <span className="pl-2 italic text-muted-foreground">collapsed</span>
+            <span className="italic">collapsed</span>
           )}
           {!expanded && collapsedElement}
         </Button>

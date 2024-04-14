@@ -17,9 +17,7 @@ export const HNThreadComponent = async (
   const indentColor = getIndentColor(props.indentLevel);
 
   return (
-    <Collapsible
-      collapsedElement={`${(props.kids?.length ?? 0) + 1} collapsed`}
-    >
+    <Collapsible>
       <div
         className={`flex flex-1 basis-full flex-col items-start gap-1 ${leftBorder} ${indentColor}`}
       >
@@ -34,10 +32,7 @@ export const HNThreadComponent = async (
               indentLevel={(props.indentLevel ?? 0) + 1}
             />
           ) : (
-            <Collapsible
-              key={c.id}
-              collapsedElement={`${(c.kids?.length ?? 0) + 1} collapsed`}
-            >
+            <Collapsible key={c.id}>
               <div className={`${leftBorder} ${borderColor}`}>
                 <HNComment {...c} op={props.op} />
               </div>
