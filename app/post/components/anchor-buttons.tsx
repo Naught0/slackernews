@@ -4,7 +4,7 @@ import { Button } from "~/components/ui/button";
 import { useState } from "react";
 
 function findLinksWithIds() {
-  return [...document.querySelectorAll("a")].filter((elem) => elem.hash);
+  return [...document.querySelectorAll("a")].filter((elem) => !!elem.hash);
 }
 
 export function AnchorButtons() {
@@ -12,8 +12,9 @@ export function AnchorButtons() {
 
   function scrollToLink(newIdx: number) {
     if (newIdx < 0) {
-      setIdx(0);
+      setIdx(-1);
       window.scrollTo({ top: 0, behavior: "auto" });
+      return;
     }
 
     const ids = findLinksWithIds();
@@ -24,7 +25,7 @@ export function AnchorButtons() {
   }
 
   return (
-    <div className="fixed bottom-5 right-5 flex w-fit flex-row gap-1 lg:bottom-10 lg:right-10">
+    <div className="sticky bottom-5 left-5 flex w-fit flex-row gap-1 lg:bottom-10 lg:left-10">
       <Button
         onClick={() => scrollToLink(idx - 1)}
         type="button"
