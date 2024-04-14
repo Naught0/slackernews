@@ -1,8 +1,8 @@
 import { gatherComments, getItemById } from "~/app/hackernews-api";
-import { AnchorButtons } from "~/components/ui/anchor-buttons";
 import { BackHomeButton } from "~/components/ui/browser-back-button";
 import { Post } from "~/components/ui/post";
 import { Separator } from "~/components/ui/separator";
+import { AnchorButtons } from "../components/anchor-buttons";
 import { HNThreadComponent } from "../components/thread";
 
 export default async function Page({
