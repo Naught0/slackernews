@@ -34,7 +34,7 @@ export const HNComment = (props: HNComment & { op: string }) => {
       {props.text && (
         <div
           dangerouslySetInnerHTML={{ __html: props.text }}
-          className="prose prose-sm prose-slate max-w-none max-w-screen-lg dark:prose-invert md:prose-base"
+          className="prose prose-sm prose-slate max-w-none dark:prose-invert md:prose-base"
         />
       )}
     </article>
