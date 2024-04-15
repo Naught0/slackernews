@@ -7,7 +7,7 @@ export const PostActions = (props: { postId: number; comments: number }) => {
   return (
     <div className="flex flex-row flex-wrap gap-3">
       <Link className="cursor-pointer" href={`/post/${props.postId}`}>
-        <Button className="gap-1" variant="secondary">
+        <Button className="gap-1" variant="outline">
           <BiCommentDetail />
           {props.comments}
         </Button>
