@@ -1,4 +1,4 @@
-import { ModeToggle } from "./theme-toggle";
+import { ModeToggle } from "~/components/ui/theme-toggle";
 
 export const Nav = () => {
   return (

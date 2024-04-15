@@ -1,6 +1,6 @@
 import { getHomepage } from "~/app/hackernews-api";
 import { HomepagePagination } from "~/components/ui/homepage-pagination";
-import { Post } from "~/components/ui/post";
+import { Post } from "~/app/components/post";
 
 export default async function Home({
   searchParams,

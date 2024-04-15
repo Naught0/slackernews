@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { BiCommentDetail } from "react-icons/bi";
-import { Button } from "./button";
+import { Button } from "~/components/ui/button";
 
 export const PostActions = (props: { postId: number; comments: number }) => {
   return (
