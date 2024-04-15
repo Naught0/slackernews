@@ -26,7 +26,7 @@ export const Post = ({
             {"url" in story ? (
               <Link href={story.url} className="w-fit text-lg lg:text-xl">
                 {story.title}
-                <p className="ml-1 text-xs text-muted-foreground lg:text-sm">
+                <p className="ml-1 break-all text-xs text-muted-foreground lg:text-sm">
                   {new URL(story.url).hostname}
                 </p>
               </Link>
