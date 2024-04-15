@@ -17,28 +17,24 @@ export const Collapsible = ({
 } & HTMLProps<HTMLDivElement>) => {
   const [expanded, setExpanded] = useState(true);
   return (
-    <div
-      className={cn(
-        `flex flex-row ${expanded ? "items-start" : "items-center"}`,
-        className,
-      )}
-      {...props}
-    >
+    <div className={cn(className, `flex`)} {...props}>
       {canCollapse && (
-        <Button
-          onClick={() => setExpanded(!expanded)}
-          variant={"link"}
-          size={"sm"}
-          className="gap-2"
-        >
-          {expanded ? <BiMessageSquareMinus /> : <BiMessageSquareAdd />}
-          {!expanded && !collapsedElement && (
-            <span className="italic">collapsed</span>
-          )}
-          {!expanded && collapsedElement}
-        </Button>
+        <div className="flex">
+          <Button
+            onClick={() => setExpanded(!expanded)}
+            variant={"outline"}
+            size={"sm"}
+            className={`h-full max-w-fit ${expanded ? "items-start" : "items-center"} justify-start gap-2 rounded-none border-none p-2`}
+          >
+            {expanded ? <BiMessageSquareMinus /> : <BiMessageSquareAdd />}
+            {!expanded && !collapsedElement && (
+              <span className="italic">collapsed</span>
+            )}
+            {!expanded && collapsedElement}
+          </Button>
+        </div>
       )}
-      {expanded && children}
+      {expanded && <div>{children}</div>}
     </div>
   );
 };
