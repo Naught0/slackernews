@@ -75,5 +75,8 @@
     pre {
       white-space: pre-wrap;
     }
+    .prose a {
+      word-break: break-all;
+    }
   }
 }
