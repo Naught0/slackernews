@@ -1,7 +1,6 @@
 import { gatherComments, getItemById } from "~/app/hackernews-api";
 import { BackHomeButton } from "~/components/ui/browser-back-button";
 import { Post } from "~/app/components/post";
-import { Separator } from "~/components/ui/separator";
 import { AnchorButtons } from "../components/anchor-buttons";
 import { HNThreadComponent } from "../components/thread";
 
@@ -21,7 +20,7 @@ export default async function Page({
           <Post story={story} className="flex-grow" />
         </div>
       </div>
-      <Separator />
+      <br />
       {thread.comments?.map((comment) => (
         <HNThreadComponent op={story.by} key={comment.id} {...comment} />
       ))}
