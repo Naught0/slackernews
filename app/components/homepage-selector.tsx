@@ -8,7 +8,6 @@ import {
 import React, { useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Button } from "~/components/ui/button";
 import { GoArrowUpRight } from "react-icons/go";
 import { SlPresent } from "react-icons/sl";
 import { GoClock } from "react-icons/go";
@@ -54,9 +53,7 @@ export function HomepageSelector() {
   }, [pathname]);
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        {current}
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger>{current}</DropdownMenuTrigger>
       <DropdownMenuContent>
         <MenuItem>
           <MenuItemLink href="/">
