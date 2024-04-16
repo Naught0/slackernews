@@ -25,21 +25,25 @@ export function AnchorButtons() {
   }
 
   return (
-    <div className="sticky bottom-5 left-5 flex w-fit flex-row gap-1 lg:bottom-10 lg:left-10">
-      <Button
-        onClick={() => scrollToLink(idx - 1)}
-        type="button"
-        variant={"outline"}
-      >
-        <ArrowUpIcon />
-      </Button>
-      <Button
-        onClick={() => scrollToLink(idx + 1)}
-        type="button"
-        variant="outline"
-      >
-        <ArrowDownIcon />
-      </Button>
-    </div>
+    <aside className="sticky bottom-3 right-0 flex w-full justify-end">
+      <div className="flex w-fit flex-col gap-1 opacity-40 hover:opacity-85 lg:bottom-10 lg:left-10">
+        <Button
+          onClick={() => scrollToLink(idx - 1)}
+          type="button"
+          size={"icon"}
+          variant={"outline"}
+        >
+          <ArrowUpIcon />
+        </Button>
+        <Button
+          onClick={() => scrollToLink(idx + 1)}
+          type="button"
+          size="icon"
+          variant="outline"
+        >
+          <ArrowDownIcon />
+        </Button>
+      </div>
+    </aside>
   );
 }
