@@ -12,7 +12,7 @@ export const HNComment = (props: HNComment & { op: string }) => {
         "flex min-w-0 flex-1 flex-col items-start justify-between border-l-0 border-solid pl-3"
       }
     >
-      <div className="flex w-full flex-row items-center gap-1 text-sm lg:text-base">
+      <div className="flex w-full flex-row flex-wrap items-center gap-x-1 text-sm lg:text-base">
         {props.deleted ? (
           <span className="text-muted-foreground">[deleted]</span>
         ) : (
@@ -27,10 +27,12 @@ export const HNComment = (props: HNComment & { op: string }) => {
             {props.by}
           </Link>
         )}
-        <Timestamp time={props.time} />
-        <Link href={`#${props.id}`} className="py-2">
-          <RiHashtag />
-        </Link>
+        <div className="flex flex-row items-center">
+          <Timestamp time={props.time} />
+          <Link href={`#${props.id}`} className="py-2">
+            <RiHashtag />
+          </Link>
+        </div>
       </div>
       {props.text && (
         <div
