@@ -52,7 +52,7 @@ export async function gatherComments(
       );
       const chunks = chunk(
         kidsCommentsPromises.map((promise) => retryPromise(promise)),
-        10,
+        50,
       );
 
       comments.comments = [];
