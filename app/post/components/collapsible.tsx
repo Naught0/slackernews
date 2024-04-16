@@ -24,7 +24,7 @@ export const Collapsible = ({
             onClick={() => setExpanded(!expanded)}
             variant={"outline"}
             size={"sm"}
-            className={`h-full max-w-fit ${expanded ? "items-start" : "items-center"} justify-start gap-2 rounded-none border-none p-2`}
+            className={`h-full max-w-fit ${expanded ? "items-start" : "items-center"} justify-start gap-2 rounded-none border-none p-1 lg:p-2`}
           >
             {expanded ? <BiMessageSquareMinus /> : <BiMessageSquareAdd />}
             {!expanded && !collapsedElement && (
