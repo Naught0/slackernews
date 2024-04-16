@@ -1,6 +1,7 @@
 import chunk from "lodash.chunk";
 import { retryPromise } from "./retry";
 
+const POSTS_PER_PAGE_LIMIT = 50;
 async function request<T extends unknown>(
   url: string,
   config?: RequestInit,
@@ -14,10 +15,15 @@ async function request<T extends unknown>(
 export async function getHomepage(props?: {
   count?: number;
   pageIndex?: number;
+  homepageType?: HNHomepageType;
 }): Promise<{ items: HNStory[] }> {
-  const count = props?.count ?? 25;
+  let count = props?.count ?? 15;
+  if (count > POSTS_PER_PAGE_LIMIT) {
+    count = POSTS_PER_PAGE_LIMIT;
+  }
+  const homepageType = props?.homepageType ?? "top";
   const pageIndex = props?.pageIndex ?? 0;
-  const postIds = await request<number[]>("/topstories.json");
+  const postIds = await request<number[]>(`/${homepageType}stories.json`);
   const postData = await Promise.all(
     postIds
       .slice(pageIndex * count, pageIndex * count + count)

@@ -1,3 +1,5 @@
+type HNHomepageType = "top" | "best" | "new";
+
 interface HNItem {
   deleted?: boolean;
   dead?: boolean;
