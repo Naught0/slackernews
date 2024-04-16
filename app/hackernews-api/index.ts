@@ -23,18 +23,23 @@ export async function getHomepage(props?: {
   }
   const homepageType = props?.homepageType ?? "top";
   const pageIndex = props?.pageIndex ?? 0;
-  const postIds = await request<number[]>(`/${homepageType}stories.json`);
+  const postIds = await request<number[]>(`/${homepageType}stories.json`, {
+    // Cache for 15 minutes
+    next: { revalidate: 900 },
+  });
   const postData = await Promise.all(
     postIds
       .slice(pageIndex * count, pageIndex * count + count)
-      .map((id) => request<HNStory>(`/item/${id}.json`)),
+      .map((id) =>
+        request<HNStory>(`/item/${id}.json`, { next: { revalidate: 3600 } }),
+      ),
   );
 
   return { items: postData };
 }
 
 export async function getItemById<T>(id: number | string) {
-  return await request<T>(`/item/${id}.json`);
+  return await request<T>(`/item/${id}.json`, { next: { revalidate: 3600 } });
 }
 
 // Function to gather comments in a thread
