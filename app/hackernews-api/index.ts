@@ -24,8 +24,8 @@ export async function getHomepage(props?: {
   const homepageType = props?.homepageType ?? "top";
   const pageIndex = props?.pageIndex ?? 0;
   const postIds = await request<number[]>(`/${homepageType}stories.json`, {
-    // Cache for 15 minutes
-    next: { revalidate: 900 },
+    // Cache for 5 minutes
+    next: { revalidate: 300 },
   });
   const postData = await Promise.all(
     postIds
