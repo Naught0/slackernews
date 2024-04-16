@@ -1,4 +1,4 @@
-import { gatherComments, getItemById } from "~/app/hackernews-api";
+import { getItemById, timedComments } from "~/app/hackernews-api";
 import { BackHomeButton } from "~/components/ui/browser-back-button";
 import { Post } from "~/app/components/post";
 import { AnchorButtons } from "../components/anchor-buttons";
@@ -10,7 +10,7 @@ export default async function Page({
   params: { id: string };
 }) {
   const story = await getItemById<HNStory>(id);
-  const thread = await gatherComments(id);
+  const thread = await timedComments(id);
 
   return (
     <div className="flex w-full max-w-screen-lg flex-col gap-3">
