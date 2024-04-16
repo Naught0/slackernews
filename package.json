@@ -20,7 +20,6 @@
     "clsx": "^2.1.0",
     "date-fns": "^3.6.0",
     "dayjs": "^1.11.10",
-    "lodash.chunk": "^4.2.0",
     "lucide-react": "^0.365.0",
     "next": "14.1.4",
     "next-themes": "^0.3.0",
@@ -35,7 +34,6 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.12",
-    "@types/lodash.chunk": "^4.2.9",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

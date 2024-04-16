@@ -1,4 +1,3 @@
-import chunk from "lodash.chunk";
 import { retryPromise } from "./retry";
 
 const POSTS_PER_PAGE_LIMIT = 50;
@@ -30,9 +29,7 @@ export async function getHomepage(props?: {
   const postData = await Promise.all(
     postIds
       .slice(pageIndex * count, pageIndex * count + count)
-      .map((id) =>
-        request<HNStory>(`/item/${id}.json`, { next: { revalidate: 3600 } }),
-      ),
+      .map((id) => request<HNStory>(`/item/${id}.json`)),
   );
 
   return { items: postData };
@@ -53,17 +50,8 @@ export async function gatherComments(
 
     if (depth > 0 && item.kids) {
       const kidsCommentsPromises = item.kids.map((kidId) =>
-        gatherComments(kidId, depth - 1),
+        retryPromise(gatherComments(kidId, depth - 1)),
       );
-      const chunks = chunk(
-        kidsCommentsPromises.map((promise) => retryPromise(promise)),
-        50,
-      );
-
-      comments.comments = [];
-      for (const commentChunk of chunks) {
-        comments.comments.push(...(await Promise.all(commentChunk)));
-      }
       comments.comments = await Promise.all(kidsCommentsPromises);
     }
 
@@ -79,10 +67,9 @@ export async function timedComments(
   depth: number = 5,
 ) {
   const start = +new Date();
-  console.log(start);
   const comments = await gatherComments(commentId, depth);
   const end = +new Date();
-  console.log("Got comments for", commentId, "in", (end - start) / 1000, "ms");
+  console.log("Got comments for", commentId, "in", (end - start) / 1000, "s");
 
   return comments;
 }
