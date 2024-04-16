@@ -24,15 +24,18 @@ export function HomepagePagination({
     [searchParams],
   );
   return (
-    <Pagination>
-      <PaginationContent>
-        <PaginationItem>
-          <PaginationPrevious href={`?page=${page - 1 > 0 ? page - 1 : 1}`} />
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationNext href={`?page=${page + 1}`} />
-        </PaginationItem>
-      </PaginationContent>
-    </Pagination>
+    <div className="flex flex-col items-center gap-1">
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious href={`?page=${page - 1 > 0 ? page - 1 : 1}`} />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext href={`?page=${page + 1}`} />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+      <span className="text-sm">page {page}</span>
+    </div>
   );
 }
