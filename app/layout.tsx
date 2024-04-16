@@ -4,6 +4,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import { Nav } from "~/app/components/nav";
 import { ThemeProvider } from "~/components/ui/theme-provider";
 import { Footer } from "./components/footer";
+import { Suspense } from "react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -35,7 +36,9 @@ export default function RootLayout({
         disableTransitionOnChange
       >
         <body className={`${inter.variable} ${jetbrains.variable}`}>
-          <Nav />
+          <Suspense>
+            <Nav />
+          </Suspense>
           <main className="flex min-h-screen flex-col items-center p-6 lg:p-12 xl:px-16">
             {children}
           </main>
