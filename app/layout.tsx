@@ -42,8 +42,8 @@ export default function RootLayout({
           <main className="flex min-h-screen flex-col items-center p-6 lg:p-12 xl:px-16">
             {children}
           </main>
+          <Footer />
         </body>
-        <Footer />
       </ThemeProvider>
     </html>
   );
