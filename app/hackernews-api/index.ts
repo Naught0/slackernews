@@ -1,3 +1,6 @@
+import chunk from "lodash.chunk";
+import { retryPromise } from "./retry";
+
 async function request<T extends unknown>(
   url: string,
   config?: RequestInit,
@@ -41,6 +44,15 @@ export async function gatherComments(
       const kidsCommentsPromises = item.kids.map((kidId) =>
         gatherComments(kidId, depth - 1),
       );
+      const chunks = chunk(
+        kidsCommentsPromises.map((promise) => retryPromise(promise)),
+        10,
+      );
+
+      comments.comments = [];
+      for (const commentChunk of chunks) {
+        comments.comments.push(...(await Promise.all(commentChunk)));
+      }
       comments.comments = await Promise.all(kidsCommentsPromises);
     }
 
