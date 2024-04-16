@@ -1,14 +1,13 @@
 "use client";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import React, { useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { Button } from "~/components/ui/button";
 import { GoArrowUpRight } from "react-icons/go";
 import { SlPresent } from "react-icons/sl";
@@ -56,9 +55,7 @@ export function HomepageSelector() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Button size="sm" variant={"outline"} className="gap-1">
-          {current}
-        </Button>
+        {current}
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <MenuItem>
