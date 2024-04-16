@@ -2,9 +2,8 @@ import "~/app/globals.css";
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { Nav } from "~/app/components/nav";
-import { ThemeProvider } from "~/components/ui/theme-provider";
 import { Footer } from "./components/footer";
-import { Suspense } from "react";
+import { Providers } from "./providers";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,22 +28,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
-      >
-        <body className={`${inter.variable} ${jetbrains.variable}`}>
-          <Suspense>
-            <Nav />
-          </Suspense>
+      <body className={`${inter.variable} ${jetbrains.variable}`}>
+        <Providers>
+          <Nav />
           <main className="flex min-h-screen flex-col items-center p-6 lg:p-12 xl:px-16">
             {children}
           </main>
           <Footer />
-        </body>
-      </ThemeProvider>
+        </Providers>
+      </body>
     </html>
   );
 }
