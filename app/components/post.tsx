@@ -30,7 +30,7 @@ export const Post = ({
           )}
           <Link
             href={`/user/${story.by}`}
-            className="flex w-fit items-center gap-1 text-sm text-slate-500 dark:text-muted-foreground md:text-base"
+            className="flex w-fit items-center gap-1 text-sm text-muted-foreground dark:text-muted-foreground md:text-base"
           >
             <PersonIcon />
             {story.by}
