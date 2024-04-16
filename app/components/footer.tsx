@@ -1,8 +1,9 @@
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import React from "react";
 
 export function Footer() {
   return (
-    <div className="prose max-w-none bg-accent pb-16 pt-24 text-center text-sm dark:prose-invert lg:pt-36">
+    <footer className="prose prose-sm max-w-none bg-accent pb-16 pt-24 text-center text-sm dark:prose-invert lg:pt-36">
       <p>
         <a href="https://github.com/naught0">naught0</a> made this
       </p>
@@ -12,6 +13,17 @@ export function Footer() {
       <p>
         and data from <a href="https://news.ycombinator.com/">hackernews</a>
       </p>
-    </div>
+      <p>
+        with absolutely no relation to{" "}
+        <a href="https://slackernews.app/">
+          <i>this</i> slackernews
+        </a>{" "}
+        which also seems cool
+      </p>
+      <span>
+        <GitHubLogoIcon className="inline" />{" "}
+        <a href="https://github.com/naught0/slackernews">source</a>
+      </span>
+    </footer>
   );
 }
