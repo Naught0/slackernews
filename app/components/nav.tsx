@@ -6,7 +6,7 @@ export const Nav = () => {
     <div className="flex flex-row justify-center p-6">
       <div className="flex w-full max-w-screen-lg flex-grow flex-row items-center justify-between gap-3 lg:gap-6">
         <div className="flex">
-          <Link href="/">/slackernews</Link>
+          <Link href="/">/slacker_news</Link>
         </div>
         <div className="flex">
           <ModeToggle />
