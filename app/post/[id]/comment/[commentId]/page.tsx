@@ -1,4 +1,5 @@
 import { gatherComments } from "~/app/hackernews-api";
+import { HNComment } from "~/app/post/components/comment";
 import { HNThreadComponent } from "~/app/post/components/thread";
 
 export default async function Page({
@@ -8,7 +9,12 @@ export default async function Page({
 }) {
   const comment = await gatherComments(commentId);
 
-  return comment?.comments?.map((comment) => (
-    <HNThreadComponent key={comment.id} postId={id} {...comment} />
-  ));
+  return (
+    <>
+      <HNComment op={comment.by} {...comment} />
+      {comment?.comments?.map((c) => (
+        <HNThreadComponent key={c.id} op={comment.by} postId={id} {...c} />
+      ))}
+    </>
+  );
 }
