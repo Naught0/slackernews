@@ -1,5 +1,6 @@
 import { Collapsible } from "./collapsible";
 import { HNComment } from "./comment";
+import Link from "next/link";
 
 const indentColorsClassName = [
   "border-slate-300",
@@ -12,7 +13,7 @@ const indentColorsClassName = [
 ];
 const leftBorder = "border-l-2 border-solid";
 export const HNThreadComponent = async (
-  props: HNComment & { indentLevel?: number; op: string },
+  props: HNComment & { indentLevel?: number; op?: string; postId: string },
 ) => {
   const indentColor = getIndentColor(props.indentLevel);
 
@@ -30,12 +31,23 @@ export const HNThreadComponent = async (
               {...c}
               op={props.op}
               indentLevel={(props.indentLevel ?? 0) + 1}
+              postId={props.postId}
             />
           ) : (
             <Collapsible key={c.id}>
               <div className={`${leftBorder} ${borderColor}`}>
                 <HNComment {...c} op={props.op} />
               </div>
+              {c.kids && (
+                <div
+                  key={c.id}
+                  className="py-1 text-sm text-accent-foreground underline lg:text-base"
+                >
+                  <Link href={`/post/${props.postId}/comment/${props.id}`}>
+                    See more replies
+                  </Link>
+                </div>
+              )}
             </Collapsible>
           );
         })}

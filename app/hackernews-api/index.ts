@@ -42,7 +42,7 @@ export async function getItemById<T>(id: number | string) {
 // Function to gather comments in a thread
 export async function gatherComments(
   commentId: string | number,
-  depth: number = 5,
+  depth: number = 4,
 ): Promise<HNComment> {
   try {
     const item = await getItemById<HNComment>(commentId);
@@ -64,7 +64,7 @@ export async function gatherComments(
 
 export async function timedComments(
   commentId: string | number,
-  depth: number = 5,
+  depth: number = 4,
 ) {
   const start = +new Date();
   const comments = await gatherComments(commentId, depth);

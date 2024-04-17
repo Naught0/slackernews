@@ -3,7 +3,7 @@ import { RiHashtag } from "react-icons/ri";
 import sanitizeHtml from "sanitize-html";
 import { Timestamp } from "~/components/ui/timestamp";
 
-export const HNComment = (props: HNComment & { op: string }) => {
+export const HNComment = (props: HNComment & { op?: string }) => {
   const isOp = props.by === props.op;
   return (
     <article
