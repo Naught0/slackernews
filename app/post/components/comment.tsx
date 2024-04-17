@@ -3,7 +3,9 @@ import { RiHashtag } from "react-icons/ri";
 import sanitizeHtml from "sanitize-html";
 import { Timestamp } from "~/components/ui/timestamp";
 
-export const HNComment = (props: HNComment & { op?: string }) => {
+export const HNComment = (
+  props: HNComment & { op?: string; postId: string },
+) => {
   const isOp = props.by === props.op;
   return (
     <article
@@ -29,7 +31,10 @@ export const HNComment = (props: HNComment & { op?: string }) => {
         )}
         <div className="flex flex-row items-center">
           <Timestamp time={props.time} />
-          <Link href={`#${props.id}`} className="py-2">
+          <Link
+            href={`/post/${props.postId}/comment/${props.id}`}
+            className="py-2"
+          >
             <RiHashtag />
           </Link>
         </div>

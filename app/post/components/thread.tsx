@@ -1,6 +1,7 @@
 import { Collapsible } from "./collapsible";
 import { HNComment } from "./comment";
 import Link from "next/link";
+import { GoArrowRight } from "react-icons/go";
 
 const indentColorsClassName = [
   "border-slate-300",
@@ -36,15 +37,16 @@ export const HNThreadComponent = async (
           ) : (
             <Collapsible key={c.id}>
               <div className={`${leftBorder} ${borderColor}`}>
-                <HNComment {...c} op={props.op} />
+                <HNComment postId={props.postId} {...c} op={props.op} />
               </div>
               {c.kids && (
                 <div
                   key={c.id}
                   className="py-1 text-sm text-accent-foreground underline lg:text-base"
                 >
-                  <Link href={`/post/${props.postId}/comment/${props.id}`}>
-                    See more replies
+                  <Link href={`/post/${props.postId}/comment/${c.id}`}>
+                    See replies
+                    <GoArrowRight className="ml-1 inline" />
                   </Link>
                 </div>
               )}
