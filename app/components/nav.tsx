@@ -14,14 +14,17 @@ export const Nav = () => {
             /slacker_news
             <wbr />
             {path.length > 1 &&
-              path.split("/").map(
-                (part) =>
-                  part && (
-                    <span key={part}>
-                      <wbr />/{part}
-                    </span>
-                  ),
-              )}
+              path
+                .split("/")
+                .filter((item) => item)
+                .map(
+                  (part) =>
+                    part && (
+                      <span key={part}>
+                        <wbr />/{part}
+                      </span>
+                    ),
+                )}
             {params.size > 0 && "?" + new URLSearchParams(params).toString()}
           </Link>
         </div>
