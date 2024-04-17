@@ -1,4 +1,4 @@
-type HNHomepageType = "top" | "best" | "new";
+type HNHomepageType = "top" | "best" | "new" | "ask" | "show" | "job";
 
 interface HNItem {
   deleted?: boolean;
