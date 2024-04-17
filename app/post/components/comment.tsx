@@ -4,9 +4,9 @@ import sanitizeHtml from "sanitize-html";
 import { Timestamp } from "~/components/ui/timestamp";
 
 export const HNComment = (
-  props: HNComment & { op?: string; postId: string },
+  props: HNPWAItem & { op?: string | null; postId: string },
 ) => {
-  const isOp = props.by === props.op;
+  const isOp = props.user === props.op;
   return (
     <article
       id={`${props.id}`}
@@ -19,14 +19,14 @@ export const HNComment = (
           <span className="text-muted-foreground">[deleted]</span>
         ) : (
           <Link
-            href={`/user/${props.by}`}
+            href={`/user/${props.user}`}
             className={
               isOp
                 ? "text-blue-600 dark:text-blue-300"
                 : "text-muted-foreground"
             }
           >
-            {props.by}
+            {props.user}
           </Link>
         )}
         <div className="flex flex-row items-center">
@@ -39,9 +39,9 @@ export const HNComment = (
           </Link>
         </div>
       </div>
-      {props.text && (
+      {props.content && (
         <div
-          dangerouslySetInnerHTML={{ __html: processText(props.text) }}
+          dangerouslySetInnerHTML={{ __html: processText(props.content) }}
           className="prose prose-sm prose-slate max-w-none dark:prose-invert md:prose-base"
         />
       )}

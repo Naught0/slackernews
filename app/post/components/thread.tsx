@@ -14,9 +14,16 @@ const indentColorsClassName = [
 ];
 const leftBorder = "border-l-2 border-solid";
 export const HNThreadComponent = async (
-  props: HNComment & { indentLevel?: number; op?: string; postId: string },
+  props: HNPWAItem & {
+    indentLevel?: number;
+    op?: string;
+    postId: string;
+    maxDepth?: number;
+  },
 ) => {
   const indentColor = getIndentColor(props.indentLevel);
+  const indentLevel = props.indentLevel ?? 0;
+  const maxDepth = props.maxDepth ?? 5;
 
   return (
     <Collapsible>
@@ -26,7 +33,7 @@ export const HNThreadComponent = async (
         <HNComment indentLevel={0} {...props} />
         {props.comments?.map((c) => {
           const borderColor = getIndentColor((props?.indentLevel ?? 0) + 1);
-          return c.comments ? (
+          return indentLevel < maxDepth ? (
             <HNThreadComponent
               key={c.id}
               {...c}
@@ -39,7 +46,7 @@ export const HNThreadComponent = async (
               <div className={`${leftBorder} ${borderColor}`}>
                 <HNComment postId={props.postId} {...c} op={props.op} />
               </div>
-              {c.kids && (
+              {c.comments.length > 0 && (
                 <div
                   key={c.id}
                   className="py-1 text-sm text-accent-foreground underline lg:text-base"
