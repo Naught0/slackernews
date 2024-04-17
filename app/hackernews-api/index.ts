@@ -1,5 +1,3 @@
-import { retryPromise } from "./retry";
-
 const POSTS_PER_PAGE_LIMIT = 50;
 async function request<T extends unknown>(
   url: string,
@@ -37,39 +35,4 @@ export async function getHomepage(props?: {
 
 export async function getItemById<T>(id: number | string) {
   return await request<T>(`/item/${id}.json`, { next: { revalidate: 3600 } });
-}
-
-// Function to gather comments in a thread
-export async function gatherComments(
-  commentId: string | number,
-  depth: number = 4,
-): Promise<HNComment> {
-  try {
-    const item = await getItemById<HNComment>(commentId);
-    const comments: HNComment = { ...item };
-
-    if (depth > 0 && item.kids) {
-      const kidsCommentsPromises = item.kids.map((kidId) =>
-        retryPromise(gatherComments(kidId, depth - 1)),
-      );
-      comments.comments = await Promise.all(kidsCommentsPromises);
-    }
-
-    return comments;
-  } catch (error) {
-    console.error("Error gathering comments:", error);
-    throw error;
-  }
-}
-
-export async function timedComments(
-  commentId: string | number,
-  depth: number = 4,
-) {
-  const start = +new Date();
-  const comments = await gatherComments(commentId, depth);
-  const end = +new Date();
-  console.log("Got comments for", commentId, "in", (end - start) / 1000, "s");
-
-  return comments;
 }
