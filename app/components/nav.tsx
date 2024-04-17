@@ -13,7 +13,15 @@ export const Nav = () => {
           <Link href="/" className="font-mono">
             /slacker_news
             <wbr />
-            {path.length > 1 && path}
+            {path.length > 1 &&
+              path.split("/").map(
+                (part) =>
+                  part && (
+                    <span key={part}>
+                      <wbr />/{part}
+                    </span>
+                  ),
+              )}
             {params.size > 0 && "?" + new URLSearchParams(params).toString()}
           </Link>
         </div>
