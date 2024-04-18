@@ -11,7 +11,7 @@ export const HNComment = (
     <article
       id={`${props.id}`}
       className={
-        "flex min-w-0 flex-1 flex-col items-start justify-between border-l-0 border-solid pl-3"
+        "flex min-w-0 flex-1 flex-col items-start  border-l-0 border-solid pl-3"
       }
     >
       <div className="flex w-full flex-row flex-wrap items-center gap-x-1 text-sm lg:text-base">
@@ -20,11 +20,7 @@ export const HNComment = (
         ) : (
           <Link
             href={`/user/${props.user}`}
-            className={
-              isOp
-                ? "text-blue-600 dark:text-blue-300"
-                : "text-muted-foreground"
-            }
+            className={isOp ? "text-link-foreground" : "text-muted-foreground"}
           >
             {props.user}
           </Link>
