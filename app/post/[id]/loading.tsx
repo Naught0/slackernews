@@ -41,7 +41,7 @@ function generateComment() {
     title: "test",
     id: 0,
     time: 0,
-    type: "comment",
+    type: "comment" as HNPWAItem["type"],
     points: 0,
     time_ago: "80 years ago",
     content:
