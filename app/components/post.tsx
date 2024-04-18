@@ -1,24 +1,20 @@
 import Link from "next/link";
 import { PostActions } from "./post-actions";
 import { PersonIcon, TriangleUpIcon } from "@radix-ui/react-icons";
-import { HTMLProps } from "react";
-import { cn } from "~/lib/utils";
+import { MainItemContainer } from "./main-item-container";
 
 export const Post = ({
   story,
-  ...props
-}: { story: HNPost } & HTMLProps<HTMLDivElement>) => {
+  className,
+}: {
+  story: HNPost;
+  className?: string;
+}) => {
   return (
-    <article
-      {...props}
-      className={cn(
-        "flex flex-col gap-3 border-b border-solid border-slate-300 p-3 dark:border-slate-700",
-        props.className,
-      )}
-    >
+    <MainItemContainer className={className}>
       <div className="flex flex-col gap-2">
         <div className="flex flex-col gap-1">
-          {"url" in story ? (
+          {"url" in story && story.url.startsWith("https") ? (
             <Link href={story.url} className="w-fit text-lg lg:text-xl">
               {story.title}
               <p className="ml-1 break-all text-xs text-muted-foreground lg:text-sm">
@@ -46,6 +42,6 @@ export const Post = ({
           )}
         </div>
       </div>
-    </article>
+    </MainItemContainer>
   );
 };
