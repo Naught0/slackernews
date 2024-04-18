@@ -1,7 +1,5 @@
 import React from "react";
 import { Skeleton } from "~/components/ui/skeleton";
-import { HNComment } from "../components/comment";
-import { generateKey } from "crypto";
 import { randomChoice } from "~/lib/utils";
 
 const LoadingComment = (
