@@ -36,3 +36,9 @@ export async function getHomepage(props?: {
 export async function getItemById<T>(id: number | string) {
   return await request<T>(`/item/${id}.json`, { next: { revalidate: 3600 } });
 }
+
+export async function getUserById(id: number | string) {
+  return await request<HNUser>(`/user/${id}.json`, {
+    next: { revalidate: 900 },
+  });
+}

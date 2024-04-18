@@ -74,6 +74,12 @@ interface HNPollOpt {
   type: "pollopt";
 }
 
+interface HNUser {
+  created: number;
+  id: string;
+  karma: number;
+  submitted: number[];
+}
 type HNAnyItem = HNStory | HNAsk | HNJob | HNComment | HNPoll;
 
 type HNPost = HNStory | HNAsk | HNJob;
@@ -88,7 +94,7 @@ interface HNPWAItem {
   content: string;
   deleted?: boolean;
   dead?: boolean;
-  type: string;
+  type: "comment" | "link" | "job" | "poll" | "pollopt";
   url?: string;
   domain?: string;
   comments: Item[]; // Comments are items too
