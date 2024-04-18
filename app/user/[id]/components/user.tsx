@@ -41,7 +41,7 @@ export async function User(props: { userId: string }) {
             if (item.type === "comment") {
               return (
                 <Collapsible key={item.id} className="bottom-border py-2">
-                  <HNComment postId={""} {...item} />
+                  <HNComment {...item} />
                 </Collapsible>
               );
             }

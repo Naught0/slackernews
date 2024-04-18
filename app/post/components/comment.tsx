@@ -4,8 +4,11 @@ import sanitizeHtml from "sanitize-html";
 import { Timestamp } from "~/components/ui/timestamp";
 
 export const HNComment = (
-  props: HNPWAItem & { op?: string | null; postId: string },
+  props: HNPWAItem & { op?: string | null; postId?: string },
 ) => {
+  const commentLink = props.postId
+    ? `/post/${props.postId}/comment/${props.id}`
+    : `/comment/${props.id}`;
   const isOp = props.user === props.op;
   return (
     <article
@@ -27,10 +30,7 @@ export const HNComment = (
         )}
         <div className="flex flex-row items-center">
           <Timestamp time={props.time} />
-          <Link
-            href={`/post/${props.postId}/comment/${props.id}`}
-            className="py-2"
-          >
+          <Link href={commentLink} className="py-2">
             <RiHashtag />
           </Link>
         </div>
