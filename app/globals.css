@@ -19,6 +19,8 @@
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
+    --link-foreground: #2563eb;
+
     --muted: 210 40% 85.1%;
     --muted-foreground: 215.4 16.3% 30.9%;
 
@@ -54,6 +56,8 @@
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 75%;
 
+    --link-foreground: #93c5fd;
+
     --accent: 217.2 32.6% 15.5%;
     --accent-foreground: 210 40% 98%;
 
@@ -71,6 +75,9 @@
     @apply border-border;
   }
   body {
+    .bottom-border {
+      @apply border-b border-solid border-slate-300 dark:border-slate-700;
+    }
     @apply bg-background font-sans text-foreground;
     pre {
       @apply font-mono;
