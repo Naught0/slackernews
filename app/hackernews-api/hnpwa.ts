@@ -6,6 +6,6 @@ async function request<T extends unknown>(
   return (await resp.json()) as T;
 }
 
-export const getComments = async (postId: string) => {
+export const getItem = async (postId: string | number) => {
   return await request<HNPWAItem>(`/item/${postId}`);
 };
