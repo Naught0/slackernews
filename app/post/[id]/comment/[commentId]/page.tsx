@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { GoArrowLeft, GoArrowUp } from "react-icons/go";
 import { getItemById } from "~/app/hackernews-api";
-import { getComments } from "~/app/hackernews-api/hnpwa";
+import { getItem } from "~/app/hackernews-api/hnpwa";
 import { HNComment } from "~/app/post/components/comment";
 import { HNThreadComponent } from "~/app/post/components/thread";
 
@@ -10,7 +10,7 @@ export default async function Page({
 }: {
   params: { id: string; commentId: string };
 }) {
-  const comment = await getComments(commentId);
+  const comment = await getItem(commentId);
   const rawComment = await getItemById<HNComment>(commentId);
   const contextLink = () => {
     if (!rawComment.parent) return null;
