@@ -1,9 +1,22 @@
 import React from "react";
-import { User } from "./components/user";
+import { getUserById } from "~/app/hackernews-api";
+import { getItem } from "~/app/hackernews-api/hnpwa";
+import Items from "~/app/components/items";
+import User from "./components/user";
 
-export default function Page(props: {
+export default async function Page(props: {
   params: { id: string };
-  searchParams: { page?: string };
+  searchParams: { page?: string; perPage?: string };
 }) {
-  return <User userId={props.params.id} />;
+  const user = await getUserById(props.params.id);
+  const items = await Promise.all(
+    user.submitted.slice(0, 10).map((itemId) => getItem(itemId)),
+  );
+  return (
+    <div className="flex flex-1 flex-col gap-2 lg:max-w-screen-md">
+      <User user={user} />
+      <h1 className="text-lg lg:text-xl">Recent activity</h1>
+      <Items items={items} />
+    </div>
+  );
 }

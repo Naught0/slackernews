@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { cn } from "~/lib/utils";
 
 function Skeleton({
@@ -12,4 +13,14 @@ function Skeleton({
   );
 }
 
-export { Skeleton };
+function SkeleWrap({
+  children,
+  loading,
+}: {
+  children: ReactNode;
+  loading?: boolean;
+}) {
+  return loading ? <Skeleton>{children}</Skeleton> : children;
+}
+
+export { Skeleton, SkeleWrap };
