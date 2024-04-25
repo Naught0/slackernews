@@ -1,5 +1,11 @@
-import { CommentPage } from "~/app/components/comment-page";
+import { RedirectType, permanentRedirect } from "next/navigation";
+import { getCommentPost } from "~/app/hackernews-api/hnpwa";
 
-export default function Page({ params: { id } }: { params: { id: string } }) {
-  return <CommentPage commentId={id} />;
+export default async function Page({
+  params: { id },
+}: {
+  params: { id: string };
+}) {
+  const post = await getCommentPost(id);
+  permanentRedirect(`/post/${post.id}/comment/${id}`, RedirectType.replace);
 }
