@@ -4,7 +4,7 @@ import { Button } from "~/components/ui/button";
 import { useState } from "react";
 
 function findLinksWithIds() {
-  return [...document.querySelectorAll("a")].filter((elem) => !!elem.hash);
+  return [...document.querySelectorAll("article")];
 }
 
 export function AnchorButtons() {
@@ -21,7 +21,7 @@ export function AnchorButtons() {
     if (newIdx > ids.length - 1) return setIdx(ids.length - 1);
 
     setIdx(newIdx);
-    ids[newIdx]?.scrollIntoView({ behavior: "auto", inline: "start" });
+    ids[newIdx]?.scrollIntoView({ behavior: "auto", block: "start" });
   }
 
   return (
