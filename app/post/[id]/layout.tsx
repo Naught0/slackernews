@@ -21,7 +21,7 @@ export default async function Layout({
         </div>
       </div>
       <br />
-      <div className="comments">{children}</div>
+      <div className="comments gap-3">{children}</div>
     </div>
   );
 }
