@@ -25,7 +25,7 @@ export function AnchorButtons() {
   }
 
   return (
-    <aside className="sticky bottom-3 right-0 flex w-full justify-end">
+    <aside className="sticky bottom-1/4 right-0 flex w-full justify-end">
       <div className="flex w-fit flex-col gap-1 opacity-40 hover:opacity-85 lg:bottom-10 lg:left-10">
         <Button
           onClick={() => scrollToLink(idx - 1)}
