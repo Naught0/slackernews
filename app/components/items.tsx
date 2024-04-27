@@ -4,7 +4,7 @@ import { Post } from "./post";
 
 export default function Items({ items }: { items: HNPWAItem[] }) {
   return (
-    <div className="flex flex-col gap-2 px-3 lg:px-6">
+    <div className="flex flex-col px-3 lg:px-6">
       {items
         .filter((item) => !item.deleted)
         .map((item) => {
