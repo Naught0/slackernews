@@ -1,3 +1,4 @@
+const DEFAULT_CACHE_TTL_SECONDS = 180;
 const POSTS_PER_PAGE_LIMIT = 50;
 async function request<T extends unknown>(
   url: string,
@@ -34,7 +35,9 @@ export async function getHomepage(props?: {
 }
 
 export async function getItemById<T>(id: number | string) {
-  return await request<T>(`/item/${id}.json`, { next: { revalidate: 3600 } });
+  return await request<T>(`/item/${id}.json`, {
+    next: { revalidate: DEFAULT_CACHE_TTL_SECONDS },
+  });
 }
 
 export async function getUserById(id: number | string) {
