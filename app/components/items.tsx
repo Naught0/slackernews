@@ -4,13 +4,13 @@ import { Post } from "./post";
 
 export default function Items({ items }: { items: HNPWAItem[] }) {
   return (
-    <div className="flex flex-col px-3 lg:px-6">
+    <div className="border-color flex flex-col gap-6 divide-y px-3 lg:px-6">
       {items
         .filter((item) => !item.deleted)
         .map((item) => {
           if (item.type === "comment") {
             return (
-              <Collapsible key={item.id} className="bottom-border py-2">
+              <Collapsible key={item.id} className="py-2">
                 <HNComment {...item} />
               </Collapsible>
             );

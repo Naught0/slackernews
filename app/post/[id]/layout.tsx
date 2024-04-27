@@ -15,7 +15,7 @@ export default async function Layout({
   return (
     <div className="flex w-full max-w-screen-lg flex-col gap-3">
       <div className="flex flex-col flex-wrap gap-3">
-        <div className="flex flex-1 flex-row flex-wrap gap-3">
+        <div className="border-color flex flex-1 flex-row flex-wrap gap-3 border-b">
           <BackHomeButton />
           <Post story={story} className="flex-grow" />
         </div>

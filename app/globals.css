@@ -75,8 +75,8 @@
     @apply border-border;
   }
   body {
-    .bottom-border {
-      @apply border-b border-solid border-slate-300 dark:border-slate-700;
+    .border-color {
+      @apply divide-slate-300 border-slate-300 dark:divide-slate-700 dark:border-slate-700;
     }
     @apply bg-background font-sans text-foreground;
     pre {

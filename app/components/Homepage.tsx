@@ -20,9 +20,13 @@ export default async function Homepage({
       <div className="flex justify-end">
         <HomepageSelector />
       </div>
-      {results.items.map((item) => (
-        <Post key={item.id} story={item} />
-      ))}
+      <div className="border-color divide-y">
+        {results.items.map((item) => (
+          <div key={item.id} className="py-3 lg:py-6">
+            <Post story={item} />
+          </div>
+        ))}
+      </div>
       <HomepagePagination searchParams={searchParams} />
     </div>
   );

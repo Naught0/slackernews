@@ -8,7 +8,7 @@ export const MainItemContainer = ({
   children: React.ReactNode;
 }) => {
   return (
-    <article className={cn("bottom-border flex flex-col gap-3 p-3", className)}>
+    <article className={cn("flex flex-col gap-3 p-3", className)}>
       {children}
     </article>
   );
