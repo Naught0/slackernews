@@ -22,7 +22,7 @@ export default async function Homepage({
       </div>
       <div className="border-color divide-y">
         {results.items.map((item) => (
-          <div key={item.id} className="py-3 lg:py-6">
+          <div key={item.id} className="py-3">
             <Post story={item} />
           </div>
         ))}

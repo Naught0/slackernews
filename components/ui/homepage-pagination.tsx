@@ -24,7 +24,7 @@ export function HomepagePagination({
     [searchParams],
   );
   return (
-    <div className="flex flex-col items-center gap-1">
+    <div className="border-color flex flex-col items-center gap-1 border-t py-3">
       <Pagination>
         <PaginationContent>
           <PaginationItem>
