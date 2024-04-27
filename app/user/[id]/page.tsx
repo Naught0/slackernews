@@ -22,7 +22,7 @@ export default async function Page({
 
   return (
     <div className="flex flex-1 flex-col gap-3 lg:max-w-screen-md lg:gap-6">
-      <div className="flex flex-row items-start gap-3">
+      <div className="border-color flex flex-row items-start gap-3 border-b pb-3">
         <BackHomeButton /> <User user={user} className="flex-1" />
       </div>
       <h1 className="text-lg lg:text-2xl">Recent activity</h1>
