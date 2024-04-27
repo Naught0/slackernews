@@ -8,12 +8,14 @@ const formatNumber = Intl.NumberFormat();
 export default function User({
   user,
   loading,
+  className,
 }: {
   user: HNUser;
   loading?: boolean;
+  className?: string;
 }) {
   return (
-    <MainItemContainer>
+    <MainItemContainer className={className}>
       <p className="inline-flex flex-grow-0 items-center gap-1 text-lg lg:text-xl">
         <SkeleWrap loading={loading}>
           <PersonIcon />
