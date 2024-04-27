@@ -14,7 +14,7 @@ export const HNComment = (
     <article
       id={`${props.id}`}
       className={
-        "flex min-w-0 flex-1 flex-col items-start  border-l-0 border-solid pl-3"
+        "flex min-w-0 flex-1 flex-col items-start border-l-0 border-solid pl-3"
       }
     >
       <div className="flex w-full flex-row flex-wrap items-center gap-x-1 text-sm lg:text-base">
