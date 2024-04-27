@@ -4,7 +4,7 @@ import { Button } from "~/components/ui/button";
 import { useState } from "react";
 
 function findLinksWithIds() {
-  return [...document.querySelectorAll("article")];
+  return [...document.querySelectorAll(".comments article")];
 }
 
 export function AnchorButtons() {
