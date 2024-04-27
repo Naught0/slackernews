@@ -14,11 +14,11 @@ export default async function Page(props: {
     user.submitted.slice(0, 10).map((itemId) => getItem(itemId)),
   );
   return (
-    <div className="flex flex-1 flex-col gap-2 lg:max-w-screen-md">
+    <div className="flex flex-1 flex-col gap-3 lg:max-w-screen-md lg:gap-6">
       <div className="flex flex-row items-start gap-3">
         <BackHomeButton /> <User user={user} className="flex-1" />
       </div>
-      <h1 className="text-lg lg:text-xl">Recent activity</h1>
+      <h1 className="text-lg lg:text-2xl">Recent activity</h1>
       <Items items={items} />
     </div>
   );

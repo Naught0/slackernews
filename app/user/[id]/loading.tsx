@@ -12,7 +12,7 @@ export default function Loading() {
   return (
     <div className="flex w-full flex-1 flex-col gap-2 lg:max-w-screen-md">
       <User user={fakeUser} loading />
-      <h1 className="text-lg lg:text-xl">Recent activity</h1>
+      <h1 className="text-lg lg:text-2xl">Recent activity</h1>
       <div className="flex flex-col gap-2 px-3 lg:px-6">
         <CommentLoading />
       </div>
