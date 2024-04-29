@@ -23,7 +23,7 @@ export const HNThreadComponent = async (
 ) => {
   const indentColor = getIndentColor(props.indentLevel);
   const indentLevel = props.indentLevel ?? 0;
-  const maxDepth = props.maxDepth ?? 4;
+  const maxDepth = props.maxDepth ?? 3;
 
   return (
     <Collapsible>
