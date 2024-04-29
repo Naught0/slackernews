@@ -25,8 +25,8 @@ export function AnchorButtons() {
   }
 
   return (
-    <aside className="sticky bottom-1/4 right-0 flex w-full justify-end">
-      <div className="flex w-fit flex-col gap-1 opacity-40 hover:opacity-85 lg:bottom-10 lg:left-10">
+    <aside className="pointer-events-none fixed bottom-1/3 right-12 flex w-full justify-end lg:right-24">
+      <div className="pointer-events-auto flex w-fit flex-col gap-1 opacity-45 hover:opacity-85 lg:bottom-10 lg:left-10">
         <Button
           onClick={() => scrollToLink(idx - 1)}
           type="button"
