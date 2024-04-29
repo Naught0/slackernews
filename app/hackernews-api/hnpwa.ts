@@ -1,12 +1,15 @@
 import { getItemById } from ".";
 
-export const revalidate = 30;
+const DEFAULT_CACHE_SECONDS = 180;
 
 async function request<T extends unknown>(
   url: string,
   config?: RequestInit,
 ): Promise<T> {
-  const resp = await fetch(`https://api.hnpwa.com/v0${url}.json`, config);
+  const resp = await fetch(`https://api.hnpwa.com/v0${url}.json`, {
+    next: { revalidate: DEFAULT_CACHE_SECONDS },
+    ...config,
+  });
   return (await resp.json()) as T;
 }
 
