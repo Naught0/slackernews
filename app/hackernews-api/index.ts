@@ -1,5 +1,6 @@
-const DEFAULT_CACHE_TTL_SECONDS = 180;
+export const revalidate = 30;
 const POSTS_PER_PAGE_LIMIT = 50;
+
 async function request<T extends unknown>(
   url: string,
   config?: RequestInit,
@@ -21,10 +22,7 @@ export async function getHomepage(props?: {
   }
   const homepageType = props?.homepageType ?? "top";
   const pageIndex = props?.pageIndex ?? 0;
-  const postIds = await request<number[]>(`/${homepageType}stories.json`, {
-    // Cache for 5 minutes
-    next: { revalidate: 300 },
-  });
+  const postIds = await request<number[]>(`/${homepageType}stories.json`);
   const postData = await Promise.all(
     postIds
       .slice(pageIndex * count, pageIndex * count + count)
@@ -35,13 +33,9 @@ export async function getHomepage(props?: {
 }
 
 export async function getItemById<T>(id: number | string) {
-  return await request<T>(`/item/${id}.json`, {
-    next: { revalidate: DEFAULT_CACHE_TTL_SECONDS },
-  });
+  return await request<T>(`/item/${id}.json`);
 }
 
 export async function getUserById(id: number | string) {
-  return await request<HNUser>(`/user/${id}.json`, {
-    next: { revalidate: 900 },
-  });
+  return await request<HNUser>(`/user/${id}.json`);
 }
