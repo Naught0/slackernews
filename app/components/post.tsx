@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { PostActions } from "./post-actions";
 import { PersonIcon, TriangleUpIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
 import { MainItemContainer } from "./main-item-container";
+import { PostActions } from "./post-actions";
 
 export const Post = ({
   story,
@@ -24,6 +24,7 @@ export const Post = ({
           ) : (
             <p className="w-fit text-lg lg:text-xl">{story.title}</p>
           )}
+
           <Link
             href={`/user/${story.by}`}
             className="flex w-fit items-center gap-1 text-sm text-muted-foreground dark:text-muted-foreground md:text-base"
@@ -31,6 +32,9 @@ export const Post = ({
             <PersonIcon />
             {story.by}
           </Link>
+          <span className="font-mono text-xs text-muted-foreground lg:text-sm">
+            {new Date(story.time * 1000).toISOString()}
+          </span>
         </div>
         <div className="flex flex-row items-center gap-3">
           <span className="align-middle text-sm text-secondary-foreground lg:text-base">
