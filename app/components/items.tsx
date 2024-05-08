@@ -7,7 +7,7 @@ function Wrapper({ children }: { children: React.ReactNode }) {
 }
 export default function Items({ items }: { items: HNPWAItem[] }) {
   return (
-    <div className="border-color flex flex-col divide-y px-3 lg:px-6 gap-2">
+    <div className="border-color flex flex-col gap-2 divide-y px-3 lg:px-6">
       {items
         .filter((item) => !item.deleted)
         .map((item) => {
