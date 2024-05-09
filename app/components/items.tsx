@@ -23,19 +23,7 @@ export default function Items({ items }: { items: HNPWAItem[] }) {
           if (item.type === "link") {
             return (
               <Wrapper key={item.id}>
-                <Post
-                  story={{
-                    ...item,
-                    url: item.url?.includes("http")
-                      ? item.url
-                      : "https://google.com",
-                    type: "story",
-                    by: item.user ?? "",
-                    descendants: item.comments_count,
-                    kids: [],
-                    score: item.points ?? 0,
-                  }}
-                />
+                <Post story={item} />
               </Wrapper>
             );
           }

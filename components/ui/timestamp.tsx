@@ -1,5 +1,5 @@
 "use client";
-import { HTMLProps } from "react";
+import { HTMLProps, ReactNode, useState } from "react";
 import { cn } from "~/lib/utils";
 import dayjs from "dayjs";
 import relative from "dayjs/plugin/relativeTime";
@@ -8,30 +8,32 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@radix-ui/react-tooltip";
+} from "./tooltip";
 dayjs.extend(relative);
 
 export const Timestamp = ({
   time,
+  timeAgo,
   ...props
 }: {
   time: number;
+  timeAgo: ReactNode;
 } & HTMLProps<HTMLSpanElement>) => {
-  const djs = dayjs.unix(time);
+  const [open, setOpen] = useState(false);
   return (
-    <TooltipProvider delayDuration={500}>
-      <Tooltip>
-        <TooltipTrigger>
+    <TooltipProvider delayDuration={700}>
+      <Tooltip open={open} onOpenChange={setOpen}>
+        <TooltipTrigger onClick={() => setOpen(!open)}>
           <span
             {...props}
             className={cn("text-xs lg:text-base", props.className)}
           >
-            {dayjs().to(djs)}
+            {timeAgo}
           </span>
         </TooltipTrigger>
         <TooltipContent className="bg-primary">
           <span className="font-mono text-xs">
-            {djs.toDate().toLocaleString()}
+            {new Date(time).toLocaleString()}
           </span>
         </TooltipContent>
       </Tooltip>

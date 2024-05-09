@@ -5,7 +5,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import React, { useMemo } from "react";
+import React, { useMemo, JSX, createElement } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { GoArrowUpRight, GoBriefcase } from "react-icons/go";
@@ -57,13 +57,16 @@ const Job = () => {
     </Container>
   );
 };
-const compMap: Record<HNHomepageType, JSX.Element> = {
-  ask: <Ask />,
-  best: <Best />,
-  top: <Top />,
-  job: <Job />,
-  new: <New />,
-  show: <Show />,
+const compMap: Record<
+  string,
+  { component: () => JSX.Element; type: HNPWAFeedType | "best" }
+> = {
+  ask: { type: "ask", component: Ask },
+  best: { type: "best", component: Best },
+  top: { type: "news", component: Top },
+  job: { type: "jobs", component: Job },
+  new: { type: "newest", component: New },
+  show: { type: "show", component: Show },
 };
 const MenuItem = (props: { children: React.ReactNode }) => (
   <DropdownMenuItem className="px-0 py-0">{props.children}</DropdownMenuItem>
@@ -80,12 +83,14 @@ export function HomepageSelector() {
   const current = useMemo(() => {
     const thing = pathname.split("/").slice(-1)[0] as HNHomepageType;
 
-    return compMap?.[thing] ?? <Top />;
+    return compMap?.[thing] ?? compMap["top"];
   }, [pathname]);
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>{current}</DropdownMenuTrigger>
+      <DropdownMenuTrigger>
+        {createElement(current.component)}
+      </DropdownMenuTrigger>
       <DropdownMenuContent>
         <MenuItem>
           <MenuItemLink href="/">
@@ -98,7 +103,7 @@ export function HomepageSelector() {
           </MenuItemLink>
         </MenuItem>
         <MenuItem>
-          <MenuItemLink href="/new">
+          <MenuItemLink href="/newest">
             <New />
           </MenuItemLink>
         </MenuItem>
@@ -113,7 +118,7 @@ export function HomepageSelector() {
           </MenuItemLink>
         </MenuItem>
         <MenuItem>
-          <MenuItemLink href="/job">
+          <MenuItemLink href="/jobs">
             <Job />
           </MenuItemLink>
         </MenuItem>

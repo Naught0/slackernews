@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Post } from "~/app/components/post";
-import { getItemById } from "~/app/hackernews-api";
+import { getItem } from "~/app/hackernews-api/hnpwa";
 import { BackHomeButton } from "~/components/ui/browser-back-button";
 
 export default async function Layout({
@@ -10,7 +10,7 @@ export default async function Layout({
   params: { id: string };
   children: ReactNode;
 }) {
-  const story = await getItemById<HNStory>(id);
+  const story = await getItem(id);
 
   return (
     <div className="flex w-full max-w-screen-lg flex-col gap-3">

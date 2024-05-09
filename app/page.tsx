@@ -5,5 +5,5 @@ export default async function Home({
 }: {
   searchParams: Record<string, string | undefined>;
 }) {
-  return <Homepage searchParams={searchParams} type="top" />;
+  return <Homepage searchParams={searchParams} type="news" />;
 }

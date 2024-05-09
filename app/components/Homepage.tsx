@@ -1,16 +1,16 @@
-import { getHomepage } from "~/app/hackernews-api";
 import { HomepagePagination } from "~/components/ui/homepage-pagination";
 import { Post } from "~/app/components/post";
 import { HomepageSelector } from "~/app/components/homepage-selector";
+import { getHomepage } from "../hackernews-api/hnpwa";
 
 export default async function Homepage({
   searchParams,
-  type = "top",
+  type = "news",
 }: {
   searchParams?: Record<string, string | undefined>;
-  type: HNHomepageType;
+  type: HNPWAFeedType;
 }) {
-  const results = await getHomepage({
+  const { items } = await getHomepage({
     count: parseInt(searchParams?.["perPage"] ?? "15"),
     pageIndex: parseInt(searchParams?.["page"] ?? "1") - 1,
     homepageType: type,
@@ -21,7 +21,7 @@ export default async function Homepage({
         <HomepageSelector />
       </div>
       <div className="border-color divide-y">
-        {results.items.map((item) => (
+        {items.map((item) => (
           <div key={item.id} className="py-3">
             <Post story={item} />
           </div>

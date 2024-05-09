@@ -84,6 +84,8 @@ type HNAnyItem = HNStory | HNAsk | HNJob | HNComment | HNPoll;
 
 type HNPost = HNStory | HNAsk | HNJob;
 
+type HNPWAFeedType = "news" | "newest" | "ask" | "show" | "jobs";
+
 interface HNPWAItem {
   id: number;
   title: string;
@@ -100,4 +102,17 @@ interface HNPWAItem {
   comments: Item[]; // Comments are items too
   level: number;
   comments_count: number;
+}
+
+interface HNPWAFeedItem {
+  id: number;
+  title: string;
+  points?: number | null;
+  user?: string | null;
+  time: number;
+  time_ago: string;
+  comments_count: number;
+  type: string;
+  url?: string;
+  domain?: string;
 }

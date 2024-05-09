@@ -1,18 +1,36 @@
 import { getItemById } from ".";
 
-const DEFAULT_CACHE_SECONDS = 180;
+const DEFAULT_CACHE_TTL_SECONDS = 180;
+const POSTS_PER_PAGE_LIMIT = 50;
 
 async function request<T extends unknown>(
   url: string,
   config?: RequestInit,
 ): Promise<T> {
   const resp = await fetch(`https://api.hnpwa.com/v0${url}.json`, {
-    next: { revalidate: DEFAULT_CACHE_SECONDS },
+    next: { revalidate: DEFAULT_CACHE_TTL_SECONDS },
     ...config,
   });
   return (await resp.json()) as T;
 }
 
+export async function getHomepage(props: {
+  count?: number;
+  pageIndex?: number;
+  homepageType?: HNPWAFeedType;
+}) {
+  let count = props?.count ?? 15;
+  if (count > POSTS_PER_PAGE_LIMIT) {
+    count = POSTS_PER_PAGE_LIMIT;
+  }
+  const homepageType = props?.homepageType ?? "top";
+  const pageIndex = props?.pageIndex ?? 0;
+  return {
+    items: await request<HNPWAFeedItem[]>(`/${homepageType}/${pageIndex + 1}`, {
+      next: { revalidate: DEFAULT_CACHE_TTL_SECONDS },
+    }),
+  };
+}
 export async function getCommentPost(
   commentId: number | string,
 ): Promise<HNPost> {

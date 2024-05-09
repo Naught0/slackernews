@@ -29,7 +29,7 @@ export const HNComment = (
           </Link>
         )}
         <div className="flex flex-row items-center">
-          <Timestamp time={props.time} />
+          <Timestamp timeAgo={props.time_ago} time={props.time} />
           <Link href={commentLink} className="py-2">
             <RiHashtag />
           </Link>
