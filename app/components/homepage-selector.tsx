@@ -61,10 +61,10 @@ const compMap: Record<
   string,
   { component: () => JSX.Element; type: HNPWAFeedType | "best" }
 > = {
+  top: { type: "news", component: Top },
   ask: { type: "ask", component: Ask },
   best: { type: "best", component: Best },
-  top: { type: "news", component: Top },
-  job: { type: "jobs", component: Job },
+  jobs: { type: "jobs", component: Job },
   new: { type: "newest", component: New },
   show: { type: "show", component: Show },
 };

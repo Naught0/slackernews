@@ -1,4 +1,5 @@
-import { getItemById } from ".";
+import { getItemById, getHomepage as getOfficialHompage } from ".";
+import { convertPostToPWA } from "./utils";
 
 const DEFAULT_CACHE_TTL_SECONDS = 180;
 const POSTS_PER_PAGE_LIMIT = 50;
@@ -17,7 +18,7 @@ async function request<T extends unknown>(
 export async function getHomepage(props: {
   count?: number;
   pageIndex?: number;
-  homepageType?: HNPWAFeedType;
+  homepageType?: HNPWAFeedType | "best";
 }) {
   let count = props?.count ?? 15;
   if (count > POSTS_PER_PAGE_LIMIT) {
@@ -25,6 +26,14 @@ export async function getHomepage(props: {
   }
   const homepageType = props?.homepageType ?? "top";
   const pageIndex = props?.pageIndex ?? 0;
+  if (homepageType === "best") {
+    return {
+      items: (
+        await getOfficialHompage({ ...props, homepageType: "best" })
+      ).items.map((item) => convertPostToPWA(item)),
+    };
+  }
+
   return {
     items: await request<HNPWAFeedItem[]>(`/${homepageType}/${pageIndex + 1}`, {
       next: { revalidate: DEFAULT_CACHE_TTL_SECONDS },
