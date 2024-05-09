@@ -5,6 +5,7 @@ import { Nav } from "~/app/components/nav";
 import { Footer } from "./components/footer";
 import { Providers } from "./providers";
 import { Suspense } from "react";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${jetbrains.variable}`}>
+        <Analytics />
         <Providers>
           <Suspense>
             <Nav />
