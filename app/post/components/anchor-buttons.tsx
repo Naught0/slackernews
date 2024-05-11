@@ -3,7 +3,7 @@ import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import { Button } from "~/components/ui/button";
 import { useState } from "react";
 
-function findLinksWithIds() {
+function findAnchors() {
   return [...document.querySelectorAll(".comments .anchor")];
 }
 
@@ -17,11 +17,21 @@ export function AnchorButtons() {
       return;
     }
 
-    const ids = findLinksWithIds();
+    const ids = findAnchors();
     if (newIdx > ids.length - 1) return setIdx(ids.length - 1);
 
-    setIdx(newIdx);
-    ids[newIdx]?.scrollIntoView({ behavior: "auto", block: "start" });
+    if (ids[newIdx]?.checkVisibility()) {
+      setIdx(newIdx);
+      return ids[newIdx]?.scrollIntoView({ behavior: "auto", block: "start" });
+    }
+    if (newIdx > idx && newIdx < ids.length) {
+      setIdx(newIdx + 1);
+      scrollToLink(newIdx + 1);
+    }
+    if (newIdx < idx && newIdx > -1) {
+      setIdx(newIdx - 1);
+      scrollToLink(newIdx - 1);
+    }
   }
 
   return (
