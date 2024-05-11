@@ -4,7 +4,11 @@ import sanitizeHtml from "sanitize-html";
 import { Timestamp } from "~/components/ui/timestamp";
 
 export const HNComment = (
-  props: HNPWAItem & { op?: string | null; postId?: string },
+  props: HNPWAItem & {
+    op?: string | null;
+    postId?: string;
+    anchor?: boolean;
+  },
 ) => {
   const commentLink = props.postId
     ? `/post/${props.postId}/comment/${props.id}`
@@ -12,10 +16,7 @@ export const HNComment = (
   const isOp = props.user === props.op;
   return (
     <article
-      id={`${props.id}`}
-      className={
-        "flex min-w-0 flex-1 flex-col items-start border-l-0 border-solid pl-3"
-      }
+      className={`${props.anchor ? "anchor " : ""}flex min-w-0 flex-1 flex-col items-start border-l-0 border-solid pl-3`}
     >
       <div className="flex w-full flex-row flex-wrap items-center gap-x-1 text-sm lg:text-base">
         {props.deleted ? (

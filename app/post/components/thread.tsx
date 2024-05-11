@@ -30,7 +30,7 @@ export const HNThreadComponent = async (
       <div
         className={`flex flex-col items-start gap-1 ${leftBorder} ${indentColor}`}
       >
-        <HNComment indentLevel={0} {...props} />
+        <HNComment {...props} anchor={indentLevel === 0 ? true : false} />
         {props.comments?.map((c) => {
           const borderColor = getIndentColor((props?.indentLevel ?? 0) + 1);
           return indentLevel < maxDepth ? (
