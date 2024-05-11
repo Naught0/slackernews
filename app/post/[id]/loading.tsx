@@ -55,7 +55,7 @@ function generateComment() {
 export default function Loading() {
   return (
     <div className="flex flex-col gap-3">
-      {[...new Array(5).keys()].map((idx) => (
+      {[...new Array(25).keys()].map((idx) => (
         <LoadingComment key={idx} {...generateComment()} />
       ))}
     </div>
