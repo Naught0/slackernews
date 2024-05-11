@@ -34,7 +34,7 @@ export const Collapsible = ({
           </Button>
         </div>
       )}
-      {expanded && <div>{children}</div>}
+      {<div className={`${expanded ? "" : "hidden"}`}>{children}</div>}
     </div>
   );
 };
