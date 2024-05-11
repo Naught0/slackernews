@@ -46,7 +46,7 @@ export const Post = ({
         <div className="flex flex-row items-center gap-3">
           <span className="align-middle text-sm text-secondary-foreground lg:text-base">
             <RxCaretUp className="inline size-6" />
-            {story.points}
+            {story.points && Intl.NumberFormat().format(story.points)}
           </span>
           {"comments_count" in story && (
             <PostActions comments={story.comments_count} postId={story.id} />

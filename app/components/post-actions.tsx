@@ -9,7 +9,7 @@ export const PostActions = (props: { postId: number; comments: number }) => {
       <Link className="cursor-pointer" href={`/post/${props.postId}`}>
         <Button className="gap-1" variant="outline">
           <BiCommentDetail />
-          {props.comments}
+          {Intl.NumberFormat().format(props.comments)}
         </Button>
       </Link>
     </div>
