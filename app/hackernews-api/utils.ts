@@ -20,7 +20,7 @@ export function convertPostToPWA(post: HNStory): HNPWAItem {
     }
   }
 
-  ret["time_ago"] = dayjs().to(dayjs(ret.time));
+  ret["time_ago"] = dayjs().to(dayjs(ret.time * 1000));
 
   return ret as HNPWAItem;
 }
