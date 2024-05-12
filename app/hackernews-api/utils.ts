@@ -19,8 +19,8 @@ export function convertPostToPWA(post: HNStory): HNPWAItem {
       ret[FIELD_MAP.get(k as keyof HNStory)!] = v;
     }
   }
-
-  ret["time_ago"] = dayjs().to(dayjs(ret.time * 1000));
+  if (ret.time)
+    ret["time_ago"] = dayjs().to(dayjs(ret.time * 1000));
 
   return ret as HNPWAItem;
 }
