@@ -31,27 +31,31 @@ export const Post = ({
             <p className="w-fit text-lg lg:text-xl">{story.title}</p>
           )}
 
-          <Link
-            href={`/user/${story.user}`}
-            className="flex w-fit items-center gap-1 text-sm text-muted-foreground dark:text-muted-foreground md:text-base"
-          >
-            <RxPerson />
-            {story.user}
-          </Link>
+          {story.user && (
+            <Link
+              href={`/user/${story.user}`}
+              className="flex w-fit items-center gap-1 text-sm text-muted-foreground dark:text-muted-foreground md:text-base"
+            >
+              <RxPerson />
+              {story.user}
+            </Link>
+          )}
           <div className="flex items-center gap-1 text-sm text-muted-foreground">
             <RxClock />
             <Timestamp time={story.time} timeAgo={story.time_ago} />
           </div>
         </div>
-        <div className="flex flex-row items-center gap-3">
-          <span className="align-middle text-sm text-secondary-foreground lg:text-base">
-            <RxCaretUp className="inline size-6" />
-            {story.points && Intl.NumberFormat().format(story.points)}
-          </span>
-          {"comments_count" in story && (
-            <PostActions comments={story.comments_count} postId={story.id} />
-          )}
-        </div>
+        {story.points && (
+          <div className="flex flex-row items-center gap-3">
+            <span className="align-middle text-sm text-secondary-foreground lg:text-base">
+              <RxCaretUp className="inline size-6" />
+              {Intl.NumberFormat().format(story.points)}
+            </span>
+            {"comments_count" in story && story.type !== "job" && (
+              <PostActions comments={story.comments_count} postId={story.id} />
+            )}
+          </div>
+        )}
       </div>
     </MainItemContainer>
   );
