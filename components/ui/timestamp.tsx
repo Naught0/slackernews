@@ -33,7 +33,7 @@ export const Timestamp = ({
         </TooltipTrigger>
         <TooltipContent className="bg-primary">
           <span className="font-mono text-xs">
-            {new Date(time).toLocaleString()}
+            {new Date(time * 1000).toLocaleString()}
           </span>
         </TooltipContent>
       </Tooltip>
