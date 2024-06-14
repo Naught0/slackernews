@@ -1,6 +1,8 @@
 import { RedirectType, permanentRedirect } from "next/navigation";
 import { getCommentPost } from "~/app/hackernews-api/hnpwa";
 
+export const revalidate = 120;
+
 export default async function Page({
   params: { id },
 }: {
