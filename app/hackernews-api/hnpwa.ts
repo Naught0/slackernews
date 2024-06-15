@@ -1,7 +1,6 @@
 import { getItemById, getHomepage as getOfficialHompage } from ".";
 import { convertPostToPWA } from "./utils";
 
-const DEFAULT_CACHE_TTL_SECONDS = 180;
 const POSTS_PER_PAGE_LIMIT = 50;
 
 async function request<T extends unknown>(
@@ -9,7 +8,7 @@ async function request<T extends unknown>(
   config?: RequestInit,
 ): Promise<T> {
   const resp = await fetch(`https://api.hnpwa.com/v0${url}.json`, {
-    next: { revalidate: DEFAULT_CACHE_TTL_SECONDS },
+    cache: "no-store",
     ...config,
   });
   return (await resp.json()) as T;
@@ -35,9 +34,7 @@ export async function getHomepage(props: {
   }
 
   return {
-    items: await request<HNPWAFeedItem[]>(`/${homepageType}/${pageIndex + 1}`, {
-      next: { revalidate: DEFAULT_CACHE_TTL_SECONDS },
-    }),
+    items: await request<HNPWAFeedItem[]>(`/${homepageType}/${pageIndex + 1}`),
   };
 }
 export async function getCommentPost(

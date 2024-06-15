@@ -1,15 +1,17 @@
 const DEFAULT_CACHE_TTL_SECONDS = 180;
 const POSTS_PER_PAGE_LIMIT = 50;
+
 async function request<T extends unknown>(
   url: string,
   config?: RequestInit,
 ): Promise<T> {
-  const resp = await fetch(
-    `https://hacker-news.firebaseio.com/v0${url}`,
-    config,
-  );
+  const resp = await fetch(`https://hacker-news.firebaseio.com/v0${url}`, {
+    cache: "no-store",
+    ...config,
+  });
   return (await resp.json()) as T;
 }
+
 export async function getHomepage(props?: {
   count?: number;
   pageIndex?: number;
@@ -21,10 +23,7 @@ export async function getHomepage(props?: {
   }
   const homepageType = props?.homepageType ?? "top";
   const pageIndex = props?.pageIndex ?? 0;
-  const postIds = await request<number[]>(`/${homepageType}stories.json`, {
-    // Cache for 5 minutes
-    next: { revalidate: DEFAULT_CACHE_TTL_SECONDS },
-  });
+  const postIds = await request<number[]>(`/${homepageType}stories.json`);
   const postData = await Promise.all(
     postIds
       .slice(pageIndex * count, pageIndex * count + count)
@@ -41,7 +40,5 @@ export async function getItemById<T>(id: number | string) {
 }
 
 export async function getUserById(id: number | string) {
-  return await request<HNUser>(`/user/${id}.json`, {
-    next: { revalidate: 900 },
-  });
+  return await request<HNUser>(`/user/${id}.json`);
 }
