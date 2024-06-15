@@ -18,7 +18,7 @@ export const Post = ({
     <MainItemContainer className={className}>
       <div className="flex flex-col gap-2">
         <div className="flex flex-col gap-1">
-          {"url" in story && story.url?.startsWith("https") ? (
+          {"url" in story && story.url?.startsWith("http") ? (
             <Link href={story.url} className="w-fit text-lg lg:text-xl">
               {story.title}
               <br />
