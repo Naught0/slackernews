@@ -1,4 +1,5 @@
-import { PersonIcon, CalendarIcon } from "@radix-ui/react-icons";
+import { PersonIcon } from "@radix-ui/react-icons";
+import { BiCalendar } from "react-icons/bi";
 import { GoTriangleUp } from "react-icons/go";
 import { MainItemContainer } from "~/app/components/main-item-container";
 
@@ -18,14 +19,12 @@ export default function User({
     <MainItemContainer className={className}>
       <p className="inline-flex flex-grow-0 items-center gap-1 text-lg lg:text-xl">
         <SkeleWrap loading={loading}>
-          <PersonIcon />
-          {user.id}
+          <PersonIcon /> {user.id}
         </SkeleWrap>
       </p>
       <p className="gap0 inline-flex items-center">
         <SkeleWrap loading={loading}>
-          <CalendarIcon />
-          {new Date(user.created * 1000).toLocaleDateString()}
+          <BiCalendar /> {new Date(user.created * 1000).toLocaleDateString()}
         </SkeleWrap>
       </p>
       <p>
