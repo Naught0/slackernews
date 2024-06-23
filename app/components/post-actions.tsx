@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { BiCommentDetail } from "react-icons/bi";
-import { Button, buttonVariants } from "~/components/ui/button";
-import { LiaHackerNews } from "react-icons/lia";
+import { Button } from "~/components/ui/button";
 
 export const PostActions = (props: { postId: number; comments: number }) => {
   return (
@@ -12,15 +11,6 @@ export const PostActions = (props: { postId: number; comments: number }) => {
           {Intl.NumberFormat().format(props.comments)}
         </Button>
       </Link>
-
-      <a
-        className={buttonVariants({ variant: "outline", size: "icon" })}
-        href={`https://news.ycombinator.com/item?id=${props.postId}`}
-        target="_blank"
-        rel="noreferrer"
-      >
-        <LiaHackerNews className="text-2xl" />
-      </a>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FaLink } from "react-icons/fa";
+import { RiHashtag } from "react-icons/ri";
 import sanitizeHtml from "sanitize-html";
 import { Timestamp } from "~/components/ui/timestamp";
 import { HNLink } from "~/app/components/hn-link";
@@ -30,10 +30,10 @@ export const HNComment = (
             {props.user}
           </Link>
         )}
-        <div className="flex flex-row items-center gap-2">
+        <div className="flex flex-row items-center gap-1.5 md:gap-1">
           <Timestamp timeAgo={props.time_ago} time={props.time} />
           <Link href={commentLink} className="text-lg">
-            <FaLink />
+            <RiHashtag />
           </Link>
           <HNLink id={props.id} />
         </div>

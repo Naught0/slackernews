@@ -5,14 +5,18 @@ import { PostActions } from "./post-actions";
 import dayjs from "dayjs";
 import relative from "dayjs/plugin/relativeTime";
 import { Timestamp } from "~/components/ui/timestamp";
+import { BiLinkExternal } from "react-icons/bi";
+import { buttonVariants } from "~/components/ui/button";
 dayjs.extend(relative);
 
 export const Post = ({
   story,
   className,
+  showHnLink,
 }: {
   story: HNPWAFeedItem;
   className?: string;
+  showHnLink?: boolean;
 }) => {
   return (
     <MainItemContainer className={className}>
@@ -58,6 +62,21 @@ export const Post = ({
             </span>
             {"comments_count" in story && story.type !== "job" && (
               <PostActions comments={story.comments_count} postId={story.id} />
+            )}
+            {showHnLink && (
+              <a
+                href={`https://news.ycombinator.com/item?id=${story.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={buttonVariants({
+                  variant: "link",
+                  className: "w-fit px-0 text-sm",
+                  size: "sm",
+                })}
+              >
+                <span className="pr-1">View on HN</span>
+                <BiLinkExternal className="inline" />
+              </a>
             )}
           </div>
         )}
