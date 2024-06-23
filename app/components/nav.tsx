@@ -7,7 +7,7 @@ export const Nav = () => {
   const path = usePathname();
   const params = useSearchParams();
   return (
-    <div className="flex flex-row justify-center p-6">
+    <div className="flex flex-row justify-center p-2 md:p-6">
       <div className="flex w-full max-w-screen-lg flex-grow flex-row items-center justify-between gap-3 lg:gap-6">
         <div className="flex">
           <Link href="/" className="font-mono">
