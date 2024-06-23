@@ -25,3 +25,4 @@ an alternative frontend to hackernews.
 TODO:
 
 - [ ] Increase width of user page to always be maximum
+- [ ] Redirect comment IDs used on on `/post` route to `/comment` page instead
