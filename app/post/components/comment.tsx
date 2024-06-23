@@ -47,5 +47,16 @@ export const HNComment = (
 };
 
 function processText(text: string) {
-  return sanitizeHtml(text);
+  let sanitized = sanitizeHtml(text);
+  const regex = /href="https:.*news.ycombinator.com.*item\?id=([0-9]+)/g;
+  const matches = sanitized.matchAll(regex);
+
+  for (const match of matches) {
+    const id = match[1];
+    sanitized = sanitized.replace(
+      regex,
+      `href="/comment/${id}">https://news.ycombinator.com/item?id=${match[1]}`,
+    );
+  }
+  return sanitized;
 }
