@@ -37,7 +37,7 @@ export default function RootLayout({
           <Suspense>
             <Nav />
           </Suspense>
-          <main className="flex min-h-screen flex-col items-center p-6 pb-10 lg:p-12 lg:pb-16 xl:px-16">
+          <main className="flex min-h-screen flex-col items-center px-2 py-6 pb-10 md:p-12 md:pb-16 xl:px-16">
             {children}
           </main>
           <Footer />
