@@ -6,6 +6,7 @@ import { Footer } from "./components/footer";
 import { Providers } from "./providers";
 import { Suspense } from "react";
 import { Analytics } from "@vercel/analytics/next";
+import { ClientSideScrollRestorer } from "./components/hooks/scroll-restore";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -42,6 +43,9 @@ export default function RootLayout({
           <Footer />
         </Providers>
       </body>
+      <Suspense>
+        <ClientSideScrollRestorer />
+      </Suspense>
     </html>
   );
 }
