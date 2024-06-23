@@ -21,3 +21,7 @@ an alternative frontend to hackernews.
    - e.g. if the scroll idx is 0 and you scroll to idx 20, the down button should take you to 21
 - [ ] Persistent settings (Cookies?)
     - [ ] Ability to toggle on/off HN link replacement
+
+TODO:
+
+- [ ] Increase width of user page to always be maximum
