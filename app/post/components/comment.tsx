@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { RiHashtag } from "react-icons/ri";
+import { FaLink } from "react-icons/fa";
 import sanitizeHtml from "sanitize-html";
 import { Timestamp } from "~/components/ui/timestamp";
+import { HNLink } from "~/app/components/hn-link";
 
 export const HNComment = (
   props: HNPWAItem & {
@@ -16,9 +17,9 @@ export const HNComment = (
   const isOp = props.user === props.op;
   return (
     <article
-      className={`${props.anchor ? "anchor " : ""}flex min-w-0 flex-1 flex-col items-start border-l-0 border-solid pl-3`}
+      className={`${props.anchor ? "anchor " : ""}flex min-w-0 flex-1 flex-col items-start gap-y-1 border-l-0 border-solid pl-3`}
     >
-      <div className="flex w-full flex-row flex-wrap items-center gap-x-1 text-sm lg:text-base">
+      <div className="flex w-full flex-row flex-wrap items-center gap-1 text-sm lg:text-base">
         {props.deleted ? (
           <span className="text-muted-foreground">[deleted]</span>
         ) : (
@@ -29,11 +30,12 @@ export const HNComment = (
             {props.user}
           </Link>
         )}
-        <div className="flex flex-row items-center">
+        <div className="flex flex-row items-center gap-2">
           <Timestamp timeAgo={props.time_ago} time={props.time} />
-          <Link href={commentLink} className="py-2">
-            <RiHashtag />
+          <Link href={commentLink} className="text-lg">
+            <FaLink />
           </Link>
+          <HNLink id={props.id} />
         </div>
       </div>
       {props.content && (
