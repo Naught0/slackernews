@@ -26,3 +26,4 @@ TODO:
 
 - [ ] Increase width of user page to always be maximum
 - [ ] Redirect comment IDs used on on `/post` route to `/comment` page instead
+- [ ] Validate a comment belongs to a post so that a comment cannot be displayed under an unrelated post
