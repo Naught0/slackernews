@@ -1,12 +1,11 @@
-const DEFAULT_CACHE_TTL_SECONDS = 180;
-const POSTS_PER_PAGE_LIMIT = 50;
+import { DEFAULT_CACHE_TTL_SECONDS, POSTS_PER_PAGE_LIMIT } from "./constants";
 
 async function request<T extends unknown>(
   url: string,
   config?: RequestInit,
 ): Promise<T> {
   const resp = await fetch(`https://hacker-news.firebaseio.com/v0${url}`, {
-    cache: "no-store",
+    next: { revalidate: DEFAULT_CACHE_TTL_SECONDS },
     ...config,
   });
   return (await resp.json()) as T;
@@ -34,11 +33,9 @@ export async function getHomepage(props?: {
 }
 
 export async function getItemById<T>(id: number | string) {
-  return await request<T>(`/item/${id}.json`, {
-    next: { revalidate: DEFAULT_CACHE_TTL_SECONDS },
-  });
+  return await request<T>(`/item/${id}.json`);
 }
 
 export async function getUserById(id: number | string) {
-  return await request<HNUser>(`/user/${id}.json`);
+  return await request<HNUser | null>(`/user/${id}.json`);
 }

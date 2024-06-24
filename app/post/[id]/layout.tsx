@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { ReactNode } from "react";
 import { Post } from "~/app/components/post";
 import { getItem } from "~/app/hackernews-api/hnpwa";
@@ -11,6 +12,7 @@ export default async function Layout({
   children: ReactNode;
 }) {
   const story = await getItem(id);
+  if (!story) notFound();
 
   return (
     <div className="flex w-full max-w-screen-lg flex-col gap-3">

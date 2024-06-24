@@ -1,10 +1,10 @@
-import React from "react";
 import { getUserById } from "~/app/hackernews-api";
 import { getPaginatedItems } from "~/app/hackernews-api/hnpwa";
 import Items from "~/app/components/items";
 import User from "./components/user";
 import { BackHomeButton } from "~/components/ui/browser-back-button";
 import { HomepagePagination } from "~/components/ui/homepage-pagination";
+import { notFound } from "next/navigation";
 
 export default async function Page({
   params: { id: userId },
@@ -14,6 +14,8 @@ export default async function Page({
   searchParams: { page?: string; perPage?: string };
 }) {
   const user = await getUserById(userId);
+  if (!user) notFound();
+
   const { items } = await getPaginatedItems({
     items: user.submitted,
     perPage: parseInt(perPage ?? "15"),

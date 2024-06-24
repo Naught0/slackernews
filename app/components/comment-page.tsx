@@ -4,6 +4,7 @@ import { getItem } from "../hackernews-api/hnpwa";
 import { HNComment } from "../post/components/comment";
 import { HNThreadComponent } from "../post/components/thread";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export async function CommentPage({
   commentId,
@@ -13,6 +14,8 @@ export async function CommentPage({
   postId?: string;
 }) {
   const comment = await getItem(commentId);
+  if (!comment) notFound();
+
   const rawComment = await getItemById<HNComment>(commentId);
   const contextLink = () => {
     if (!rawComment.parent) return null;
