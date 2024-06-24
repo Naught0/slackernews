@@ -21,7 +21,7 @@ export default async function Page({
   });
 
   return (
-    <div className="flex flex-1 flex-col gap-3 lg:max-w-screen-md lg:gap-6">
+    <div className="flex w-full flex-col gap-3 md:max-w-screen-md lg:gap-6">
       <div className="border-color flex flex-row items-start gap-3 border-b pb-3">
         <BackHomeButton /> <User user={user} className="flex-1" />
       </div>
