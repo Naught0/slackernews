@@ -1,11 +1,11 @@
-import { DEFAULT_CACHE_TTL_SECONDS, POSTS_PER_PAGE_LIMIT } from "./constants";
+import { POSTS_PER_PAGE_LIMIT } from "./constants";
 
 async function request<T extends unknown>(
   url: string,
   config?: RequestInit,
 ): Promise<T> {
   const resp = await fetch(`https://hacker-news.firebaseio.com/v0${url}`, {
-    next: { revalidate: DEFAULT_CACHE_TTL_SECONDS },
+    cache: "no-store",
     ...config,
   });
   return (await resp.json()) as T;
