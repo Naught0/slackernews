@@ -5,6 +5,22 @@ import { HNComment } from "../post/components/comment";
 import { HNThreadComponent } from "../post/components/thread";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { cn } from "~/lib/utils";
+
+export const BackToPost = ({
+  postId,
+  className,
+}: {
+  postId: string;
+  className?: string;
+}) => {
+  return (
+    <Link href={`/post/${postId}`} className={cn(className)}>
+      <GoArrowLeft className="mr-1 inline" />
+      <span className="underline">Back to post</span>
+    </Link>
+  );
+};
 
 export async function CommentPage({
   commentId,
@@ -21,19 +37,20 @@ export async function CommentPage({
     if (!rawComment.parent) return null;
 
     if (rawComment.parent.toString() === postId) {
-      return (
-        <Link href={`/post/${postId}`} className="gap-1">
-          <GoArrowLeft className="mr-1 inline" />
-          <span className="underline">Back to post</span>
-        </Link>
-      );
+      return <BackToPost postId={postId} />;
     }
     if (postId && rawComment.parent) {
       return (
-        <Link href={`/post/${postId}/comment/${rawComment.parent}`}>
-          <GoArrowUp className="mr-1 inline" />
-          <span className="underline">See more context</span>
-        </Link>
+        <div className="border-color flex flex-row divide-x">
+          <BackToPost postId={postId} className="pr-3" />
+          <Link
+            href={`/post/${postId}/comment/${rawComment.parent}`}
+            className="px-2"
+          >
+            <GoArrowUp className="mr-1 inline" />
+            <span className="underline">See more context</span>
+          </Link>
+        </div>
       );
     }
 
@@ -45,7 +62,9 @@ export async function CommentPage({
   };
   return (
     <>
-      {rawComment.parent && contextLink()}
+      <div className="contents text-sm md:text-base">
+        {rawComment.parent && contextLink()}
+      </div>
       {comment.type === "comment" && (
         <HNComment postId={postId} op={comment.user} {...comment} />
       )}
