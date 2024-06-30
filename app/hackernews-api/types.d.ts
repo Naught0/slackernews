@@ -111,6 +111,7 @@ interface HNPWAFeedItem {
   user?: string | null;
   time: number;
   time_ago: string;
+  content?: string;
   comments_count: number;
   type: string;
   url?: string;

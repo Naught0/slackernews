@@ -81,6 +81,12 @@ export const Post = ({
           </div>
         )}
       </div>
+      {story.content && (
+        <article
+          className="prose prose-sm prose-slate max-w-none border-l-2 pl-3 dark:prose-invert md:prose-base"
+          dangerouslySetInnerHTML={{ __html: story.content }}
+        />
+      )}
     </MainItemContainer>
   );
 };
