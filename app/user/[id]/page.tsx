@@ -2,7 +2,6 @@ import { getUserById } from "~/app/hackernews-api";
 import { getPaginatedItems } from "~/app/hackernews-api/hnpwa";
 import Items from "~/app/components/items";
 import User from "./components/user";
-import { BackHomeButton } from "~/components/ui/browser-back-button";
 import { HomepagePagination } from "~/components/ui/homepage-pagination";
 import { notFound } from "next/navigation";
 
@@ -25,7 +24,7 @@ export default async function Page({
   return (
     <div className="flex w-full flex-col gap-3 md:max-w-screen-md lg:gap-6">
       <div className="border-color flex flex-row items-start gap-3 border-b pb-3">
-        <BackHomeButton /> <User user={user} className="flex-1" />
+        <User user={user} className="flex-1" />
       </div>
       <h1 className="text-lg lg:text-2xl">Recent activity</h1>
       <Items items={items} />
