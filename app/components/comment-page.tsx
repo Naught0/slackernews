@@ -1,11 +1,11 @@
+import Link from "next/link";
+import { notFound } from "next/navigation";
 import { GoArrowLeft, GoArrowUp } from "react-icons/go";
+import { cn } from "~/lib/utils";
 import { getItemById } from "../hackernews-api";
 import { getItem } from "../hackernews-api/hnpwa";
 import { HNComment } from "../post/components/comment";
 import { HNThreadComponent } from "../post/components/thread";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { cn } from "~/lib/utils";
 
 export const BackToPost = ({
   postId,
@@ -62,7 +62,7 @@ export async function CommentPage({
   };
   return (
     <>
-      <div className="contents text-sm md:text-base">
+      <div className="mb-3 text-sm md:text-base">
         {rawComment.parent && contextLink()}
       </div>
       {comment.type === "comment" && (
