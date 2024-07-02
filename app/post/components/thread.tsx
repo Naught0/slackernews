@@ -16,8 +16,8 @@ const leftBorder = "border-l-2 border-solid";
 export const HNThreadComponent = async (
   props: HNPWAItem & {
     indentLevel?: number;
-    op?: string;
-    postId: string;
+    op?: string | null;
+    postId?: string;
     maxDepth?: number;
   },
 ) => {
