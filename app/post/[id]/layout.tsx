@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import { ReactNode } from "react";
 import { Post } from "~/app/components/post";
 import { getItem } from "~/app/hackernews-api/hnpwa";
-import { BackHomeButton } from "~/components/ui/browser-back-button";
 
 export default async function Layout({
   params: { id },
@@ -18,7 +17,6 @@ export default async function Layout({
     <div className="flex w-full max-w-screen-lg flex-col gap-6">
       <div className="flex flex-col flex-wrap gap-3">
         <div className="border-color flex flex-1 flex-row flex-wrap gap-3 border-b pb-3">
-          <BackHomeButton />
           <Post story={story} className="flex-grow" showHnLink />
         </div>
       </div>
