@@ -99,7 +99,7 @@ interface HNPWAItem {
   type: "comment" | "link" | "job" | "poll" | "pollopt";
   url?: string;
   domain?: string;
-  comments: Item[]; // Comments are items too
+  comments: HNPWAItem[]; // Comments are items too
   level: number;
   comments_count: number;
 }
