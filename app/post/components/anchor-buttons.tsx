@@ -1,57 +1,51 @@
 "use client";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import { Button } from "~/components/ui/button";
-import { useState } from "react";
-
-function findAnchors() {
-  return [...document.querySelectorAll(".comments .anchor")];
-}
 
 export function AnchorButtons() {
-  const [idx, setIdx] = useState(-1);
+  function next() {
+    const elem = findNextAnchor();
+    if (!elem) return;
 
-  function scrollToLink(newIdx: number) {
-    if (newIdx < 0) {
-      setIdx(-1);
-      window.scrollTo({ top: 0, behavior: "auto" });
-      return;
-    }
+    elem.scrollIntoView({ block: "start" });
+  }
+  function prev() {
+    const elem = findPrevAnchor();
+    if (!elem) return window.scrollTo({ top: 0 });
 
-    const ids = findAnchors();
-    if (newIdx > ids.length - 1) return setIdx(ids.length - 1);
-
-    if (ids[newIdx]?.checkVisibility()) {
-      setIdx(newIdx);
-      return ids[newIdx]?.scrollIntoView({ behavior: "auto", block: "start" });
-    }
-    if (newIdx > idx && newIdx < ids.length) {
-      setIdx(newIdx + 1);
-      scrollToLink(newIdx + 1);
-    }
-    if (newIdx < idx && newIdx > -1) {
-      setIdx(newIdx - 1);
-      scrollToLink(newIdx - 1);
-    }
+    elem.scrollIntoView({ block: "start" });
   }
 
   return (
     <div className="fixed bottom-1/3 right-12 flex w-fit flex-col gap-1 opacity-45 hover:opacity-85 lg:right-24">
-      <Button
-        onClick={() => scrollToLink(idx - 1)}
-        type="button"
-        size={"icon"}
-        variant={"outline"}
-      >
+      <Button onClick={prev} type="button" size={"icon"} variant={"outline"}>
         <ArrowUpIcon />
       </Button>
-      <Button
-        onClick={() => scrollToLink(idx + 1)}
-        type="button"
-        size="icon"
-        variant="outline"
-      >
+      <Button onClick={next} type="button" size="icon" variant="outline">
         <ArrowDownIcon />
       </Button>
     </div>
   );
+}
+
+function findAnchors() {
+  return [...document.querySelectorAll(".comments .anchor")].toSorted(
+    (a, b) => b.getBoundingClientRect().y - a.getBoundingClientRect().y,
+  );
+}
+
+function findPrevAnchor() {
+  return findAnchors().find((a) => a.getBoundingClientRect().y < -25);
+}
+
+function findNextAnchor() {
+  // Source: https://medium.com/@alan.nguyen2050/detect-scroll-reaches-the-bottom-acb315824214
+  const scrolledTo = window.scrollY + window.innerHeight;
+  const threshold = 150;
+  const cantScroll = document.body.scrollHeight - threshold <= scrolledTo;
+  if (cantScroll) return;
+
+  return findAnchors()
+    .toReversed()
+    .find((a) => a.getBoundingClientRect().y > 25);
 }
