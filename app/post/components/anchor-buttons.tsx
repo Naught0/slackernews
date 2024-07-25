@@ -7,13 +7,13 @@ export function AnchorButtons() {
     const elem = findNextAnchor();
     if (!elem) return;
 
-    elem.scrollIntoView({ block: "start" });
+    elem.scrollIntoView({ block: "start", behavior: "smooth" });
   }
   function prev() {
     const elem = findPrevAnchor();
     if (!elem) return window.scrollTo({ top: 0 });
 
-    elem.scrollIntoView({ block: "start" });
+    elem.scrollIntoView({ block: "start", behavior: "smooth" });
   }
 
   return (
