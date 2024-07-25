@@ -14,7 +14,7 @@ export default function Items({ items }: { items: HNPWAItem[] }) {
           if (item.type === "comment") {
             return (
               <Wrapper key={item.id}>
-                <Collapsible itemId={item.id} className="py-2">
+                <Collapsible persistId={`collapse:${item.id}`} className="py-2">
                   <HNComment {...item} />
                 </Collapsible>
               </Wrapper>
