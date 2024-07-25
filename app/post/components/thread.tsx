@@ -26,7 +26,7 @@ export const HNThreadComponent = async (
   const maxDepth = props.maxDepth ?? 3;
 
   return (
-    <Collapsible>
+    <Collapsible persistId={`collapse:${props.id}`}>
       <div
         className={`flex flex-col items-start gap-1 ${leftBorder} ${indentColor}`}
       >
@@ -42,7 +42,7 @@ export const HNThreadComponent = async (
               postId={props.postId}
             />
           ) : (
-            <Collapsible key={c.id}>
+            <Collapsible persistId={`collapse:${c.id}`} key={c.id}>
               <div className={`${leftBorder} ${borderColor}`}>
                 <HNComment postId={props.postId} {...c} op={props.op} />
               </div>
