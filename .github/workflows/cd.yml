@@ -1,0 +1,38 @@
+name: CD
+on:
+  push:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '21'
+      - name: SSH Setup
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/server.key
+          chmod 600 ~/.ssh/server.key
+          cat >>~/.ssh/config <<END
+          Host server
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/server.key
+            StrictHostKeyChecking no
+          END
+          apt-get update && apt-get install openssh-client
+        env:
+          SSH_USER: ${{ secrets.SERVER_SSH_USER }}
+          SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          SSH_HOST: ${{ secrets.SERVER_SSH_HOST }} 
+      - name: Build
+        run: |
+          npm install -g pnpm
+          pnpm install
+          pnpm build
+      - name: Deploy
+        run: |
+          scp -r .next server:~/slackernews/.next 
+          ssh server 'systemctl --user restart slackernews'
