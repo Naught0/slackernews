@@ -22,7 +22,7 @@ jobs:
             IdentityFile ~/.ssh/server.key
             StrictHostKeyChecking no
           END
-          apt-get update && apt-get install openssh-client
+          sudo apt-get update && sudo apt-get install openssh-client
         env:
           SSH_USER: ${{ secrets.SERVER_SSH_USER }}
           SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
