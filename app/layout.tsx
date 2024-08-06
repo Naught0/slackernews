@@ -31,6 +31,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script defer data-domain="slackernews.jamese.dev" src="https://plausible.jamese.dev/js/script.js"></script>
+      </head>
       <body className={`${inter.variable} ${jetbrains.variable}`}>
         <Analytics />
         <Providers>
