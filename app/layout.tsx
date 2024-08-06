@@ -6,7 +6,7 @@ import { Footer } from "./components/footer";
 import { Providers } from "./providers";
 import { Suspense } from "react";
 import { ClientSideScrollRestorer } from "./components/hooks/scroll-restore";
-import Head from "next/head";
+import Script from "next/script";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -31,13 +31,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Head>
-        <script
-          defer
-          data-domain="slackernews.jamese.dev"
-          src="https://plausible.jamese.dev/js/script.js"
-        ></script>
-      </Head>
       <body className={`${inter.variable} ${jetbrains.variable}`}>
         <Providers>
           <Suspense>
@@ -52,6 +45,11 @@ export default function RootLayout({
       <Suspense>
         <ClientSideScrollRestorer />
       </Suspense>
+      <Script
+        defer
+        data-domain="slackernews.jamese.dev"
+        src="https://plausible.jamese.dev/js/script.js"
+      ></Script>
     </html>
   );
 }
