@@ -5,7 +5,6 @@ import { Nav } from "~/app/components/nav";
 import { Footer } from "./components/footer";
 import { Providers } from "./providers";
 import { Suspense } from "react";
-import { ClientSideScrollRestorer } from "./components/hooks/scroll-restore";
 import Script from "next/script";
 
 const inter = Inter({
