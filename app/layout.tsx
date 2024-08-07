@@ -42,9 +42,6 @@ export default function RootLayout({
           <Footer />
         </Providers>
       </body>
-      <Suspense>
-        <ClientSideScrollRestorer />
-      </Suspense>
       <Script
         defer
         data-domain="slackernews.jamese.dev"
