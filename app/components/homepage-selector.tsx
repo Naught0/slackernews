@@ -13,50 +13,34 @@ import { SlPresent } from "react-icons/sl";
 import { GoClock } from "react-icons/go";
 import { BsQuestionLg } from "react-icons/bs";
 import { HiOutlinePresentationChartLine } from "react-icons/hi";
+import { IconType } from "react-icons/lib";
 
 const Container = (props: { children: React.ReactNode }) => {
   return (
     <span className="inline-flex items-center gap-1.5">{props.children}</span>
   );
 };
-const Top = () => (
+const HomepageLink = ({
+  icon,
+  children,
+}: {
+  icon: IconType;
+  children: React.ReactNode;
+}) => (
   <Container>
-    <GoArrowUpRight className="inline" /> top
+    {icon({ className: "inline" })} {children}
   </Container>
 );
-const Best = () => (
-  <Container>
-    <SlPresent className="inline" /> best
-  </Container>
+
+const Top = () => <HomepageLink icon={GoArrowUpRight}>top</HomepageLink>;
+const Best = () => <HomepageLink icon={SlPresent}>best</HomepageLink>;
+const New = () => <HomepageLink icon={GoClock}>new</HomepageLink>;
+const Ask = () => <HomepageLink icon={BsQuestionLg}>ask</HomepageLink>;
+const Show = () => (
+  <HomepageLink icon={HiOutlinePresentationChartLine}>show</HomepageLink>
 );
-const New = () => {
-  return (
-    <Container>
-      <GoClock className="inline" /> new
-    </Container>
-  );
-};
-const Ask = () => {
-  return (
-    <Container>
-      <BsQuestionLg className="inline" /> ask
-    </Container>
-  );
-};
-const Show = () => {
-  return (
-    <Container>
-      <HiOutlinePresentationChartLine className="inline" /> show
-    </Container>
-  );
-};
-const Job = () => {
-  return (
-    <Container>
-      <GoBriefcase className="inline" /> job
-    </Container>
-  );
-};
+const Job = () => <HomepageLink icon={GoBriefcase}>job</HomepageLink>;
+
 const compMap: Record<
   string,
   { component: () => JSX.Element; type: HNPWAFeedType | "best" }
