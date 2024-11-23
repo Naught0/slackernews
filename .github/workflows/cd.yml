@@ -28,10 +28,9 @@ jobs:
           SSH_HOST: ${{ secrets.SERVER_SSH_HOST }} 
       - name: Build
         run: |
-          npm install -g pnpm
-          pnpm install
-          pnpm build
+          docker build -t slackernews:latest .
+          docker save -o slackernews.tar slackernews:latest
       - name: Deploy
         run: |
-          scp -r .next server:~/slackernews/
-          ssh server 'systemctl --user restart slackernews'
+          scp -r slackernews.tar server:~/slackernews/slackernews.tar
+          ssh server "cd slackernews && docker load -i slackernews.tar && compose up -d"
