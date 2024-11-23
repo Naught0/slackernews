@@ -40,12 +40,12 @@ export async function getHomepage(props: {
 }
 export async function getCommentPost(
   commentId: number | string,
-): Promise<HNPost> {
+): Promise<HNPost | null> {
   let itemId = commentId;
   while (true) {
     const item = await getItemById<HNComment | HNPost>(itemId);
 
-    if (item.type === "comment") {
+    if (item?.type === "comment") {
       itemId = item.parent;
       continue;
     }

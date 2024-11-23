@@ -33,7 +33,7 @@ export async function getHomepage(props?: {
 }
 
 export async function getItemById<T>(id: number | string) {
-  return await request<T>(`/item/${id}.json`);
+  return await request<T | null>(`/item/${id}.json`);
 }
 
 export async function getUserById(id: number | string) {

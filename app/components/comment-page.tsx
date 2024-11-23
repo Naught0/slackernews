@@ -30,9 +30,9 @@ export async function CommentPage({
   postId?: string;
 }) {
   const comment = await getItem(commentId);
-  if (!comment) notFound();
-
   const rawComment = await getItemById<HNComment>(commentId);
+  if (!rawComment) return notFound();
+
   const contextLink = () => {
     if (!rawComment.parent) return null;
 
@@ -65,7 +65,7 @@ export async function CommentPage({
       <div className="mb-3 text-sm md:text-base">
         {rawComment.parent && contextLink()}
       </div>
-      {comment.type === "comment" && (
+      {comment?.type === "comment" && (
         <HNComment postId={postId} op={comment.user} {...comment} />
       )}
       {comment?.comments?.map((c) => (
