@@ -1,9 +1,10 @@
 import { CommentPage } from "~/app/components/comment-page";
 
 export default async function Page({
-  params: { commentId, id },
+  params,
 }: {
-  params: { id: string; commentId: string };
+  params: Promise<{ id: string; commentId: string }>;
 }) {
+  const { commentId, id } = await params;
   return <CommentPage postId={id} commentId={commentId} />;
 }

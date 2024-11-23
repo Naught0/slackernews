@@ -4,10 +4,11 @@ import { HNThreadComponent } from "../components/thread";
 import { getItem } from "~/app/hackernews-api/hnpwa";
 
 export default async function Page({
-  params: { id },
+  params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   const thread = await getItem(id);
   if (!thread) notFound();
 

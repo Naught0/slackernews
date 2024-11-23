@@ -6,12 +6,15 @@ import { HomepagePagination } from "~/components/ui/homepage-pagination";
 import { notFound } from "next/navigation";
 
 export default async function Page({
-  params: { id: userId },
-  searchParams: { page, perPage },
+  params,
+  searchParams,
 }: {
-  params: { id: string };
-  searchParams: { page?: string; perPage?: string };
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ page?: string; perPage?: string }>;
 }) {
+  const { id } = await params;
+  const { page, perPage } = await searchParams;
+  const userId = parseInt(id);
   const user = await getUserById(userId);
   if (!user) notFound();
 

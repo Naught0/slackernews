@@ -4,12 +4,13 @@ import { Post } from "~/app/components/post";
 import { getItem } from "~/app/hackernews-api/hnpwa";
 
 export default async function Layout({
-  params: { id },
+  params,
   children,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
   children: ReactNode;
 }) {
+  const { id } = await params;
   const story = await getItem(id);
   if (!story) notFound();
 

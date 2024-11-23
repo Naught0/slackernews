@@ -4,10 +4,11 @@ import { getCommentPost } from "~/app/hackernews-api/hnpwa";
 export const revalidate = 120;
 
 export default async function Page({
-  params: { id },
+  params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   const post = await getCommentPost(id);
   if (!post) return notFound();
 

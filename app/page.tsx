@@ -5,7 +5,7 @@ export const revalidate = 120;
 export default async function Home({
   searchParams,
 }: {
-  searchParams: Record<string, string | undefined>;
+  searchParams: Promise<Record<string, string | undefined>>;
 }) {
-  return <Homepage searchParams={searchParams} type="news" />;
+  return <Homepage searchParams={await searchParams} type="news" />;
 }
