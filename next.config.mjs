@@ -1,4 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = { experimental: { scrollRestoration: false } };
+const nextConfig = { output: "standalone" };
 
 export default nextConfig;
