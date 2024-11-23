@@ -33,4 +33,4 @@ jobs:
       - name: Deploy
         run: |
           scp -r slackernews.tar server:~/slackernews/slackernews.tar
-          ssh server "cd slackernews && git checkout main && git pull && docker load -i slackernews.tar && compose up -d && rm slackernews.tar"
+          ssh server "cd slackernews && git checkout main && git pull && docker load -i slackernews.tar && docker compose up -d && rm slackernews.tar"
