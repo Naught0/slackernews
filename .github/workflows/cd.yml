@@ -33,5 +33,5 @@ jobs:
           pnpm build
       - name: Deploy
         run: |
-          scp -r .next server:~/slackernews/.next 
+          scp -r .next server:~/slackernews/
           ssh server 'systemctl --user restart slackernews'
