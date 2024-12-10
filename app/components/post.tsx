@@ -13,10 +13,12 @@ export const Post = ({
   story,
   className,
   showHnLink,
+  prefetch = true,
 }: {
   story: HNPWAFeedItem;
   className?: string;
   showHnLink?: boolean;
+  prefetch?: boolean;
 }) => {
   return (
     <MainItemContainer className={className}>
@@ -28,6 +30,7 @@ export const Post = ({
               rel="noopener noreferrer"
               target="_blank"
               className="w-fit text-lg lg:text-xl"
+              prefetch={prefetch}
             >
               {story.title}
               <br />
@@ -44,6 +47,7 @@ export const Post = ({
             <Link
               href={`/user/${story.user}`}
               className="flex w-fit items-center gap-1 text-sm text-muted-foreground dark:text-muted-foreground md:text-base"
+              prefetch={false}
             >
               <RxPerson />
               {story.user}
