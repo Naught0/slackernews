@@ -14,8 +14,7 @@ export default async function Page({
 }) {
   const { id } = await params;
   const { page, perPage } = await searchParams;
-  const userId = parseInt(id);
-  const user = await getUserById(userId);
+  const user = await getUserById(id);
   if (!user) notFound();
 
   const { items } = await getPaginatedItems({
