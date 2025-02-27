@@ -46,6 +46,7 @@ export async function CommentPage({
           <Link
             href={`/post/${postId}/comment/${rawComment.parent}`}
             className="px-2"
+            prefetch={false}
           >
             <GoArrowUp className="mr-1 inline" />
             <span className="underline">See more context</span>
@@ -55,7 +56,11 @@ export async function CommentPage({
     }
 
     return (
-      <Link href={`/comment/${rawComment.parent}`} className="underline">
+      <Link
+        href={`/comment/${rawComment.parent}`}
+        className="underline"
+        prefetch={false}
+      >
         <GoArrowUp className="mr-1 inline" /> See parent comment
       </Link>
     );

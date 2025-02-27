@@ -51,7 +51,10 @@ export const HNThreadComponent = async (
                   key={c.id}
                   className="py-1 text-sm text-accent-foreground underline lg:text-base"
                 >
-                  <Link href={`/post/${props.postId}/comment/${c.id}`}>
+                  <Link
+                    href={`/post/${props.postId}/comment/${c.id}`}
+                    prefetch={false}
+                  >
                     See replies
                     <GoArrowRight className="ml-1 inline" />
                   </Link>

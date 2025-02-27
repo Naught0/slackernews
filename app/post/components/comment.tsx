@@ -26,13 +26,14 @@ export const HNComment = (
           <Link
             href={`/user/${props.user}`}
             className={isOp ? "text-link-foreground" : "text-muted-foreground"}
+            prefetch={false}
           >
             {props.user}
           </Link>
         )}
         <div className="flex flex-row items-center gap-1.5 md:gap-1">
           <Timestamp timeAgo={props.time_ago} time={props.time} />
-          <Link href={commentLink} className="text-lg">
+          <Link href={commentLink} className="text-lg" prefetch={false}>
             <RiHashtag />
           </Link>
           <HNLink id={props.id} />

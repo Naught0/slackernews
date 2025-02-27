@@ -57,7 +57,7 @@ const MenuItem = (props: { children: React.ReactNode }) => (
 );
 const MenuItemLink = (props: { href: string; children: React.ReactNode }) => {
   return (
-    <Link href={props.href} className="w-full px-2 py-1.5">
+    <Link href={props.href} className="w-full px-2 py-1.5" prefetch={false}>
       {props.children}
     </Link>
   );
