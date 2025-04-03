@@ -1,6 +1,7 @@
 import { HomepagePagination } from "~/components/ui/homepage-pagination";
 import { Post } from "~/app/components/post";
 import { getHomepage } from "../hackernews-api/hnpwa";
+import { HomepageSelector } from "./homepage-selector";
 
 export default async function Homepage({
   searchParams,
@@ -15,15 +16,20 @@ export default async function Homepage({
     homepageType: type,
   });
   return (
-    <div className="flex flex-col gap-3">
-      <div className="border-color divide-y">
-        {items.map((item) => (
-          <div key={item.id} className="py-3">
-            <Post story={item} />
-          </div>
-        ))}
+    <div className="flex w-full max-w-screen-lg flex-col">
+      <div className="self-end">
+        <HomepageSelector />
       </div>
-      <HomepagePagination searchParams={searchParams} />
+      <div className="flex flex-col gap-3">
+        <div className="border-color divide-y">
+          {items.map((item) => (
+            <div key={item.id} className="py-3">
+              <Post story={item} />
+            </div>
+          ))}
+        </div>
+        <HomepagePagination searchParams={searchParams} />
+      </div>
     </div>
   );
 }
