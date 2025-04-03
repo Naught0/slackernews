@@ -1,4 +1,3 @@
-import { BiCalendar } from "react-icons/bi";
 import { GoTriangleUp } from "react-icons/go";
 import { LiaHackerNews } from "react-icons/lia";
 import { MainItemContainer } from "~/app/components/main-item-container";
