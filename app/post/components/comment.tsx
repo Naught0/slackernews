@@ -41,7 +41,9 @@ export const HNComment = (
       </div>
       {props.content && (
         <div
-          dangerouslySetInnerHTML={{ __html: replaceHnLinks(props.content) }}
+          dangerouslySetInnerHTML={{
+            __html: replaceHnLinks(sanitizeHtml(props.content)),
+          }}
           className="prose prose-sm prose-slate max-w-none dark:prose-invert md:prose-base"
         />
       )}
@@ -49,20 +51,19 @@ export const HNComment = (
   );
 };
 
-function replaceHnLinks(html: string) {
-  let sanitized = sanitizeHtml(html);
+export function replaceHnLinks(sanitizedHtml: string) {
   const hnLinkRegex =
     /href="https:..news.ycombinator.com.(user|item)\?id=([\w\d]+)/gim;
-  const matches = sanitized.matchAll(hnLinkRegex);
+  const matches = sanitizedHtml.matchAll(hnLinkRegex);
 
   for (const match of matches) {
     const toReplace = match[0];
     const id = match[2];
     const type = match[1];
-    sanitized = sanitized.replace(
+    sanitizedHtml = sanitizedHtml.replace(
       toReplace,
       `href="/${type === "user" ? "user" : "comment"}/${id}`,
     );
   }
-  return sanitized;
+  return sanitizedHtml;
 }

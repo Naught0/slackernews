@@ -7,6 +7,8 @@ import relative from "dayjs/plugin/relativeTime";
 import { Timestamp } from "~/components/ui/timestamp";
 import { BiLinkExternal } from "react-icons/bi";
 import { buttonVariants } from "~/components/ui/button";
+import sanitizeHtml from "sanitize-html";
+import { replaceHnLinks } from "../post/components/comment";
 dayjs.extend(relative);
 
 export const Post = ({
@@ -88,7 +90,9 @@ export const Post = ({
       {story.content && (
         <article
           className="prose prose-sm prose-slate max-w-none border-l-2 pl-3 dark:prose-invert md:prose-base"
-          dangerouslySetInnerHTML={{ __html: story.content }}
+          dangerouslySetInnerHTML={{
+            __html: replaceHnLinks(sanitizeHtml(story.content)),
+          }}
         />
       )}
     </MainItemContainer>
