@@ -49,8 +49,8 @@ export const HNComment = (
   );
 };
 
-function replaceHnLinks(text: string) {
-  let sanitized = sanitizeHtml(text);
+function replaceHnLinks(html: string) {
+  let sanitized = sanitizeHtml(html);
   const hnLinkRegex =
     /href="https:..news.ycombinator.com.(user|item)\?id=([\w\d]+)/gim;
   const matches = sanitized.matchAll(hnLinkRegex);
