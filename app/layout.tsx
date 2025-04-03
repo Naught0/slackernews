@@ -6,6 +6,7 @@ import { Footer } from "./components/footer";
 import { Providers } from "./providers";
 import { Suspense } from "react";
 import Script from "next/script";
+import { HomepageSelector } from "./components/homepage-selector";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -36,7 +37,12 @@ export default function RootLayout({
             <Nav />
           </Suspense>
           <main className="flex min-h-screen flex-col items-center px-2 py-6 pb-10 md:p-12 md:pb-16 xl:px-16">
-            {children}
+            <div className="flex w-full max-w-screen-lg flex-col">
+              <div className="self-end">
+                <HomepageSelector />
+              </div>
+              {children}
+            </div>
           </main>
           <Footer />
         </Providers>

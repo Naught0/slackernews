@@ -1,6 +1,5 @@
 import { HomepagePagination } from "~/components/ui/homepage-pagination";
 import { Post } from "~/app/components/post";
-import { HomepageSelector } from "~/app/components/homepage-selector";
 import { getHomepage } from "../hackernews-api/hnpwa";
 
 export default async function Homepage({
@@ -17,9 +16,6 @@ export default async function Homepage({
   });
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex justify-end">
-        <HomepageSelector />
-      </div>
       <div className="border-color divide-y">
         {items.map((item) => (
           <div key={item.id} className="py-3">
