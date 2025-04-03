@@ -1,7 +1,8 @@
-import { PersonIcon } from "@radix-ui/react-icons";
 import { BiCalendar } from "react-icons/bi";
 import { GoTriangleUp } from "react-icons/go";
+import { LiaHackerNews } from "react-icons/lia";
 import { MainItemContainer } from "~/app/components/main-item-container";
+import sanitizeHtml from "sanitize-html";
 
 import { SkeleWrap } from "~/components/ui/skeleton";
 
@@ -17,14 +18,21 @@ export default function User({
 }) {
   return (
     <MainItemContainer className={className}>
-      <p className="inline-flex flex-grow-0 items-center gap-1 text-lg lg:text-xl">
+      <p className="inline-flex items-center gap-1.5 text-xl lg:text-2xl">
         <SkeleWrap loading={loading}>
-          <PersonIcon /> {user.id}
+          {user.id}
+          <a
+            href={`https://news.ycombinator.com/user?id=${user.id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <LiaHackerNews />
+          </a>
         </SkeleWrap>
       </p>
-      <p className="gap0 inline-flex items-center">
+      <p className="inline-flex items-center gap-0">
         <SkeleWrap loading={loading}>
-          <BiCalendar /> {new Date(user.created * 1000).toLocaleDateString()}
+          since {new Date(user.created * 1000).toLocaleDateString()}
         </SkeleWrap>
       </p>
       <p>
@@ -39,6 +47,11 @@ export default function User({
           {user.submitted.length !== 1 && "s"}
         </SkeleWrap>
       </p>
+
+      <p
+        dangerouslySetInnerHTML={{ __html: sanitizeHtml(user.about) }}
+        className="text-muted-foreground"
+      ></p>
     </MainItemContainer>
   );
 }

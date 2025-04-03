@@ -79,6 +79,7 @@ interface HNUser {
   id: string;
   karma: number;
   submitted: number[];
+  about: string;
 }
 type HNAnyItem = HNStory | HNAsk | HNJob | HNComment | HNPoll;
 
