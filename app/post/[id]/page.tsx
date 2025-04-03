@@ -18,7 +18,7 @@ export default async function Page({
       <div className="border-color flex flex-1 flex-row flex-wrap gap-3 border-b pb-3">
         <Post story={thread} className="flex-grow" showHnLink />
       </div>
-      <div className="comments flex flex-col gap-3">
+      <div className="flex flex-col gap-3">
         {thread.comments?.map((comment) => (
           <HNThreadComponent
             postId={id}
