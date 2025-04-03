@@ -27,3 +27,5 @@ TODO:
 - [ ] Redirect comment IDs used on on `/post` route to `/comment` page instead
 - [ ] Validate a comment belongs to a post so that a comment cannot be displayed under an unrelated post
 - [ ] Investigate race condition between scroll restore and collapsible component reading session storage for initial state
+- [ ] Fix loading state for homepages
+- [ ] Fix comment flashing before redirecting to post when supplying a postId to `/comment`
