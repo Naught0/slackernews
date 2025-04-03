@@ -28,7 +28,7 @@ export default async function Page({
       <div className="border-color flex flex-row items-start gap-3 border-b pb-3">
         <User user={user} className="flex-1" />
       </div>
-      <h1 className="text-lg lg:text-2xl">Recent activity</h1>
+      <h1 className="px-3 text-lg lg:text-2xl">Recent activity</h1>
       <Items items={items} />
       <HomepagePagination searchParams={{ page, perPage }} />
     </div>
