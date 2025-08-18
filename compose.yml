@@ -24,6 +24,6 @@ services:
     image: ghcr.io/xe/x/httpdebug
     pull_policy: always
 
-  volumes:
-    caddy_data:
-    caddy_config:     - .:/usr/src/app
+volumes:
+  caddy_data:
+  caddy_config:     - .:/usr/src/app
