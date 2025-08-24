@@ -32,8 +32,6 @@ function findAnchors() {
   const anchors = [...document.querySelectorAll(".anchor")].toSorted(
     (a, b) => b.getBoundingClientRect().y - a.getBoundingClientRect().y,
   );
-
-  console.log(anchors);
   return anchors;
 }
 
