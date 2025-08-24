@@ -29,9 +29,12 @@ export function AnchorButtons() {
 }
 
 function findAnchors() {
-  return [...document.querySelectorAll(".comments .anchor")].toSorted(
+  const anchors = [...document.querySelectorAll(".anchor")].toSorted(
     (a, b) => b.getBoundingClientRect().y - a.getBoundingClientRect().y,
   );
+
+  console.log(anchors);
+  return anchors;
 }
 
 function findPrevAnchor() {
