@@ -1,29 +1,13 @@
 services:
   app:
-    image: "slackernews:latest"
+    build: .
+    expose:
+      - "3000"
+  nginx:
+    image: nginx
     ports:
-      - "3001:3000"
+      - "3006:80"
     volumes:
-  caddy:
-    image: caddy:2
-    ports:
-      - 3001:3000
-    volumes:
-      - ./conf:/etc/caddy
-      - caddy_config:/config
-      - caddy_data:/data
-
-  anubis:
-    image: ghcr.io/techarohq/anubis:latest
-    pull_policy: always
-    environment:
-      BIND: ":3000"
-      TARGET: http://httpdebug:3000
-
-  httpdebug:
-    image: ghcr.io/xe/x/httpdebug
-    pull_policy: always
-
-volumes:
-  caddy_data:
-  caddy_config:     - .:/usr/src/app
+      - ./nginx/:/etc/nginx/
+    depends_on:
+      - app
