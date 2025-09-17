@@ -1,12 +1,10 @@
 services:
   app:
     build: .
-    expose:
-      - "3000"
   nginx:
     image: nginx
     ports:
-      - "3006:80"
+      - "127.0.0.1:3006:80"
     volumes:
       - ./nginx/:/etc/nginx/
     depends_on:
