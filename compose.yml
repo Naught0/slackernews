@@ -1,6 +1,8 @@
 services:
   app:
+    image: slackernews:latest
     build: .
+    restart: always
   nginx:
     image: nginx
     ports:
