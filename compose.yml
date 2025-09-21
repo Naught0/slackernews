@@ -2,8 +2,9 @@ services:
   app:
     image: slackernews:latest
     build: .
-    restart: always
+    restart: unless-stopped
   nginx:
+    restart: unless-stopped
     image: nginx
     ports:
       - "127.0.0.1:3006:80"
