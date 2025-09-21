@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import Homepage from "../components/Homepage";
 
-export const revalidate = 120;
+export const revalidate = 300;
 
 export default async function Home(props: {
   searchParams: Promise<Record<string, string | undefined>>;
