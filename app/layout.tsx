@@ -6,7 +6,6 @@ import { Footer } from "./components/footer";
 import { Providers } from "./providers";
 import { Suspense } from "react";
 import Script from "next/script";
-import { HomepageSelector } from "./components/homepage-selector";
 
 const inter = Inter({
   subsets: ["latin"],

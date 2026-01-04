@@ -2,14 +2,11 @@ import { RxPerson, RxCaretUp, RxClock, RxLink2 } from "react-icons/rx";
 import Link from "next/link";
 import { MainItemContainer } from "./main-item-container";
 import { PostActions } from "./post-actions";
-import dayjs from "dayjs";
-import relative from "dayjs/plugin/relativeTime";
 import { Timestamp } from "~/components/ui/timestamp";
 import { BiLinkExternal } from "react-icons/bi";
 import { buttonVariants } from "~/components/ui/button";
 import sanitizeHtml from "sanitize-html";
 import { replaceHnLinks } from "../post/components/comment";
-dayjs.extend(relative);
 
 export const Post = ({
   story,

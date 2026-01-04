@@ -1,15 +1,12 @@
 "use client";
 import { HTMLProps, ReactNode, useState } from "react";
 import { cn } from "~/lib/utils";
-import dayjs from "dayjs";
-import relative from "dayjs/plugin/relativeTime";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "./tooltip";
-dayjs.extend(relative);
 
 export const Timestamp = ({
   time,

@@ -1,7 +1,4 @@
-import dayjs from "dayjs";
-import relative from "dayjs/plugin/relativeTime";
-dayjs.extend(relative);
-
+import { formatDistanceToNow } from "date-fns";
 const FIELD_MAP: Map<keyof HNStory, keyof HNPWAItem> = new Map([
   ["id", "id"],
   ["title", "title"],
@@ -19,8 +16,9 @@ export function convertPostToPWA(post: HNStory): HNPWAItem {
       ret[FIELD_MAP.get(k as keyof HNStory)!] = v;
     }
   }
+
   if (ret.time)
-    ret["time_ago"] = dayjs().to(dayjs(ret.time * 1000));
+    ret["time_ago"] = formatDistanceToNow(new Date(ret.time * 1000));
 
   return ret as HNPWAItem;
 }
