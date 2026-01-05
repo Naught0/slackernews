@@ -7,6 +7,8 @@ import { HNComment } from "./comment";
 import Link from "next/link";
 import { GoArrowRight } from "react-icons/go";
 import { AnchorButtons } from "./anchor-buttons";
+import { Button } from "~/components/ui/button";
+import { ArrowDownToLine } from "lucide-react";
 
 const indentColorsClassName = [
   "border-slate-300",
@@ -74,12 +76,10 @@ const NestedComments = React.memo(
               </div>
             </Collapsible>
             {isAtMaxDepth && comment.comments.length > 0 && (
-              <div className="pl-6 pt-1 text-sm text-accent-foreground underline lg:text-base">
-                <Link
-                  href={`/post/${postId}/comment/${comment.id}`}
-                  prefetch={false}
-                >
-                  See replies
+              <div className="pl-8 pt-1 text-sm text-accent-foreground underline lg:text-base">
+                <Link href={`/comment/${comment.id}`} prefetch={false}>
+                  {comment.comments.length} repl
+                  {comment.comments.length === 1 ? "y" : "ies"}
                   <GoArrowRight className="ml-1 inline" />
                 </Link>
               </div>
@@ -90,6 +90,8 @@ const NestedComments = React.memo(
     );
   },
 );
+
+NestedComments.displayName = "NestedComments";
 
 export const VirtualThread = ({
   comments,
@@ -119,6 +121,22 @@ export const VirtualThread = ({
         overflow: "auto",
       }}
     >
+      {comments.length > 2 && (
+        <div className="mb-6 flex justify-center">
+          <Button
+            className="grid items-center justify-center text-slate-300"
+            variant="link"
+            onClick={(e) =>
+              (e.target as HTMLButtonElement).parentElement?.scrollIntoView({
+                inline: "start",
+                block: "start",
+              })
+            }
+          >
+            <ArrowDownToLine className="m-auto size-9" strokeWidth={1} />
+          </Button>
+        </div>
+      )}
       <div
         style={{
           height: `${virtualizer.getTotalSize()}px`,
