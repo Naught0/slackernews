@@ -1,8 +1,7 @@
 import { notFound } from "next/navigation";
-import { AnchorButtons } from "../components/anchor-buttons";
-import { HNThreadComponent } from "../components/thread";
 import { getItem } from "~/app/hackernews-api/hnpwa";
 import { Post } from "~/app/components/post";
+import { VirtualThread } from "../components/virtual-thread";
 
 export default async function Page({
   params,
@@ -19,15 +18,21 @@ export default async function Page({
         <Post story={thread} className="flex-grow" showHnLink />
       </div>
       <div className="flex flex-col gap-3">
-        {thread.comments?.map((comment) => (
-          <HNThreadComponent
-            postId={id}
-            op={thread.user}
-            key={comment.id}
-            {...comment}
-          />
-        ))}
-        <AnchorButtons />
+        <VirtualThread
+          comments={thread.comments}
+          postId={id}
+          op={thread.user}
+          id={0}
+          title={""}
+          points={null}
+          user={null}
+          time={0}
+          time_ago={""}
+          content={""}
+          type={"link"}
+          level={0}
+          comments_count={0}
+        />
       </div>
     </div>
   );

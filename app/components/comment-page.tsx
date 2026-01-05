@@ -5,7 +5,8 @@ import { cn } from "~/lib/utils";
 import { getItemById } from "../hackernews-api";
 import { getItem } from "../hackernews-api/hnpwa";
 import { HNComment } from "../post/components/comment";
-import { HNThreadComponent } from "../post/components/thread";
+import { VirtualThread } from "../post/components/virtual-thread";
+import { Separator } from "~/components/ui/separator";
 
 export const BackToPost = ({
   postId,
@@ -73,14 +74,22 @@ export async function CommentPage({
       {comment?.type === "comment" && (
         <HNComment postId={postId} op={comment.user} {...comment} />
       )}
-      {comment?.comments?.map((c) => (
-        <HNThreadComponent
-          key={c.id}
-          op={comment.user}
-          {...c}
-          postId={postId}
-        />
-      ))}
+      <Separator />
+      <VirtualThread
+        comments={comment?.comments ?? []}
+        postId={postId}
+        op={comment?.user ?? null}
+        id={0}
+        title={""}
+        points={null}
+        user={null}
+        time={0}
+        time_ago={""}
+        content={""}
+        type={"comment"}
+        level={0}
+        comments_count={0}
+      />
     </>
   );
 }
