@@ -3,12 +3,19 @@ services:
     image: slackernews:latest
     build: .
     restart: unless-stopped
-  nginx:
+  anubis:
+    image: ghcr.io/techarohq/anubis:latest
     restart: unless-stopped
+    command: ["-target", "http://app:3000"]
+    depends_on:
+      - app
+
+  nginx:
     image: nginx
+    restart: unless-stopped
     ports:
       - "127.0.0.1:3006:80"
     volumes:
       - ./nginx/:/etc/nginx/
     depends_on:
-      - app
+      - anubis
