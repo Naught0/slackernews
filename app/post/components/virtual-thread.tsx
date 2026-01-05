@@ -6,6 +6,7 @@ import { Collapsible } from "./collapsible";
 import { HNComment } from "./comment";
 import Link from "next/link";
 import { GoArrowRight } from "react-icons/go";
+import { AnchorButtons } from "./anchor-buttons";
 
 const indentColorsClassName = [
   "border-slate-300",
@@ -125,6 +126,7 @@ export const VirtualThread = ({
           position: "relative",
         }}
       >
+        <AnchorButtons container={parentRef.current} />
         <div
           style={{
             position: "absolute",
