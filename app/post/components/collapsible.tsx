@@ -1,5 +1,12 @@
 "use client";
-import { Activity, HTMLProps, ReactNode, useRef, useState } from "react";
+import {
+  Activity,
+  HTMLProps,
+  ReactNode,
+  useRef,
+  useState,
+  startTransition,
+} from "react";
 import { BiMessageSquareAdd, BiMessageSquareMinus } from "react-icons/bi";
 import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
@@ -21,11 +28,13 @@ export const Collapsible = ({
   const ref = useRef<HTMLDivElement>(null);
 
   function onClick() {
-    setExpanded((prev) => {
-      if (persistId) {
-        sessionStorage.setItem(persistId, prev ? "0" : "1");
-      }
-      return !prev;
+    startTransition(() => {
+      setExpanded((prev) => {
+        if (persistId) {
+          sessionStorage.setItem(persistId, prev ? "0" : "1");
+        }
+        return !prev;
+      });
     });
   }
 
