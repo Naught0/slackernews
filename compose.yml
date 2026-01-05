@@ -3,10 +3,15 @@ services:
     image: slackernews:latest
     build: .
     restart: unless-stopped
+
   anubis:
     image: ghcr.io/techarohq/anubis:latest
     restart: unless-stopped
     command: ["-target", "http://app:3000"]
+    environment:
+      POLICY_FNAME: /data/botPolicy.yaml
+    volumes:
+      - ./anubis/botPolicy.yaml:/data/botPolicy.yaml:ro
     depends_on:
       - app
 
