@@ -75,21 +75,9 @@ export async function CommentPage({
         <HNComment postId={postId} op={comment.user} {...comment} />
       )}
       <Separator />
-      <VirtualThread
-        comments={comment?.comments ?? []}
-        postId={postId}
-        op={comment?.user ?? null}
-        id={0}
-        title={""}
-        points={null}
-        user={null}
-        time={0}
-        time_ago={""}
-        content={""}
-        type={"comment"}
-        level={0}
-        comments_count={0}
-      />
+      {comment && (
+        <VirtualThread postId={postId} op={comment.user} {...comment} />
+      )}
     </>
   );
 }
