@@ -2,6 +2,8 @@
 
 an alternative frontend to hackernews.
 
+![](https://www.jamese.dev/slackernews.webp)
+
 **Features**:
 
 - [ ] Voting
