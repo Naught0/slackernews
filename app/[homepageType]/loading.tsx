@@ -1,10 +1,11 @@
+import { Skeleton } from "~/components/ui/skeleton";
 import { HomepageSelector } from "../components/homepage-selector";
 import { Post } from "../components/post";
 
 const testPosts: HNPWAFeedItem[] = [
   {
     id: 1,
-    title: "Understanding TypeScript",
+    title: "Understanding TypeScript: Or How to Stop Worrying and Love It",
     points: 120,
     user: "alice",
     time: 1713945600,
@@ -16,7 +17,7 @@ const testPosts: HNPWAFeedItem[] = [
   },
   {
     id: 2,
-    title: "Show HN: New JS framework",
+    title: "Show HN: New JS framework -- It's not what you think!",
     points: 95,
     user: "bob",
     time: 1713942000,
@@ -28,7 +29,7 @@ const testPosts: HNPWAFeedItem[] = [
   },
   {
     id: 3,
-    title: "Ask HN: Best dev setup?",
+    title: "Ask HN: Best dev setup? There isn't one, give up.",
     points: 60,
     user: "carol",
     time: 1713938400,
@@ -74,7 +75,7 @@ const testPosts: HNPWAFeedItem[] = [
     id: 7,
     title: "Show HN: Code visualizer",
     points: 45,
-    user: "frank",
+    user: "frank0ph0ne",
     time: 1713924000,
     time_ago: "9 hours ago",
     comments_count: 12,
@@ -84,9 +85,9 @@ const testPosts: HNPWAFeedItem[] = [
   },
   {
     id: 8,
-    title: "Ask HN: How to learn Rust?",
+    title: "Ask HN: How to learn Rust? lorem ipsum longer title here",
     points: 80,
-    user: "grace",
+    user: "gracias",
     time: 1713920400,
     time_ago: "10 hours ago",
     comments_count: 33,
@@ -94,9 +95,9 @@ const testPosts: HNPWAFeedItem[] = [
   },
   {
     id: 9,
-    title: "Python 3.13 Released",
+    title: "There Were BGP Anomalies During The Venezuela Blackout",
     points: 300,
-    user: "helen",
+    user: "helen the villain",
     time: 1713916800,
     time_ago: "11 hours ago",
     comments_count: 88,
@@ -106,9 +107,9 @@ const testPosts: HNPWAFeedItem[] = [
   },
   {
     id: 10,
-    title: "WebAssembly in 2025",
+    title: "WebAssembly in 2025 023420384208340238420348204083",
     points: 110,
-    user: "ian",
+    user: "ian ipsum lorem",
     time: 1713913200,
     time_ago: "12 hours ago",
     comments_count: 20,
@@ -125,14 +126,25 @@ export default function Loading() {
         <HomepageSelector />
       </div>
       <div className="flex flex-col gap-3">
-        <div className="border-color divide-y">
+        <div className="border-color flex flex-col gap-6">
           {testPosts.map((item) => (
-            <div key={item.id} className="py-3">
-              <Post story={item} />
+            <div key={item.id} className="grid gap-2 border-b pb-6">
+              <Skeleton className="w-fit text-lg lg:text-xl">
+                {item.title}
+              </Skeleton>
+              {item.url && (
+                <Skeleton className="w-fit">
+                  {new URL(item.url).hostname}
+                </Skeleton>
+              )}
+              <Skeleton className="w-fit">{item.user}</Skeleton>
+              <div className="inline-flex items-center gap-2">
+                <Skeleton className="h-8 w-20" />
+                <Skeleton className="h-8 w-20" />
+              </div>
             </div>
           ))}
         </div>
-        {/* <HomepagePagination searchParams={searchParams} /> */}
       </div>
     </div>
   );
