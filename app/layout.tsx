@@ -43,7 +43,6 @@ export default function RootLayout({
       </body>
       <Script
         defer
-        data-domain="slackernews.jamese.dev"
         src="https://plausible.jamese.dev/js/script.js"
       ></Script>
     </html>
