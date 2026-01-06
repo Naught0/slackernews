@@ -2,7 +2,8 @@ import Link from "next/link";
 import { GoArrowRight } from "react-icons/go";
 import { HNComment } from "./comment";
 import { AnchorButtons } from "./anchor-buttons";
-import { Collapsible } from "./collapsible";
+import { StaticCollapsible } from "./static-collapsible";
+import { StaticCollapseInjector } from "./useCollapse";
 
 const indentColorsClassName = [
   "border-slate-300",
@@ -39,7 +40,7 @@ const StaticNestedComments = ({
     <div className="grid items-start">
       {comments.map((comment) => (
         <div key={comment.id} className="mb-1">
-          <Collapsible
+          <StaticCollapsible
             persistId={`collapse:${comment.id}`}
             collapsedElement={
               <CollapsedComment
@@ -61,7 +62,7 @@ const StaticNestedComments = ({
                 />
               )}
             </div>
-          </Collapsible>
+          </StaticCollapsible>
 
           {isAtMaxDepth && comment.comments?.length > 0 && (
             <div className="pl-8 pt-1 text-sm text-accent-foreground underline lg:text-base">
@@ -91,10 +92,11 @@ export const StaticThread = ({
 }) => {
   return (
     <div>
+      <StaticCollapseInjector />
       <AnchorButtons container={null} />
       {comments.map((comment) => (
         <div key={comment.id} className="mb-2">
-          <Collapsible
+          <StaticCollapsible
             collapsedElement={
               <CollapsedComment
                 user={comment.user ?? ""}
@@ -104,7 +106,7 @@ export const StaticThread = ({
             persistId={`collapse:${comment.id}`}
           >
             <div
-              className={`${rightBorder} ${indentColorsClassName[0]} ml-1 max-w-screen-md pl-2`}
+              className={`${rightBorder} ${indentColorsClassName[0]} max-w-screen-md pl-2`}
             >
               <HNComment {...comment} anchor={true} postId={postId} op={op} />
               {comment.comments?.length > 0 && (
@@ -117,7 +119,7 @@ export const StaticThread = ({
                 />
               )}
             </div>
-          </Collapsible>
+          </StaticCollapsible>
         </div>
       ))}
     </div>
@@ -132,7 +134,7 @@ function CollapsedComment({
   timeAgo: string;
 }) {
   return (
-    <span className="inline-flex items-center gap-1 opacity-70">
+    <span className="collapsed inline-flex items-center gap-1 opacity-70">
       <span className="font-bold text-muted-foreground">{user}</span>
       <span className="text-xs">{timeAgo}</span>
     </span>

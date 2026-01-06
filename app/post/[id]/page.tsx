@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { getItem } from "~/app/hackernews-api/hnpwa";
 import { Post } from "~/app/components/post";
-import { VirtualThread } from "../components/virtual-thread";
+import { StaticThread } from "../components/static-thread";
 
 export default async function Page({
   params,
@@ -18,7 +18,7 @@ export default async function Page({
         <Post story={thread} className="flex-grow" showHnLink />
       </div>
       <div className="flex flex-col gap-3">
-        <VirtualThread postId={id} op={thread.user} {...thread} />
+        <StaticThread postId={id} op={thread.user} {...thread} />
       </div>
     </div>
   );
