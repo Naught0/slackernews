@@ -13,11 +13,14 @@ export function AnchorButtons({
   container: HTMLElement | null;
 }) {
   function top() {
-    container?.scrollTo({ top: 0 });
+    container?.scrollTo({ top: 0 }) ?? window.scrollTo({ top: 0 });
   }
 
   function bottom() {
-    container?.scrollTo({ top: container.scrollHeight });
+    container?.scrollTo({ top: container.scrollHeight }) ??
+      window.scrollTo({
+        top: document.body.scrollHeight,
+      });
   }
 
   function next() {
