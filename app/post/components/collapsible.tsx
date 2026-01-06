@@ -3,7 +3,6 @@ import {
   Activity,
   HTMLProps,
   ReactNode,
-  useRef,
   useState,
   startTransition,
 } from "react";
@@ -25,7 +24,6 @@ export const Collapsible = ({
   collapsedElement?: ReactNode;
 } & HTMLProps<HTMLDivElement>) => {
   const [expanded, setExpanded] = useState(getExpandedFromSession(persistId));
-  const ref = useRef<HTMLDivElement>(null);
 
   function onClick() {
     startTransition(() => {
@@ -39,7 +37,7 @@ export const Collapsible = ({
   }
 
   return (
-    <div className={cn(className, `flex`)} {...props} ref={ref}>
+    <div className={cn(className, `flex`)} {...props}>
       {canCollapse && (
         <div className="flex">
           <Button
