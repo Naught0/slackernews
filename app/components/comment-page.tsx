@@ -5,8 +5,8 @@ import { cn } from "~/lib/utils";
 import { getItemById } from "../hackernews-api";
 import { getItem } from "../hackernews-api/hnpwa";
 import { HNComment } from "../post/components/comment";
+import { VirtualThread } from "../post/components/virtual-thread";
 import { Separator } from "~/components/ui/separator";
-import { StaticThread } from "../post/components/static-thread";
 
 export const BackToPost = ({
   postId,
@@ -76,7 +76,7 @@ export async function CommentPage({
       )}
       <Separator />
       {comment && (
-        <StaticThread postId={postId} op={comment.user} {...comment} />
+        <VirtualThread postId={postId} op={comment.user} {...comment} />
       )}
     </>
   );
