@@ -17,8 +17,8 @@ export default function User({
 }) {
   return (
     <MainItemContainer className={className}>
-      <p className="inline-flex items-center gap-1.5 text-xl lg:text-2xl">
-        <SkeleWrap loading={loading}>
+      <SkeleWrap loading={loading}>
+        <p className="inline-flex items-center gap-1.5 text-xl lg:text-2xl">
           {user.id}
           <a
             href={`https://news.ycombinator.com/user?id=${user.id}`}
@@ -27,30 +27,34 @@ export default function User({
           >
             <LiaHackerNews />
           </a>
-        </SkeleWrap>
-      </p>
-      <p className="inline-flex items-center gap-0">
-        <SkeleWrap loading={loading}>
+        </p>
+      </SkeleWrap>
+      <SkeleWrap loading={loading}>
+        <p className="inline-flex items-center gap-0">
           since {new Date(user.created * 1000).toLocaleDateString()}
-        </SkeleWrap>
-      </p>
-      <p>
-        <SkeleWrap loading={loading}>
+        </p>
+      </SkeleWrap>
+      <SkeleWrap loading={loading}>
+        <p>
           <GoTriangleUp className="inline" />
           {formatNumber.format(user.karma)} points
-        </SkeleWrap>
-      </p>
-      <p>
-        <SkeleWrap loading={loading}>
+        </p>
+      </SkeleWrap>
+      <SkeleWrap loading={loading}>
+        <p>
           {formatNumber.format(user.submitted.length)} submission
           {user.submitted.length !== 1 && "s"}
-        </SkeleWrap>
-      </p>
+        </p>
+      </SkeleWrap>
 
-      <p
-        dangerouslySetInnerHTML={{ __html: sanitizeHtml(user.about) }}
-        className="text-muted-foreground"
-      ></p>
+      <SkeleWrap loading={loading}>
+        <p
+          dangerouslySetInnerHTML={{
+            __html: sanitizeHtml(user.about),
+          }}
+          className="text-muted-foreground"
+        ></p>
+      </SkeleWrap>
     </MainItemContainer>
   );
 }
