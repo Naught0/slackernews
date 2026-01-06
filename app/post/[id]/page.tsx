@@ -18,7 +18,6 @@ export default async function Page({
         <Post story={thread} className="flex-grow" showHnLink />
       </div>
       <div className="flex flex-col gap-3">
-        {/* <VirtualThread postId={id} op={thread.user} {...thread} /> */}
         <StaticThread postId={id} op={thread.user} {...thread} />
       </div>
     </div>
