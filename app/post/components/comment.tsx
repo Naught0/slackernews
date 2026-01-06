@@ -25,7 +25,7 @@ export const HNComment = (
         ) : (
           <Link
             href={`/user/${props.user}`}
-            className={isOp ? "text-link-foreground" : "text-muted-foreground"}
+            className={`font-bold ${isOp ? "text-link-foreground" : "text-muted-foreground"}`}
             prefetch={false}
           >
             {props.user}
