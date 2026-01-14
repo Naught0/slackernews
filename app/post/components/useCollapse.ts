@@ -1,28 +1,24 @@
 "use client";
-import { useEffect, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 
 function collapseComment(evt: MouseEvent) {
   const btn = evt.target as HTMLButtonElement;
   const parent = btn.closest(".collapse-comment");
   if (!parent) return console.log("NO PARENT");
 
-  parent.classList.toggle("is-hidden");
   const isHidden = parent.classList.contains("is-hidden");
   const collapsed = parent.querySelectorAll(".collapsed");
   const expanded = parent.querySelectorAll(".expanded");
 
-  if (isHidden) {
+  if (!isHidden) {
     collapsed.forEach((el) => el.classList.remove("hidden"));
     expanded.forEach((el) => el.classList.add("hidden"));
-    btn.classList.add("items-start");
-    btn.classList.remove("items-center");
   } else {
     collapsed.forEach((el) => el.classList.add("hidden"));
     expanded.forEach((el) => el.classList.remove("hidden"));
-    btn.classList.remove("items-start");
-    btn.classList.add("items-center");
   }
 
+  parent.classList.toggle("is-hidden");
   sessionStorage.setItem(parent.id, !isHidden ? "1" : "0");
 }
 
@@ -32,7 +28,6 @@ function useCollapse() {
 
     const comments = [...document.querySelectorAll(".collapse-comment")];
     const buttons = comments.map((comment) => comment.querySelector("button"));
-    console.log("Found", buttons.length, "buttons");
 
     buttons.forEach((btn) => {
       if (!btn) return;

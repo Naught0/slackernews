@@ -27,7 +27,7 @@ const StaticNestedComments = ({
   postId,
   op,
 }: {
-  comments: any[];
+  comments: HNPWAItem[];
   indentLevel: number;
   maxDepth: number;
   postId?: string;
@@ -38,43 +38,51 @@ const StaticNestedComments = ({
 
   return (
     <div className="grid items-start">
-      {comments.map((comment) => (
-        <div key={comment.id} className="mb-1">
-          <StaticCollapsible
-            persistId={`collapse:${comment.id}`}
-            collapsedElement={
-              <CollapsedComment
-                user={comment.user ?? "???"}
-                timeAgo={comment.time_ago}
-              />
-            }
-          >
-            <div className={`${rightBorder} ${indentColor} pl-2`}>
-              <HNComment {...comment} anchor={false} postId={postId} op={op} />
-
-              {!isAtMaxDepth && comment.comments?.length > 0 && (
-                <StaticNestedComments
-                  comments={comment.comments}
-                  indentLevel={indentLevel + 1}
-                  maxDepth={maxDepth}
+      {comments.map((comment) => {
+        const collapseId = `collapse:${comment.id}`;
+        return (
+          <div key={comment.id} className={`mb-1 ${collapseId}`}>
+            <StaticCollapsible
+              persistId={collapseId}
+              collapsedElement={
+                <CollapsedComment
+                  user={comment.user ?? "???"}
+                  timeAgo={comment.time_ago}
+                />
+              }
+            >
+              <div className={`${rightBorder} ${indentColor} pl-2`}>
+                <HNComment
+                  {...comment}
+                  anchor={false}
                   postId={postId}
                   op={op}
                 />
-              )}
-            </div>
-          </StaticCollapsible>
 
-          {isAtMaxDepth && comment.comments?.length > 0 && (
-            <div className="pl-8 pt-1 text-sm text-accent-foreground underline lg:text-base">
-              <Link href={`/comment/${comment.id}`} prefetch={false}>
-                {comment.comments.length} repl
-                {comment.comments.length === 1 ? "y" : "ies"}
-                <GoArrowRight className="ml-1 inline" />
-              </Link>
-            </div>
-          )}
-        </div>
-      ))}
+                {!isAtMaxDepth && comment.comments?.length > 0 && (
+                  <StaticNestedComments
+                    comments={comment.comments}
+                    indentLevel={indentLevel + 1}
+                    maxDepth={maxDepth}
+                    postId={postId}
+                    op={op}
+                  />
+                )}
+              </div>
+            </StaticCollapsible>
+
+            {isAtMaxDepth && comment.comments?.length > 0 && (
+              <div className="pl-8 pt-1 text-sm text-accent-foreground underline lg:text-base">
+                <Link href={`/comment/${comment.id}`} prefetch={false}>
+                  {comment.comments.length} repl
+                  {comment.comments.length === 1 ? "y" : "ies"}
+                  <GoArrowRight className="ml-1 inline" />
+                </Link>
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };

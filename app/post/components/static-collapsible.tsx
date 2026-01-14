@@ -1,6 +1,5 @@
 import { HTMLProps, ReactNode } from "react";
 import { BiMessageSquareAdd, BiMessageSquareMinus } from "react-icons/bi";
-import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 
 export const StaticCollapsible = ({
@@ -23,7 +22,7 @@ export const StaticCollapsible = ({
       {...props}
     >
       <button
-        className={`flex items-start gap-2 rounded-none border-none p-2 transition-colors hover:bg-white/5`}
+        className={`flex items-start gap-2 rounded-none border-none p-2 transition-colors hover:bg-white/10`}
       >
         <BiMessageSquareMinus className="expanded" strokeWidth={1} />
         <BiMessageSquareAdd className="collapsed hidden" strokeWidth={0.8} />
