@@ -19,6 +19,10 @@ function collapseComment(evt: MouseEvent) {
   }
 
   parent.classList.toggle("is-hidden");
+  // Ensure element top is at least partially above the top of the viewport
+  if (parent.getBoundingClientRect().top < 0) {
+    parent.scrollIntoView(true);
+  }
   sessionStorage.setItem(parent.id, !isHidden ? "1" : "0");
 }
 
@@ -54,7 +58,6 @@ function useCollapse() {
 }
 
 export function StaticCollapseInjector() {
-  console.log("RENDERING COLLAPSE INJECTOR");
   useCollapse();
   return null;
 }
