@@ -17,7 +17,7 @@ export const HNComment = (
   const isOp = props.user === props.op;
   return (
     <article
-      className={`${props.anchor ? "anchor " : ""}${props.deleted ? "opacity-70" : ""} flex min-w-0 flex-1 flex-col items-start gap-y-1 border-l-0 border-solid`}
+      className={`${props.anchor ? "anchor " : ""}${props.deleted ? "opacity-70" : ""} flex min-w-0 flex-1 flex-col items-start gap-y-1 border-l-0 border-solid pl-2`}
     >
       <div className="flex w-full flex-row flex-wrap items-center gap-1 text-sm lg:text-base">
         {props.deleted ? (

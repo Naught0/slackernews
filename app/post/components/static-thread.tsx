@@ -51,7 +51,7 @@ const StaticNestedComments = ({
                 />
               }
             >
-              <div className={`${rightBorder} ${indentColor} pl-2`}>
+              <div className={`${rightBorder} ${indentColor}`}>
                 <HNComment
                   {...comment}
                   anchor={false}
@@ -114,7 +114,7 @@ export const StaticThread = ({
             persistId={`collapse:${comment.id}`}
           >
             <div
-              className={`${rightBorder} ${indentColorsClassName[0]} max-w-screen-md pl-2`}
+              className={`${rightBorder} ${indentColorsClassName[0]} max-w-screen-md`}
             >
               <HNComment {...comment} anchor={true} postId={postId} op={op} />
               {comment.comments?.length > 0 && (
