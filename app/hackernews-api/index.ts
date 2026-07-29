@@ -1,14 +1,22 @@
-import { POSTS_PER_PAGE_LIMIT } from "./constants";
+import type { HNHomepageType, HNStory, HNComment, HNUser } from "~/lib/types";
+import { withHnRateLimit } from "~/lib/server/rate-limit";
 
-async function request<T extends unknown>(
-  url: string,
-  config?: RequestInit,
-): Promise<T> {
-  const resp = await fetch(
-    `https://hacker-news.firebaseio.com/v0${url}`,
-    config,
-  );
-  return (await resp.json()) as T;
+const POSTS_PER_PAGE_LIMIT = 50;
+
+async function request<T>(url: string, config?: RequestInit): Promise<T> {
+  return withHnRateLimit(async () => {
+    const resp = await fetch(
+      `https://hacker-news.firebaseio.com/v0${url}`,
+      {
+        ...config,
+        signal: AbortSignal.timeout(10_000),
+      },
+    );
+    if (!resp.ok) {
+      throw new Error(`HN API ${resp.status}: ${resp.statusText}`);
+    }
+    return (await resp.json()) as T;
+  });
 }
 
 export async function getHomepage(props?: {

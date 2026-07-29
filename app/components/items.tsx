@@ -1,3 +1,4 @@
+import type { HNPWAItem } from "~/lib/types";
 import { Collapsible } from "../post/components/collapsible";
 import { HNComment } from "../post/components/comment";
 import { Post } from "./post";

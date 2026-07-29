@@ -1,66 +1,49 @@
-import React from "react";
-import { Separator } from "~/components/ui/separator";
 import { Skeleton } from "~/components/ui/skeleton";
-import { randomChoice } from "~/lib/utils";
 
-const LoadingComment = (
-  props: HNPWAItem & { op?: string | null; postId: string },
-) => {
+function PostHeaderSkeleton() {
   return (
-    <article
-      id={`${props.id}`}
-      className={
-        "flex min-w-0 flex-1 flex-col items-start justify-between gap-3 border-l-0 border-solid pl-3"
-      }
-    >
-      <div className="flex w-full flex-row flex-wrap items-center gap-3 gap-x-1 text-sm lg:text-base">
-        <Skeleton>
-          <span className="text-muted-foreground">[deleted]</span>
-        </Skeleton>
-        <Skeleton>
-          <div className="flex flex-row items-center">30 minutes ago</div>
-        </Skeleton>
+    <div className="border-color flex flex-1 flex-row flex-wrap gap-3 border-b pb-3">
+      <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1">
+          <Skeleton className="h-6 w-80 rounded" />
+          <Skeleton className="h-4 w-48 rounded" />
+          <Skeleton className="h-4 w-24 rounded" />
+          <Skeleton className="h-4 w-32 rounded" />
+        </div>
+        <div className="flex flex-row items-center gap-3">
+          <Skeleton className="h-5 w-16 rounded" />
+          <Skeleton className="h-5 w-24 rounded" />
+          <Skeleton className="h-5 w-20 rounded" />
+        </div>
       </div>
-      <Skeleton>{props.content}</Skeleton>
-    </article>
+    </div>
   );
-};
+}
 
-function generateComment() {
-  return {
-    user: randomChoice([
-      "billy",
-      "bingus_springleMcGee",
-      "another name",
-      "dr_Octagonapus_III_Esq.",
-      "bap",
-    ]),
-    postId: "0",
-    comments: [],
-    comments_count: 0,
-    level: 0,
-    title: "test",
-    id: 0,
-    time: 0,
-    type: "comment" as HNPWAItem["type"],
-    points: 0,
-    time_ago: "80 years ago",
-    content:
-      "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat. Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat. Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat. Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident. Nostrud officia pariatur ut officia. Sit irure elit esse ea nulla sunt ex occaecat reprehenderit commodo officia dolor Lorem duis laboris cupidatat officia voluptate. Culpa proident adipisicing id nulla nisi laboris ex in Lorem sunt duis officia eiusmod. Aliqua reprehenderit commodo ex non excepteur duis sunt velit enim. Voluptate laboris sint cupidatat ullamco ut ea consectetur et est culpa et culpa duis.".slice(
-        0,
-        randomChoice([120, 300, 500, 800, 1000]),
-      ),
-  };
+function CommentSkeleton() {
+  return (
+    <div className="mb-1">
+      <div className="flex flex-col gap-2 py-2">
+        <div className="flex items-center gap-2">
+          <Skeleton className="h-3 w-20 rounded" />
+          <Skeleton className="h-3 w-12 rounded" />
+        </div>
+        <Skeleton className="h-3 w-full rounded" />
+        <Skeleton className="h-3 w-5/6 rounded" />
+      </div>
+    </div>
+  );
 }
 
 export default function Loading() {
   return (
-    <div className="flex flex-col gap-3">
-      <LoadingComment {...generateComment()} />
-      <Separator className="my-3" />
-      {[...new Array(25).keys()].map((idx) => (
-        <LoadingComment key={idx} {...generateComment()} />
-      ))}
+    <div className="flex flex-col flex-wrap gap-3">
+      <PostHeaderSkeleton />
+      <div className="flex flex-col gap-3">
+        {[...new Array(12).keys()].map((idx) => (
+          <CommentSkeleton key={idx} />
+        ))}
+      </div>
     </div>
   );
 }

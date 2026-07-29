@@ -1,14 +1,38 @@
 import { getItemById, getHomepage as getOfficialHompage } from ".";
-import { convertPostToPWA } from "./utils";
+import { withHnRateLimit } from "~/lib/server/rate-limit";
+import type { HNPWAFeedType, HNPWAFeedItem, HNPWAItem, HNStory, HNComment, HNPost } from "~/lib/types";
 
 const POSTS_PER_PAGE_LIMIT = 50;
 
-async function request<T extends unknown>(
-  url: string,
-  config?: RequestInit,
-): Promise<T> {
-  const resp = await fetch(`https://api.hnpwa.com/v0${url}.json`, config);
-  return (await resp.json()) as T;
+async function request<T>(url: string, config?: RequestInit): Promise<T> {
+  return withHnRateLimit(async () => {
+    const resp = await fetch(`https://api.hnpwa.com/v0${url}.json`, {
+      ...config,
+      signal: AbortSignal.timeout(10_000),
+    });
+    if (!resp.ok) {
+      throw new Error(`HNPWA API ${resp.status}: ${resp.statusText}`);
+    }
+    return (await resp.json()) as T;
+  });
+}
+
+function convertPostToPWA(post: HNStory): HNPWAItem {
+  return {
+    id: post.id,
+    title: post.title,
+    points: post.score,
+    user: post.by,
+    time: post.time,
+    time_ago: "",
+    content: "",
+    comments: [],
+    level: 0,
+    comments_count: post.descendants,
+    type: "link",
+    url: post.url,
+    domain: post.url ? new URL(post.url).hostname : undefined,
+  };
 }
 
 export async function getHomepage(props: {
@@ -34,6 +58,7 @@ export async function getHomepage(props: {
     items: await request<HNPWAFeedItem[]>(`/${homepageType}/${pageIndex + 1}`),
   };
 }
+
 export async function getCommentPost(
   commentId: number | string,
 ): Promise<HNPost | null> {

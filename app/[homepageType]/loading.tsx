@@ -1,3 +1,4 @@
+import type { HNPWAFeedItem } from "~/lib/types";
 import { Skeleton } from "~/components/ui/skeleton";
 import { HomepageSelector } from "../components/homepage-selector";
 import { Post } from "../components/post";

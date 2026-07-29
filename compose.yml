@@ -3,9 +3,13 @@ services:
     image: slackernews:latest
     build: .
     restart: unless-stopped
+    environment:
+      SLACKER_DB_PATH: /data/cache.db
+    volumes:
+      - cache-data:/data
 
   anubis:
-    image: ghcr.io/techarohq/anubis:latest
+    image: ghcr.io/techarohq/anubis:v1.26.2
     restart: unless-stopped
     command: ["-target", "http://app:3000"]
     environment:
@@ -24,3 +28,6 @@ services:
       - ./nginx/:/etc/nginx/
     depends_on:
       - anubis
+
+volumes:
+  cache-data:

@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import Homepage from "../components/Homepage";
+import type { HNPWAFeedType } from "~/lib/types";
 
 export const revalidate = 300;
 
