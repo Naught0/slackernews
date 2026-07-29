@@ -40,6 +40,11 @@ bots:
   - import: (data)/crawlers/_allow-good.yaml
   # Challenge Firefox AI previews
   - import: (data)/clients/x-firefox-ai.yaml
+  # Allow Google-owned user-triggered fetchers (Translate, Read Aloud, Messages link previews)
+  # by their published IP ranges. Prevents the infinite-challenge loop for visitors using
+  # Google Translate while still blocking Googlebot's generic crawler.
+  # https://github.com/TecharoHQ/anubis/blob/v1.26.2/data/clients/google-user-triggered-fetchers.yaml
+  - import: (data)/clients/google-user-triggered-fetchers.yaml
 
   # Allow common "keeping the internet working" routes (well-known, favicon, robots.txt)
   - import: (data)/common/keep-internet-working.yaml

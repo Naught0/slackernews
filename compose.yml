@@ -9,7 +9,7 @@ services:
       - cache-data:/data
 
   anubis:
-    image: ghcr.io/techarohq/anubis:latest
+    image: ghcr.io/techarohq/anubis:v1.26.2
     restart: unless-stopped
     command: ["-target", "http://app:3000"]
     environment:
