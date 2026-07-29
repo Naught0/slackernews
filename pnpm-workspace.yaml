@@ -1,0 +1,5 @@
+allowBuilds:
+  '@sentry/cli': false
+  better-sqlite3: false
+  sharp: false
+  unrs-resolver: false

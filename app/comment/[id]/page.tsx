@@ -1,5 +1,5 @@
 import { RedirectType, notFound, permanentRedirect } from "next/navigation";
-import { getCommentPost } from "~/app/hackernews-api/hnpwa";
+import { getParentPost } from "~/lib/server/hn";
 
 export const revalidate = 120;
 
@@ -9,7 +9,7 @@ export default async function Page({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const post = await getCommentPost(id);
+  const post = await getParentPost(id);
   if (!post) return notFound();
 
   if (post.id.toString() === id) {

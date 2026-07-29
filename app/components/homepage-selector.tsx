@@ -14,6 +14,7 @@ import { GoClock } from "react-icons/go";
 import { BsQuestionLg } from "react-icons/bs";
 import { HiOutlinePresentationChartLine } from "react-icons/hi";
 import { IconType } from "react-icons/lib";
+import type { HNPWAFeedType, HNHomepageType } from "~/lib/types";
 
 const Container = (props: { children: React.ReactNode }) => {
   return (

@@ -2,6 +2,7 @@ import { HomepagePagination } from "~/components/ui/homepage-pagination";
 import { Post } from "~/app/components/post";
 import { getHomepage } from "../hackernews-api/hnpwa";
 import { HomepageSelector } from "./homepage-selector";
+import type { HNPWAFeedType } from "~/lib/types";
 
 export default async function Homepage({
   searchParams,

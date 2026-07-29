@@ -1,2 +1,0 @@
-export const DEFAULT_CACHE_TTL_SECONDS = 180;
-export const POSTS_PER_PAGE_LIMIT = 50;
