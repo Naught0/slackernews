@@ -7,7 +7,7 @@ import { Timestamp } from "~/components/ui/timestamp";
 import { BiLinkExternal } from "react-icons/bi";
 import { buttonVariants } from "~/components/ui/button";
 import sanitizeHtml from "sanitize-html";
-import { replaceHnLinks } from "../post/components/comment";
+import { replaceHnLinks } from "~/lib/client/hn-links";
 
 interface StoryProps {
   id: number;

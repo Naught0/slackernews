@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getItem } from "~/lib/server/hn";
-import { getCachedComment } from "~/lib/server/cache";
+import { getCachedComment, getCachedPost, upsertComments } from "~/lib/server/cache";
 import type { HNComment } from "~/lib/types";
 import type { CachedComment } from "~/lib/types";
 
@@ -40,6 +40,9 @@ export async function GET(
   }
 
   const hn = item as HNComment;
+
+  tryWriteThrough(hn);
+
   return NextResponse.json({
     cached: false,
     comment: {
@@ -53,4 +56,30 @@ export async function GET(
       deleted: hn.deleted ?? false,
     },
   } satisfies CommentResponse);
+}
+
+function tryWriteThrough(hn: HNComment) {
+  const parentComment = getCachedComment(hn.parent);
+  if (!parentComment) return;
+
+  const post = getCachedPost(parentComment.post_id);
+  if (!post) return;
+
+  upsertComments(
+    [
+      {
+        id: hn.id,
+        post_id: parentComment.post_id,
+        parent_id: hn.parent,
+        level: parentComment.level + 1,
+        by: hn.by ?? null,
+        time: hn.time,
+        content: hn.text ?? null,
+        kids: hn.kids ?? [],
+        dead: hn.dead ?? false,
+        deleted: hn.deleted ?? false,
+      },
+    ],
+    post.post.time,
+  );
 }

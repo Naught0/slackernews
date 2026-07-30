@@ -1,8 +1,10 @@
 "use client";
 import React, { useEffect, useState, useMemo } from "react";
+import { formatDistanceToNow } from "date-fns";
 import { FadeIn } from "~/components/ui/fade-in";
 import { Skeleton } from "~/components/ui/skeleton";
 import { HNComment } from "~/app/post/components/comment";
+import { Collapsible } from "~/app/post/components/collapsible";
 import {
   fetchSubtreeBatched,
   type HydratedComment,
@@ -254,38 +256,52 @@ function SubtreeNode({
   op?: string | null;
 }) {
   const children = childrenByParent.get(comment.id) ?? [];
+  const collapsedIndicator = (
+    <span className="inline-flex items-center gap-1 text-xs italic text-muted-foreground">
+      <span className="font-bold not-italic text-muted-foreground">
+        {comment.by ?? "[deleted]"}
+      </span>
+      <span>{formatDistanceToNow(comment.time * 1000, { addSuffix: true })}</span>
+    </span>
+  );
   return (
     <div className="mb-1">
-      <div
-        className={`border-l-2 border-solid ${depthColor(comment.level)} pl-2 ml-2`}
+      <Collapsible
+        persistId={`collapse:${comment.id}`}
+        className="flex"
+        collapsedElement={collapsedIndicator}
       >
-        <HNComment
-          id={comment.id}
-          user={comment.by}
-          time={comment.time}
-          content={comment.content}
-          deleted={comment.deleted}
-          dead={comment.dead}
-          op={op}
-          postId={String(postId)}
-        />
-        {children.length > 0 &&
-          children.map((child) => (
-            <SubtreeNode
-              key={child.id}
-              comment={child}
-              allNodes={allNodes}
-              childrenByParent={childrenByParent}
-              postId={postId}
-              op={op}
-            />
-          ))}
-        {children.length === 0 && comment.kids.length > 0 && (
-          <div className="pl-4 pt-1 text-xs text-muted-foreground italic">
-            {comment.kids.length} repl{comment.kids.length === 1 ? "y" : "ies"} not loaded
-          </div>
-        )}
-      </div>
+        <div
+          className={`border-l-2 border-solid ${depthColor(comment.level)} pl-2 ml-2`}
+        >
+          <HNComment
+            id={comment.id}
+            user={comment.by}
+            time={comment.time}
+            content={comment.content}
+            deleted={comment.deleted}
+            dead={comment.dead}
+            op={op}
+            postId={String(postId)}
+          />
+          {children.length > 0 &&
+            children.map((child) => (
+              <SubtreeNode
+                key={child.id}
+                comment={child}
+                allNodes={allNodes}
+                childrenByParent={childrenByParent}
+                postId={postId}
+                op={op}
+              />
+            ))}
+          {children.length === 0 && comment.kids.length > 0 && (
+            <div className="pl-4 pt-1 text-xs text-muted-foreground italic">
+              {comment.kids.length} repl{comment.kids.length === 1 ? "y" : "ies"} not loaded
+            </div>
+          )}
+        </div>
+      </Collapsible>
     </div>
   );
 }
