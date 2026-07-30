@@ -46,14 +46,14 @@ export default async function Page({
     pageIndex * perPageNum + perPageNum,
   );
 
-  const rawItems = (await Promise.all(
-    pageIds.map((itemId) => getItem(itemId)),
-  )).filter((item): item is HNAnyItem => item != null);
+  const rawItems = (
+    await Promise.all(pageIds.map((itemId) => getItem(itemId)))
+  ).filter((item): item is HNAnyItem => item != null);
 
   const items = rawItems.map(toHNPWAItem);
 
   return (
-    <div className="flex w-full flex-col gap-3 md:max-w-screen-md lg:gap-6">
+    <div className="flex w-full flex-col gap-3 md:max-w-screen-lg lg:gap-6">
       <div className="border-color flex flex-row items-start gap-3 border-b pb-3">
         <User user={user} className="flex-1" />
       </div>
