@@ -1,4 +1,19 @@
 services:
+  ingestor:
+    image: slackernews:latest
+    build: .
+    command: ["node", "scripts/ingest-bundle.js"]
+    restart: unless-stopped
+    environment:
+      SLACKER_DB_PATH: /data/cache.db
+      INGEST_UPDATES_MS: "30000"
+      INGEST_FEEDS_MS: "300000"
+      INGEST_CONCURRENCY: "16"
+      INGEST_BACKFILL: "500"
+      INGEST_FEEDS: "top,best,new,ask,show,job"
+    volumes:
+      - cache-data:/data
+
   app:
     image: slackernews:latest
     build: .

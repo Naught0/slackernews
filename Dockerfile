@@ -34,6 +34,8 @@ RUN \
   else echo "Lockfile not found." && exit 1; \
   fi
 
+RUN corepack enable pnpm && pnpm run build:ingest
+
 # Production image, copy all the files and run next
 FROM base AS runner
 WORKDIR /app
@@ -48,6 +50,10 @@ COPY --from=builder /app/public ./public
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
+
+COPY scripts ./scripts
+COPY lib ./lib
+COPY tsconfig.json ./tsconfig.json
 
 RUN mkdir -p /data
 
