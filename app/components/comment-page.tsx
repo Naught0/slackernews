@@ -1,18 +1,15 @@
+"use client";
+import { useQuery } from "@tanstack/react-query";
 import { notFound } from "next/navigation";
 import { GoArrowLeft, GoArrowUp } from "react-icons/go";
 import Link from "next/link";
 import { cn } from "~/lib/utils";
-import { getItem, getParentPost } from "~/lib/server/hn";
-import { getCachedSubtree, getCachedPost } from "~/lib/server/cache";
 import { HNComment } from "../post/components/comment";
 import { Separator } from "~/components/ui/separator";
 import { Post } from "./post";
 import { CommentSubtree } from "./comment-subtree";
-import type {
-  HNComment as HNCommentType,
-  HNPost,
-  CachedComment,
-} from "~/lib/types";
+import { fetchHnItem } from "~/lib/hn";
+import type { HnRawItem } from "~/lib/hn";
 
 export const BackToPost = ({
   postId,
@@ -29,49 +26,69 @@ export const BackToPost = ({
   );
 };
 
-function toHydrated(
-  cached: CachedComment[],
-  postId: number,
-): import("~/lib/client/waterfall").HydratedComment[] {
-  return cached.map((c) => ({
-    id: c.id,
-    post_id: postId,
-    parent_id: c.parent_id,
-    level: c.level,
-    by: c.by,
-    time: c.time,
-    content: c.content,
-    kids: c.kids,
-    dead: c.dead,
-    deleted: c.deleted,
-  }));
-}
-
-export async function CommentPage({
+export function CommentPage({
   commentId,
   postId,
 }: {
   commentId: string;
   postId?: string;
 }) {
-  const item = await getItem(commentId);
-  if (!item || (item as HNCommentType).type !== "comment") return notFound();
+  const commentIdNum = parseInt(commentId, 10);
 
-  const comment = item as HNCommentType;
+  const { data: item, isLoading } = useQuery({
+    queryKey: ["item", commentIdNum],
+    queryFn: () => fetchHnItem(commentIdNum),
+  });
+
+  if (!isLoading && item && item.type !== "comment") {
+    notFound();
+  }
+
+  if (isLoading) {
+    return <div className="text-muted-foreground p-4 text-sm">Loading comment...</div>;
+  }
+
+  if (!item) {
+    return <div className="text-muted-foreground p-4 text-sm">Comment not found.</div>;
+  }
+
+  return <CommentContent comment={item as HnRawItem} commentId={commentId} postId={postId} />;
+}
+
+function CommentContent({
+  comment,
+  commentId,
+  postId,
+}: {
+  comment: HnRawItem;
+  commentId: string;
+  postId?: string;
+}) {
+  const parentId = comment.parent;
+  const commentIdNum = parseInt(commentId, 10);
+
+  const { data: postItem } = useQuery({
+    queryKey: ["item", postId ? parseInt(postId, 10) : parentId],
+    queryFn: () => fetchHnItem(postId ? parseInt(postId, 10) : parentId),
+    enabled: Boolean(postId || parentId),
+  });
+
+  const resolvedPostId = postId ?? (postItem?.type !== "comment" ? String(postItem?.id) : undefined);
+  const resolvedPost = postItem && postItem.type !== "comment" ? postItem : null;
 
   const contextLink = () => {
-    if (!comment.parent) return null;
+    if (!parentId) return null;
 
-    const parentId = comment.parent.toString();
-    if (parentId === postId) {
+    const parentIdStr = parentId.toString();
+    if (parentIdStr === postId) {
       return <BackToPost postId={postId!} />;
     }
-    if (postId && comment.parent) {
+    if (postId && parentId) {
       return (
         <div className="border-color flex flex-row divide-x">
           <BackToPost postId={postId} className="pr-3" />
           <Link
-            href={`/post/${postId}/comment/${comment.parent}`}
+            href={`/post/${postId}/comment/${parentId}`}
             className="px-2"
             prefetch={false}
           >
@@ -84,7 +101,7 @@ export async function CommentPage({
 
     return (
       <Link
-        href={`/comment/${comment.parent}`}
+        href={`/comment/${parentId}`}
         className="underline"
         prefetch={false}
       >
@@ -93,67 +110,37 @@ export async function CommentPage({
     );
   };
 
-  const commentIdNum = parseInt(commentId, 10);
-  const resolvedPostId = postId
-    ? parseInt(postId, 10)
-    : await (async () => {
-        const parent = await getParentPost(commentIdNum);
-        return parent?.id ?? null;
-      })();
-
-  const cachedSubtree = !isNaN(commentIdNum)
-    ? getCachedSubtree(commentIdNum, 100)
-    : null;
-
-  const cachedPost = resolvedPostId
-    ? getCachedPost(resolvedPostId)
-    : null;
-
-  let post: HNPost | null = cachedPost?.post ?? null;
-  if (!post && resolvedPostId) {
-    const item = await getItem(resolvedPostId);
-    if (item) {
-      const t = (item as { type?: string }).type;
-      if (t && t !== "comment") {
-        post = item as HNPost;
-      }
-    }
-  }
-
-  const postTime = post?.time ?? comment.time;
-  const op = post?.by ?? null;
+  const op = resolvedPost?.by ?? null;
 
   return (
     <>
-      {post && (
+      {resolvedPost && (
         <>
-          <Post story={post} showHnLink />
+          <Post story={resolvedPost as any} showHnLink showText />
           <Separator />
         </>
       )}
       <div className="mb-3 text-sm md:text-base">
-        {comment.parent && contextLink()}
+        {parentId && contextLink()}
       </div>
       {comment.type === "comment" && (
         <HNComment
           id={comment.id}
-          user={comment.by}
+          user={comment.by ?? null}
           time={comment.time}
           content={comment.text ?? null}
           deleted={comment.deleted}
           dead={comment.dead}
-          postId={postId}
+          postId={postId ?? (resolvedPostId ? resolvedPostId : undefined)}
           anchor
         />
       )}
       <Separator />
-      {resolvedPostId !== null && !isNaN(commentIdNum) ? (
+      {resolvedPostId ? (
         <CommentSubtree
           rootId={commentIdNum}
-          postId={resolvedPostId}
-          postTime={postTime}
+          postId={parseInt(resolvedPostId, 10) || commentIdNum}
           op={op}
-          initialComments={cachedSubtree ? toHydrated(cachedSubtree, resolvedPostId) : undefined}
         />
       ) : (
         <div className="text-muted-foreground p-4 text-sm">

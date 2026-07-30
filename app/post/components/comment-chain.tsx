@@ -7,13 +7,35 @@ import { Collapsible } from "./collapsible";
 import { CommentBody } from "~/components/comment-body";
 import { Skeleton } from "~/components/ui/skeleton";
 import { sanitizeComment } from "~/lib/client/sanitize-comment";
-import {
-  fetchServerComment,
-  fetchHnComment,
-} from "~/lib/client/comment-source";
+import { fetchHnComment } from "~/lib/hn";
 
-const VIEWPORT_PX = 50;
 const MAX_INLINE_DEPTH = 4;
+const VIEWPORT_MARGIN = 200;
+
+function useNearViewport() {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [near, setNear] = useState(false);
+  useEffect(() => {
+    if (near) return;
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setNear(true);
+            obs.disconnect();
+            break;
+          }
+        }
+      },
+      { rootMargin: `${VIEWPORT_MARGIN}px` },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [near]);
+  return { ref, near };
+}
 
 function ChainSkeleton() {
   return (
@@ -65,52 +87,22 @@ function SeeInContext({
   );
 }
 
-function useNearViewport(rootMargin = VIEWPORT_PX) {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const [near, setNear] = useState(false);
-  useEffect(() => {
-    if (near) return;
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setNear(true);
-            obs.disconnect();
-            break;
-          }
-        }
-      },
-      { rootMargin: `${rootMargin}px` },
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [rootMargin, near]);
-  return { ref, near };
-}
-
 export function CommentChain(props: {
   rootId: number;
   depth: number;
   op?: string;
   postId?: string;
-  source: "server" | "hn";
-  eager?: boolean;
 }) {
+  const isTopLevel = props.depth === 1;
   const { ref, near } = useNearViewport();
-  const shouldFetch = props.eager || near;
+  const shouldFetch = isTopLevel || near;
 
   const q = useQuery({
     queryKey: ["comment", props.rootId],
-    queryFn: () =>
-      props.source === "server"
-        ? fetchServerComment(props.rootId)
-        : fetchHnComment(props.rootId),
+    queryFn: () => fetchHnComment(props.rootId),
     enabled: shouldFetch,
-    staleTime: Infinity,
-    gcTime: 1000 * 60 * 60 * 24,
     retry: 1,
+    gcTime: 1000 * 60 * 60 * 24,
   });
 
   const [sanitized, setSanitized] = useState<string | null>(null);
@@ -128,23 +120,11 @@ export function CommentChain(props: {
     setSanitized(null);
   }, [item]);
 
-  if (!shouldFetch) {
-    return (
-      <div ref={ref}>
-        <ChainSkeleton />
-      </div>
-    );
-  }
-
   if (q.isError) {
-    return (
-      <div ref={ref}>
-        <FailedPlaceholder id={props.rootId} />
-      </div>
-    );
+    return <FailedPlaceholder id={props.rootId} />;
   }
 
-  if (q.isLoading || !item) {
+  if (!shouldFetch || q.isLoading || !item) {
     return (
       <div ref={ref}>
         <ChainSkeleton />
@@ -219,7 +199,6 @@ export function CommentChain(props: {
                 rootId={kidId}
                 depth={props.depth + 1}
                 op={props.op}
-                source={props.source}
                 postId={props.postId}
               />
             ))}

@@ -14,7 +14,7 @@ import { GoClock } from "react-icons/go";
 import { BsQuestionLg } from "react-icons/bs";
 import { HiOutlinePresentationChartLine } from "react-icons/hi";
 import { IconType } from "react-icons/lib";
-import type { HNPWAFeedType, HNHomepageType } from "~/lib/types";
+import type { HNHomepageType } from "~/lib/types";
 
 const Container = (props: { children: React.ReactNode }) => {
   return (
@@ -44,7 +44,7 @@ const Job = () => <HomepageLink icon={GoBriefcase}>job</HomepageLink>;
 
 const compMap: Record<
   string,
-  { component: () => JSX.Element; type: HNPWAFeedType | "best" }
+  { component: () => JSX.Element; type: string }
 > = {
   top: { type: "news", component: Top },
   ask: { type: "ask", component: Ask },

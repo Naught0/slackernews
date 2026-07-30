@@ -1,25 +1,19 @@
+"use client";
+import { use } from "react";
 import { redirect } from "next/navigation";
 import Homepage from "../components/Homepage";
-import type { HNPWAFeedType } from "~/lib/types";
 
-export const revalidate = 300;
+const VALID_TYPES = ["show", "news", "ask", "jobs", "newest", "best"];
 
-export default async function Home(props: {
+export default function Home(props: {
   searchParams: Promise<Record<string, string | undefined>>;
-  params: Promise<{ homepageType: HNPWAFeedType }>;
+  params: Promise<{ homepageType: string }>;
 }) {
-  const { homepageType } = await props.params;
-  if (
-    !(
-      ["show", "news", "ask", "jobs", "newest", "best"] as (
-        | HNPWAFeedType
-        | "best"
-      )[]
-    ).includes(homepageType)
-  ) {
-    return redirect("/");
+  const { homepageType } = use(props.params);
+  if (!VALID_TYPES.includes(homepageType)) {
+    redirect("/");
   }
   return (
-    <Homepage searchParams={await props?.searchParams} type={homepageType} />
+    <Homepage searchParams={use(props.searchParams)} type={homepageType} />
   );
 }

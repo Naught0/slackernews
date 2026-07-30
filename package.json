@@ -7,9 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "init:prod": "git checkout main && git pull && pnpm install && pnpm build && pnpm start",
-    "build:ingest": "pnpm exec esbuild scripts/ingest.ts --bundle --platform=node --external:better-sqlite3 --outfile=scripts/ingest-bundle.js",
-    "ingest": "pnpm build:ingest && node --env-file=.env scripts/ingest-bundle.js"
+    "init:prod": "git checkout main && git pull && pnpm install && pnpm build && pnpm start"
   },
   "dependencies": {
     "@radix-ui/react-dropdown-menu": "^2.1.16",
@@ -21,7 +19,7 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "@sentry/nextjs": "^10.32.1",
     "@tanstack/react-query": "^5.29.0",
-    "better-sqlite3": "^11.8.1",
+
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
@@ -38,13 +36,13 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.12",
-    "@types/better-sqlite3": "^7.6.12",
+
     "@types/node": "^25.0.3",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@types/sanitize-html": "^2.11.0",
     "autoprefixer": "^10.0.1",
-    "esbuild": "^0.28.1",
+
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
     "postcss": "^8",

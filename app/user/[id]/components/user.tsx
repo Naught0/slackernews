@@ -2,7 +2,7 @@ import { GoTriangleUp } from "react-icons/go";
 import { LiaHackerNews } from "react-icons/lia";
 import { MainItemContainer } from "~/app/components/main-item-container";
 import sanitizeHtml from "sanitize-html";
-import type { HNUser } from "~/lib/types";
+import type { UserView } from "~/lib/hn";
 
 import { SkeleWrap } from "~/components/ui/skeleton";
 
@@ -12,7 +12,7 @@ export default function User({
   loading,
   className,
 }: {
-  user: HNUser;
+  user: UserView;
   loading?: boolean;
   className?: string;
 }) {

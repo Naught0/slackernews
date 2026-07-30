@@ -1,11 +1,11 @@
+"use client";
+import { use } from "react";
 import Homepage from "./components/Homepage";
 
-export const revalidate = 120;
-
-export default async function Home({
+export default function Home({
   searchParams,
 }: {
   searchParams: Promise<Record<string, string | undefined>>;
 }) {
-  return <Homepage searchParams={await searchParams} type="news" />;
+  return <Homepage searchParams={use(searchParams)} type="news" />;
 }

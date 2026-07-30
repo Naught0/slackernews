@@ -1,64 +1,27 @@
 "use client";
-import { useEffect } from "react";
 import Link from "next/link";
-import { useQueryClient } from "@tanstack/react-query";
 import { CommentCascade } from "./comment-cascade";
-import { CachedCommentsList } from "./cached-comments";
-import { toCommentView } from "~/lib/client/comment-source";
-import type { StoryResponse, SubtreeNode } from "~/lib/types";
-
-function seedSubtree(
-  qc: ReturnType<typeof useQueryClient>,
-  node: SubtreeNode,
-) {
-  qc.setQueryData(["comment", node.comment.id], toCommentView(node.comment));
-  for (const child of node.children) {
-    seedSubtree(qc, child);
-  }
-}
 
 export function Thread({
   postId,
   currentPage,
   totalPages,
-  data,
+  topLevelIds,
+  op,
 }: {
   postId: string;
   currentPage: number;
   totalPages: number;
-  data: StoryResponse;
+  topLevelIds: number[];
+  op: string;
 }) {
-  const qc = useQueryClient();
-
-  useEffect(() => {
-    if (data.stale) return;
-    for (const item of data.initialSubtree) {
-      if (item.cached) {
-        qc.setQueryData(["comment", item.id], toCommentView(item.comment));
-        for (const child of item.children) {
-          seedSubtree(qc, child);
-        }
-      }
-    }
-  }, [data, qc]);
-
   return (
     <div className="flex flex-col gap-4">
-      {data.stale ? (
-        <CommentCascade
-          topLevelIds={data.topLevelIds}
-          source="hn"
-          op={data.post.by}
-          postId={postId}
-        />
-      ) : (
-        <CachedCommentsList
-          initialSubtree={data.initialSubtree}
-          postId={postId}
-          postTime={data.post.time}
-          op={data.post.by}
-        />
-      )}
+      <CommentCascade
+        topLevelIds={topLevelIds}
+        op={op}
+        postId={postId}
+      />
       {totalPages > 1 && (
         <Pagination
           postId={postId}
@@ -79,10 +42,8 @@ function Pagination({
   currentPage: number;
   totalPages: number;
 }) {
-  const prevPage = currentPage - 1;
-  const nextPage = currentPage + 1;
-  const prevHref = prevPage > 0 ? `/post/${postId}?page=${prevPage}` : null;
-  const nextHref = nextPage < totalPages ? `/post/${postId}?page=${nextPage}` : null;
+  const prevHref = currentPage > 1 ? `/post/${postId}?page=${currentPage - 1}` : null;
+  const nextHref = currentPage < totalPages ? `/post/${postId}?page=${currentPage + 1}` : null;
 
   return (
     <div className="flex justify-center gap-4 py-6 text-sm lg:text-base">
@@ -100,7 +61,7 @@ function Pagination({
         </span>
       )}
       <span className="text-muted-foreground flex items-center">
-        Page {currentPage + 1} of {totalPages}
+        Page {currentPage} of {totalPages}
       </span>
       {nextHref ? (
         <Link

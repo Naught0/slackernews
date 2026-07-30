@@ -31,11 +31,13 @@ export const Post = ({
   story,
   className,
   showHnLink,
+  showText = false,
   prefetch = true,
 }: {
   story: StoryProps;
   className?: string;
   showHnLink?: boolean;
+  showText?: boolean;
   prefetch?: boolean;
 }) => {
   const user = story.user ?? story.by ?? null;
@@ -109,7 +111,7 @@ export const Post = ({
           </div>
         )}
       </div>
-      {content && (
+      {showText && content && (
         <article
           className="prose prose-sm prose-slate max-w-none border-l-2 pl-3 dark:prose-invert md:prose-base"
           dangerouslySetInnerHTML={{
