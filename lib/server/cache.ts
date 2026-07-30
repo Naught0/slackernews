@@ -1,6 +1,6 @@
 import Database from "better-sqlite3";
 import type { CachedComment, HNPost, HNComment } from "../types";
-import { isFresh, TWO_MONTHS_SECONDS } from "../types";
+import { isFresh, MAX_CACHE_AGE_SECONDS } from "../types";
 import { getItem } from "./hn";
 
 let _db: Database.Database | null = null;
@@ -42,6 +42,7 @@ export function db(): Database.Database {
   _db = new Database(process.env.SLACKER_DB_PATH ?? "/data/cache.db");
   _db.pragma("journal_mode = WAL");
   _db.pragma("synchronous = NORMAL");
+  _db.pragma("busy_timeout = 5000");
   _db.exec(SCHEMA);
   return _db;
 }
@@ -344,10 +345,8 @@ export async function prefetchSubtree(
   }
 }
 
-const FOUR_MONTHS_SECONDS = TWO_MONTHS_SECONDS * 2;
-
 export function evictStaleCache(): { posts: number; comments: number } {
-  const cutoff = Math.floor(Date.now() / 1000) - FOUR_MONTHS_SECONDS;
+  const cutoff = Math.floor(Date.now() / 1000) - MAX_CACHE_AGE_SECONDS;
   const posts = db().prepare("DELETE FROM posts WHERE cached_at < ?").run(cutoff).changes;
   const comments = db().prepare("DELETE FROM comments WHERE cached_at < ?").run(cutoff).changes;
   return { posts, comments };

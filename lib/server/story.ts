@@ -94,6 +94,7 @@ export async function getStoryPage({
       perPage: PER_PAGE,
       initialSubtree: buildInitialSubtree(pageIds, MAX_INITIAL_DEPTH),
       cacheable: true,
+      stale: false,
     };
   }
 
@@ -137,16 +138,19 @@ export async function getStoryPage({
       perPage: PER_PAGE,
       initialSubtree: buildInitialSubtree(topPage, MAX_INITIAL_DEPTH),
       cacheable: true,
+      stale: false,
     };
   }
 
+  const stale = !cacheable;
   const pageIds = kids.slice(page * PER_PAGE, (page + 1) * PER_PAGE);
   return {
     post: item as unknown as HNPost,
     topLevelIds: kids,
     page,
     perPage: PER_PAGE,
-    initialSubtree: pageIds.map((id) => ({ id, cached: false as const })),
+    initialSubtree: stale ? [] : pageIds.map((id) => ({ id, cached: false as const })),
     cacheable,
+    stale,
   };
 }

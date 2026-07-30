@@ -122,6 +122,7 @@ export interface StoryResponse {
     | { id: number; cached: false }
   >;
   cacheable: boolean;
+  stale: boolean;
 }
 
 export interface CommentResponse {
@@ -175,9 +176,5 @@ export interface HNPWAFeedItem {
 }
 
 export const PER_PAGE = 20;
-export const MAX_INITIAL_DEPTH = 3;
-export const TWO_MONTHS_SECONDS = 60 * 60 * 24 * 60;
-
-export function isFresh(postTime: number, now: number = Date.now() / 1000) {
-  return now - postTime < TWO_MONTHS_SECONDS;
-}
+export const MAX_INITIAL_DEPTH = 4;
+export { MAX_CACHE_AGE_SECONDS, isFresh } from "./server/freshness";

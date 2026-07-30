@@ -41,3 +41,4 @@ next-env.d.ts
 .htpasswd
 
 *.db*
+scripts/ingest-bundle.js
