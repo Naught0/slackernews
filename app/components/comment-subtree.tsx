@@ -12,19 +12,6 @@ import {
   type BatchFetchResponse,
 } from "~/lib/client/waterfall";
 
-function depthColor(level: number) {
-  const colors = [
-    "border-slate-300",
-    "border-slate-400",
-    "border-slate-500",
-    "border-slate-600",
-    "border-zinc-400",
-    "border-zinc-500",
-    "border-zinc-600",
-  ];
-  return colors[(level - 1) % colors.length];
-}
-
 function CommentSkeleton() {
   return (
     <div className="mb-1">
@@ -270,37 +257,34 @@ function SubtreeNode({
         persistId={`collapse:${comment.id}`}
         className="flex"
         collapsedElement={collapsedIndicator}
+        indentLevel={comment.level}
       >
-        <div
-          className={`border-l-2 border-solid ${depthColor(comment.level)} pl-2 ml-2`}
-        >
-          <HNComment
-            id={comment.id}
-            user={comment.by}
-            time={comment.time}
-            content={comment.content}
-            deleted={comment.deleted}
-            dead={comment.dead}
-            op={op}
-            postId={String(postId)}
-          />
-          {children.length > 0 &&
-            children.map((child) => (
-              <SubtreeNode
-                key={child.id}
-                comment={child}
-                allNodes={allNodes}
-                childrenByParent={childrenByParent}
-                postId={postId}
-                op={op}
-              />
-            ))}
-          {children.length === 0 && comment.kids.length > 0 && (
-            <div className="pl-4 pt-1 text-xs text-muted-foreground italic">
-              {comment.kids.length} repl{comment.kids.length === 1 ? "y" : "ies"} not loaded
-            </div>
-          )}
-        </div>
+        <HNComment
+          id={comment.id}
+          user={comment.by}
+          time={comment.time}
+          content={comment.content}
+          deleted={comment.deleted}
+          dead={comment.dead}
+          op={op}
+          postId={String(postId)}
+        />
+        {children.length > 0 &&
+          children.map((child) => (
+            <SubtreeNode
+              key={child.id}
+              comment={child}
+              allNodes={allNodes}
+              childrenByParent={childrenByParent}
+              postId={postId}
+              op={op}
+            />
+          ))}
+        {children.length === 0 && comment.kids.length > 0 && (
+          <div className="pl-4 pt-1 text-xs text-muted-foreground italic">
+            {comment.kids.length} repl{comment.kids.length === 1 ? "y" : "ies"} not loaded
+          </div>
+        )}
       </Collapsible>
     </div>
   );

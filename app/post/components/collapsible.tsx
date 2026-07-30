@@ -1,27 +1,22 @@
 "use client";
-import {
-  Activity,
-  HTMLProps,
-  ReactNode,
-  useRef,
-  useState,
-  startTransition,
-} from "react";
+import { HTMLProps, ReactNode, useRef, useState, startTransition } from "react";
+import { BiMessageSquareAdd, BiMessageSquareMinus } from "react-icons/bi";
+import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 
 const BORDER_COLORS = [
+  "border-slate-300",
   "border-slate-400",
-  "border-sky-400",
-  "border-teal-400",
-  "border-amber-400",
-  "border-rose-400",
-  "border-indigo-400",
-  "border-emerald-400",
+  "border-slate-500",
+  "border-slate-600",
+  "border-zinc-400",
+  "border-zinc-500",
+  "border-zinc-600",
 ] as const;
 
 export function getBorderColorForDepth(depth: number) {
   const n = BORDER_COLORS.length;
-  return BORDER_COLORS[((depth - 1) % n + n) % n];
+  return BORDER_COLORS[(((depth - 1) % n) + n) % n];
 }
 
 export const Collapsible = ({
@@ -40,7 +35,7 @@ export const Collapsible = ({
   indentLevel?: number;
 } & HTMLProps<HTMLDivElement>) => {
   const [expanded, setExpanded] = useState(getExpandedFromSession(persistId));
-  const containerRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   function toggle() {
     const wasExpanded = expanded;
@@ -55,7 +50,7 @@ export const Collapsible = ({
     });
     if (wasExpanded) {
       requestAnimationFrame(() => {
-        const el = containerRef.current;
+        const el = ref.current;
         if (el && el.getBoundingClientRect().top < 0) {
           el.scrollIntoView({ block: "start" });
         }
@@ -66,24 +61,37 @@ export const Collapsible = ({
   const borderColor = getBorderColorForDepth(indentLevel);
 
   return (
-    <div ref={containerRef} className={cn(className, "flex")} {...props}>
+    <div ref={ref} className={cn(className, "flex")} {...props}>
       {canCollapse && (
-        <button
-          type="button"
+        <Button
           onClick={toggle}
-          aria-label={expanded ? "Collapse thread" : "Expand thread"}
-          aria-expanded={expanded}
+          variant={"outline"}
+          size={"sm"}
           className={cn(
-            "shrink-0 cursor-pointer border-l-2 border-solid bg-transparent",
-            "min-w-[8px] transition-colors hover:bg-slate-200/40",
+            "h-auto min-h-full w-fit shrink-0 self-stretch justify-start gap-2 rounded-none border-none p-1 lg:p-2",
+            expanded ? "items-start" : "items-center",
+          )}
+        >
+          {expanded ? <BiMessageSquareMinus /> : <BiMessageSquareAdd />}
+
+          {!expanded && (
+            <div className="flex items-center pl-2 gap-1 text-xs italic text-muted-foreground">
+              {collapsedElement}
+            </div>
+          )}
+        </Button>
+      )}
+      {expanded && (
+        <div
+          className={cn(
+            "flex min-w-0 flex-1 flex-col gap-1",
+            "border-l-2 pl-2 border-solid",
             borderColor,
           )}
-        />
+        >
+          {children}
+        </div>
       )}
-      <div className="min-w-0 flex-1 pl-2">
-        {!expanded && collapsedElement}
-        <Activity mode={expanded ? "visible" : "hidden"}>{children}</Activity>
-      </div>
     </div>
   );
 };
